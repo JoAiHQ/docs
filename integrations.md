@@ -11,7 +11,7 @@ Integrations connect agents to external services, extending capabilities and ena
 
 ### Automation
 
-- **N8N** - Connect to N8N workflow automation platform
+- **N8N** - Verified n8n integration node for connecting JoAi agents with n8n workflows and 1000+ apps
 - **Zapier** - Integrate with Zapier (if available)
 
 ### Virtual Worlds
@@ -119,13 +119,41 @@ Different integrations require:
 
 ## N8N Integration
 
-1. Set up N8N instance
-2. Create webhook node in N8N
-3. Get webhook URL from N8N
-4. In JoAi, configure N8N integration
-5. Enter webhook URL
-6. Set up authentication
-7. Test workflow connection
+JoAi has a verified n8n integration node that allows you to connect JoAi agents with n8n workflows. The integration is built and maintained by JoAi partners and verified by n8n.
+
+**Available Actions:**
+
+- **Send Message as User** - Send a message as a user to an agent
+- **Send Message as Agent** - Send a message as an agent to a room
+
+**Setup:**
+
+1. Sign in to your n8n instance
+2. Open the editor and click **+** in the top right to open the **Nodes panel**
+3. Search for "JoAi" in the nodes panel
+4. Add the JoAi node to your workflow
+5. Configure authentication (verified nodes need a quick setup by an instance owner first)
+6. After setup, everyone on the instance can use the JoAi node in their workflows
+
+**Usage:**
+
+- Use the JoAi node in n8n workflows to interact with JoAi agents
+- Send messages to agents from n8n workflows
+- Trigger n8n workflows from JoAi agent actions
+- Build complex automation workflows connecting JoAi with 1000+ apps and services
+
+**Resources:**
+
+- [JoAi on n8n](https://n8n.io/integrations/joai/) - Official n8n integration page
+- [JoAi on GitHub](https://github.com/JoAiHQ) - JoAi GitHub repository
+- [Using verified nodes in n8n](https://docs.n8n.io/integrations/verified-nodes/) - n8n documentation
+
+**Benefits:**
+
+- Connect JoAi agents with over 1,000 apps and services through n8n
+- Build powerful automation workflows
+- Leverage n8n's built-in AI features
+- Create complex workflows that integrate JoAi with your existing tech stack
 
 ## Managing Integrations
 
