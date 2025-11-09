@@ -2,8 +2,9 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: 'JoAi Docs',
-  description: 'Documentation for JoAi products & services.',
+  title: 'JoAi Documentation',
+  description:
+    'Complete user guide for JoAi - your AI agent platform for automation, blockchain interactions, and workflow management.',
   lastUpdated: false,
   cleanUrls: true,
   themeConfig: {
@@ -14,7 +15,41 @@ export default defineConfig({
       {
         text: 'Introduction',
         items: [
-          { text: 'Getting Started', link: '/introduction/getting-started.md' },
+          { text: 'Getting Started', link: '/introduction/getting-started' },
+        ],
+      },
+      {
+        text: 'Core Features',
+        items: [
+          { text: 'Agents', link: '/agents' },
+          { text: 'Chat Commands', link: '/chat-commands' },
+          { text: 'Knowledge Base', link: '/knowledge' },
+          { text: 'Shortcuts', link: '/shortcuts' },
+          { text: 'Tasks', link: '/tasks' },
+          { text: 'Alerts', link: '/alerts' },
+          { text: 'Swarms', link: '/swarms' },
+          { text: 'Teams', link: '/teams' },
+          { text: 'Wallets', link: '/wallets' },
+        ],
+      },
+      {
+        text: 'Advanced',
+        items: [
+          { text: 'Integrations', link: '/integrations' },
+          { text: 'Blueprints', link: '/blueprints' },
+          { text: 'Actions & Automation', link: '/actions-automation' },
+        ],
+      },
+      {
+        text: 'Management',
+        items: [{ text: 'Settings & Billing', link: '/settings-billing' }],
+      },
+      {
+        text: 'Resources',
+        items: [
+          { text: 'Troubleshooting', link: '/troubleshooting' },
+          { text: 'Best Practices', link: '/best-practices' },
+          { text: 'Need Help?', link: '/help' },
         ],
       },
     ],
