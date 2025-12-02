@@ -38,6 +38,7 @@ export default defineConfig({
           { text: 'Integrations', link: '/integrations' },
           { text: 'Blueprints', link: '/blueprints' },
           { text: 'Actions & Automation', link: '/actions-automation' },
+          { text: 'Webhooks', link: '/webhooks' },
         ],
       },
       {
