@@ -23,7 +23,7 @@ export default defineConfig({
         items: [
           { text: 'Agents', link: '/agents' },
           { text: 'Chat Commands', link: '/chat-commands' },
-          { text: 'Knowledge Base', link: '/knowledge' },
+          { text: 'Knowledge', link: '/knowledge' },
           { text: 'Shortcuts', link: '/shortcuts' },
           { text: 'Tasks', link: '/tasks' },
           { text: 'Alerts', link: '/alerts' },
