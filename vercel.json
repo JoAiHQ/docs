@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/((?!assets/)(?!.*\\.[a-z]+$).*)",
+      "destination": "/$1.html"
+    }
+  ]
+}
