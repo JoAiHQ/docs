@@ -42,10 +42,6 @@ export default defineConfig({
         ],
       },
       {
-        text: 'Management',
-        items: [{ text: 'Settings & Billing', link: '/settings-billing' }],
-      },
-      {
         text: 'Resources',
         items: [
           { text: 'Troubleshooting', link: '/troubleshooting' },
