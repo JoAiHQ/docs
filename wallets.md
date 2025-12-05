@@ -4,15 +4,21 @@ Wallets enable agents to interact with blockchain networks, manage digital asset
 
 ## Wallet Types
 
-- **Agent Wallets** - Belong to individual agents, encrypted storage, multi-chain support
+- **Agent Wallets** - Belong to individual agents, encrypted storage, Web3 digital wallets
 - **User Wallets** - Your personal wallets, connect via wallet extensions
 
 ## Supported Blockchains
 
-- **MultiversX (EGLD)** - Primary blockchain network
-- Additional networks as available
+JoAi supports multiple next-generation blockchain networks:
 
-Each network requires a separate wallet.
+- **Sui** - High-performance blockchain with instant finality
+- **Solana** - Fast, scalable blockchain for decentralized apps
+- **Ethereum** - The world's leading smart contract platform
+- **Base** - Ethereum L2 by Coinbase
+- **MultiversX (EGLD)** - Scalable blockchain with sharding
+- **EVM Chains** - All Ethereum Virtual Machine compatible chains
+
+Each network requires a separate wallet. JoAi's Web3 digital wallets mean your AI agents can interact with blockchain networks across Sui, Solana, Ethereum, Base, MultiversX, and EVM chains.
 
 ## Generating Wallets
 
