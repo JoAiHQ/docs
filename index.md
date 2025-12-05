@@ -4,7 +4,7 @@ layout: home
 hero:
   name: 'JoAi'
   text: 'Documentation'
-  tagline: Complete user guide for JoAi - your AI agent platform for automation, blockchain interactions, and workflow management.
+  tagline: Next-generation AI agents - your default assistant for everything.
   actions:
     - theme: brand
       text: Get Started
@@ -14,16 +14,20 @@ hero:
       link: https://joai.ai
 
 features:
-  - title: 🤖 Agents
-    details: Create and manage AI assistants that automate tasks, manage digital assets, and connect with various services.
-  - title: 🐝 Swarms
-    details: Groups of agents working together to accomplish complex tasks through coordination and delegation.
-  - title: 👥 Teams
-    details: Collaborative workspaces where multiple users work together, share agents, and manage resources collectively.
-  - title: 💼 Wallets
-    details: Blockchain wallets for managing digital assets and executing transactions across multiple networks.
-  - title: 🔗 Integrations
-    details: Connect agents to external services, extending capabilities and enabling automation.
+  - title: 🧠 Your Default Assistant
+    details: One AI for everything - web search, PDFs, images, voice, reminders, and more.
+  - title: 🎯 Unlimited Skills
+    details: Create custom skills with warps - no coding needed. The AI agent with the most skills.
+  - title: 🤖 Intelligent Agents
+    details: AI assistants that understand natural language and work 24/7 in cloud mode.
+  - title: 📚 Knowledge & Documents
+    details: Upload PDFs for instant summaries, Q&A, and insights.
+  - title: 🔔 Smart Reminders
+    details: Set reminders with push notifications and never miss deadlines.
+  - title: ⛓️ Blockchain Ready
+    details: Web3 digital wallets for Sui, Solana, Ethereum, Base, MultiversX, and more.
+  - title: 🔗 Works Everywhere
+    details: Integrate with Slack, Telegram, Apple Health, and more.
   - title: 📋 Blueprints
-    details: Pre-configured agent templates that provide complete setups with wallets, shortcuts, and tasks.
+    details: Pre-configured templates to get started in seconds.
 ---
