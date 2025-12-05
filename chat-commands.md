@@ -1,6 +1,6 @@
-# Chat Commands
+# Chat and Commands
 
-JoAi supports special commands that you can type in chat to perform specific actions. All commands start with `/` (forward slash).
+JoAi agents support natural language chat, voice conversations, and special commands. You can talk to your agent naturally, use voice mode for hands-free conversations, or type commands for quick actions. All commands start with `/` (forward slash).
 
 ## Overview
 

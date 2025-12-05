@@ -4,7 +4,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: 'JoAi Documentation',
   description:
-    'Complete user guide for JoAi - your AI agent platform for automation, blockchain interactions, and workflow management.',
+    'AI agents that actually do things. With all the core AI capabilities you expect, plus the ability to interact with Web3 blockchains and apps you use every day - all in one place.',
   lastUpdated: false,
   cleanUrls: true,
   themeConfig: {

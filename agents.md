@@ -1,6 +1,6 @@
 # Agents
 
-Agents are the core of JoAi. They are AI assistants that understand natural language, execute actions, manage wallets, and connect to services.
+Agents are the core of JoAi. They are next-generation AI assistants that understand natural language, use powerful skills, manage Web3 digital wallets, and connect to services. Each agent comes with built-in capabilities for web search, PDF analysis, image understanding, voice conversations, reminders, and blockchain interactions across Sui, Solana, Ethereum, Base, MultiversX, and EVM chains.
 
 ## Agent Modes
 
