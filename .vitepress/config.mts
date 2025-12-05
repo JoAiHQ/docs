@@ -37,7 +37,7 @@ export default defineConfig({
         items: [
           { text: 'Integrations', link: '/integrations' },
           { text: 'Blueprints', link: '/blueprints' },
-          { text: 'Actions & Automation', link: '/actions-automation' },
+          { text: 'Skills', link: '/skills' },
           { text: 'Webhooks', link: '/webhooks' },
         ],
       },
