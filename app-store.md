@@ -16,33 +16,33 @@ Most users don't want five different AI apps. They want AI agents that can actua
 
 UNLIMITED SKILLS - NO CODING NEEDED
 
-🎯 The AI Agent with the Most Skills
+The AI Agent with the Most Skills
 Create unlimited custom skills using warps - no coding required. Build any skill you can imagine: automate workflows, connect services, process data, and more. JoAi agents can have more skills than any other AI assistant because you create them yourself.
 
 NEXT-GENERATION FEATURES
 
-🚀 Super Smart AI Agents
+Super Smart AI Agents
 JoAi agents understand natural language and work 24/7. Available in Cloud Mode so your assistant is always ready, even when the app is closed.
 
-⛓️ Blockchain Support
+Blockchain Support
 Built-in Web3 digital wallets for Sui, Solana, Ethereum, Base, MultiversX, and EVM chains. Your AI assistant can interact with blockchain networks - no separate wallet apps needed.
 
-📚 Document Intelligence
+Document Intelligence
 Upload PDFs and documents for instant summaries, Q&A, and insights. Perfect for students, researchers, legal professionals, and anyone who works with documents.
 
-🔔 Smart Reminders
+Smart Reminders
 Set reminders with push notifications so you never miss important tasks or deadlines. Your AI assistant keeps you organized.
 
-🎤 Voice Conversations
+Voice Conversations
 Have natural voice conversations with your AI assistant. Talk naturally and get instant responses.
 
-🌐 Web Search
+Web Search
 Get real-time information with integrated web search. Your assistant can find the latest information on any topic.
 
-🖼️ Image Understanding
+Image Understanding
 Analyze and describe images with AI vision. Upload photos and get detailed descriptions and insights.
 
-🔗 Works Everywhere
+Works Everywhere
 Integrate with Slack, Telegram, Apple Health, n8n, and more. Your agents can act within your favorite apps and services.
 
 PERFECT FOR
