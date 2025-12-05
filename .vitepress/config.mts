@@ -22,7 +22,7 @@ export default defineConfig({
         text: 'Core Features',
         items: [
           { text: 'Agents', link: '/agents' },
-          { text: 'Chat Commands', link: '/chat-commands' },
+          { text: 'Chat & Commands', link: '/chat-commands' },
           { text: 'Knowledge', link: '/knowledge' },
           { text: 'Shortcuts', link: '/shortcuts' },
           { text: 'Tasks', link: '/tasks' },
