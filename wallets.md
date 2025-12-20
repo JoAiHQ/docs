@@ -1,11 +1,6 @@
 # Wallets
 
-Wallets enable agents to interact with blockchain networks, manage digital assets, and execute transactions.
-
-## Wallet Types
-
-- **Agent Wallets** - Belong to individual agents, encrypted storage, Web3 digital wallets
-- **User Wallets** - Your personal wallets, connect via wallet extensions
+Wallets enable agents to interact with blockchain networks, manage digital assets, and execute transactions across multiple blockchain ecosystems.
 
 ## Supported Blockchains
 
@@ -16,88 +11,56 @@ JoAi supports multiple next-generation blockchain networks:
 - **Ethereum** - The world's leading smart contract platform
 - **Base** - Ethereum L2 by Coinbase
 - **MultiversX (EGLD)** - Scalable blockchain with sharding
-- **EVM Chains** - All Ethereum Virtual Machine compatible chains
+- **NIR** - Next-generation blockchain network
+- **EVM Chains** - All Ethereum Virtual Machine compatible chains including Arbitrum, Somnia, and other EVM-compatible networks
 
-Each network requires a separate wallet. JoAi's Web3 digital wallets mean your AI agents can interact with blockchain networks across Sui, Solana, Ethereum, Base, MultiversX, and EVM chains.
+Each network requires a separate wallet. JoAi's Web3 digital wallets enable your AI agents to interact with blockchain networks across Sui, Solana, Ethereum, Base, MultiversX, NIR, and EVM chains.
 
-## Generating Wallets
+## Wallet Management Modes
 
-1. Go to **Agent Settings > Wallets**
-2. Click **"Generate Wallet"**
-3. Select blockchain network
-4. **CRITICAL:** Save the 24-word mnemonic phrase securely
-5. Confirm you've saved the phrase
-6. Wallet is created and activated
+JoAi offers three distinct modes for managing agent wallets:
 
-**Security:** The mnemonic phrase is the only way to recover your wallet. Store it securely and never share it.
+### Local Mode
 
-## Importing Wallets
+In Local mode, your private seed is stored exclusively on your device. You maintain full ownership and control of your private key. The private key is never stored on JoAi servers.
 
-1. Go to **Agent Settings > Wallets**
-2. Click **"Import Wallet"**
-3. Select **"Import from Mnemonic"**
-4. Enter your 24-word recovery phrase
-5. Select blockchain network
-6. Wallet is imported
+### Cloud Mode
 
-**Requirements:**
+Cloud mode utilizes secure wallet infrastructure services like Privy, Gaupa, and other enterprise-grade wallet service solutions. Your wallet is managed through these trusted third-party services.
 
-- 24 words in correct order
-- Network must match your wallet
-- Valid mnemonic phrase
+### External Mode
 
-## Wallet Operations
+External mode allows agents to assist you in managing and suggesting actions for any existing wallet you already own. Agents can help you interact with wallets from various providers including Phantom, Slush from Sui, and other wallet applications. The agent provides guidance and suggestions while you maintain full control over your external wallet.
+
+## Wallet Capabilities
+
+### Generating Wallets
+
+Agents can generate new wallets for any supported blockchain network. Each wallet is created with a unique 24-word mnemonic phrase that serves as the recovery mechanism. The mnemonic phrase is critical for wallet recovery and must be stored securely.
+
+### Importing Wallets
+
+You can import existing wallets using mnemonic phrases. Import functionality supports 24-word recovery phrases and validates that the network matches your wallet configuration. This enables you to bring existing wallets into your agent ecosystem.
 
 ### Depositing Assets
 
-1. Go to **Agent Settings > Wallets**
-2. Select wallet
-3. Click **"Deposit"**
-4. Copy wallet address
-5. Send assets from external wallet
-6. Wait for blockchain confirmation
+Agents can receive assets from external wallets. Each wallet has a unique address that can be used to receive tokens and assets from any compatible source. Deposits are automatically detected and synchronized with your wallet balance.
 
 ### Withdrawing Assets
 
-1. Select wallet
-2. Click **"Withdraw"**
-3. Enter recipient address
-4. Specify amount
-5. Review and confirm
-6. Approve transaction
+Agents can send assets to any valid address on the supported blockchain networks. Withdrawal functionality includes address validation, amount specification, and transaction confirmation. All transactions require approval before execution.
+
+### On-Ramp and Off-Ramp
+
+You can deposit funds into your Agent Wallet and withdraw them at any time using external providers like Coinbase. On-ramp allows you to convert fiat currency to blockchain assets, while off-ramp converts assets back to traditional payment methods.
 
 ### Wallet Synchronization
 
-Wallets sync automatically, but you can manually sync:
-
-1. Select wallet
-2. Click **"Sync"** or **"Refresh"**
-3. Wallet state updates
+Wallets automatically synchronize with their respective blockchain networks to maintain up-to-date balances and transaction history. Manual synchronization is available to refresh wallet state on demand.
 
 ### Exporting Wallets
 
-**Export Mnemonic:**
-
-1. Select wallet
-2. Click **"Export"** or **"Backup"**
-3. Choose **"Export Mnemonic"**
-4. Verify identity (password)
-5. View and save phrase securely
-
-**Export Private Key:**
-
-- Available but use with extreme caution
-- Private keys give full wallet access
-- Store extremely securely
-
-## Multi-Wallet Management
-
-Agents can have multiple wallets:
-
-- Different networks (one per blockchain)
-- Multiple per network (premium plans)
-- Wallet priority (set which wallet to use first)
-- Easy switching between wallets
+Wallet export functionality allows you to backup your mnemonic phrases and private keys. Export operations require identity verification through password confirmation. Private key export is available but should be used with extreme caution as private keys provide full wallet access.
 
 ## Wallet Security
 
@@ -113,13 +76,6 @@ Agents can have multiple wallets:
 
 - Wallets encrypted at rest
 - Password protection for sensitive operations
-- Access control
-- Transaction approval (in manual mode)
-
-**If Wallet Compromised:**
-
-1. Immediately move funds to new wallet if possible
-2. Revoke all connected services
-3. Change all related passwords
-4. Report incident
-5. Create new secure wallet
+- Access control and permission management
+- Transaction approval requirements (in manual mode)
+- Private keys never stored on servers in Local mode
