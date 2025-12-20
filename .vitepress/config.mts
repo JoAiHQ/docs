@@ -33,6 +33,15 @@ export default defineConfig({
         ],
       },
       {
+        text: 'Protocols',
+        items: [
+          { text: 'MCP', link: '/protocols/mcp' },
+          { text: 'x402', link: '/protocols/x402' },
+          { text: 'EIP-8004 (Ethereum)', link: '/protocols/8004' },
+          { text: 'Google A2A', link: '/protocols/google-a2a' },
+        ],
+      },
+      {
         text: 'Advanced',
         items: [
           { text: 'Integrations', link: '/integrations' },
