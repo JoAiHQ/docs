@@ -33,6 +33,18 @@ export default defineConfig({
         ],
       },
       {
+        text: 'Warps',
+        items: [
+          { text: 'General', link: '/warps/general' },
+          { text: 'Specifications', link: '/warps/specifications' },
+          { text: 'Registry', link: '/warps/registry' },
+          { text: 'Search Index', link: '/warps/search-index' },
+          { text: 'Chains', link: '/warps/chains' },
+          { text: 'Integrations', link: '/warps/integrations' },
+          { text: 'SDKs', link: '/warps/sdks' },
+        ],
+      },
+      {
         text: 'Protocols',
         items: [
           { text: 'MCP', link: '/protocols/mcp' },
