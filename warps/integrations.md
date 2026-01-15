@@ -83,6 +83,12 @@ While Warp Unwrapping significantly enhances the user experience, not all users 
 
 If your client is a browser extension, consider providing this setting toggle per visited site.
 
+## ChatApps: Building AI Apps with Warps
+
+**ChatApps** is a framework for building native web3 AI applications powered by Warps. It enables you to create apps that integrate supported blockchain networks into popular AI platforms like ChatGPT, Claude, Cursor, and other MCP-enabled interfaces.
+
+ChatApps combine Warps with Dynamic MCP, Warp UI, and Cloud Wallet infrastructure to turn conversations into on-chain and off-chain execution. See the [ChatApps documentation](/chatapps) for complete details.
+
 ## Conclusion
 
 Integrating Warps into client applications enhances user experience by simplifying blockchain interactions and reducing friction. Utilize our TypeScript SDK for streamlined integration and contribute feedback or improvements through our community channels.

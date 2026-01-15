@@ -56,6 +56,7 @@ export default defineConfig({
       {
         text: 'Advanced',
         items: [
+          { text: 'ChatApps', link: '/chatapps' },
           { text: 'Integrations', link: '/integrations' },
           { text: 'Blueprints', link: '/blueprints' },
           { text: 'Skills', link: '/skills' },

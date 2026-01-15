@@ -8,7 +8,7 @@
 
 ## Promotional Text
 
-AI agents that actually do things. With all the core AI capabilities you expect, plus the ability to interact with Web3 blockchains and apps you use every day - all in one place.
+AI agents that work for you. With all the core AI capabilities you expect, plus the ability to interact with Web3 blockchains and apps you use every day - all in one place.
 
 ## Description
 
@@ -63,6 +63,20 @@ KEY FEATURES
 - Integrations with Slack, Telegram, Apple Health, n8n, and more
 - Swarms and teams for collaboration
 - Pre-configured blueprints to get started instantly
+
+BUILD AND PUBLISH CHATAPPS
+
+ChatApps: Native Web3 AI Apps
+Create and publish web3-native AI applications to the ChatGPT App Store and other platforms. ChatApps turn conversations into on-chain and off-chain execution across all supported blockchain networks (Sui, Solana, Ethereum, Base, MultiversX, NIR, and EVM chains), powered by open-source Warps and JoAi infrastructure.
+
+- Build ChatGPT Apps with blockchain capabilities
+- Works with ChatGPT, Claude, Cursor, and other MCP-enabled interfaces
+- Fast, low-code AI app creation using Warps
+- Dynamic MCP endpoints for instant connections
+- Cloud Wallet integration with secure TEE signatures
+- Publishing tooling for app store distribution
+
+Because of the ease of use and speed in creating Warps, ChatApps may be the fastest and most scalable way to create web3-native ChatGPT Apps today. See the [ChatApps documentation](/chatapps) for more details.
 
 GET STARTED IN SECONDS
 

@@ -22,6 +22,17 @@ Integrations connect agents to external services, extending capabilities and ena
 
 - **AI Nexus** - Connect agents to virtual world environments
 
+### AI Platforms (ChatApps)
+
+ChatApps enable native web3 AI applications that integrate supported blockchain networks into popular AI platforms:
+
+- **ChatGPT** - Build and publish web3-native ChatGPT Apps using the ChatApps framework
+- **Claude** - Create Claude-compatible apps with blockchain capabilities
+- **Cursor** - Integrate web3 functionality into Cursor workflows
+- **Other MCP-enabled interfaces** - Works with any platform supporting MCP (Model Context Protocol)
+
+See the [ChatApps documentation](/chatapps) for complete details.
+
 ### Custom
 
 - **Webhooks** - Custom webhook integrations

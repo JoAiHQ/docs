@@ -30,4 +30,6 @@ features:
     details: Integrate with Slack, Telegram, Apple Health, and more.
   - title: 📋 Blueprints
     details: Pre-configured templates to get started in seconds.
+  - title: 🚀 ChatApps
+    details: Build and publish native web3 AI apps for ChatGPT, Claude, Cursor, and more.
 ---
