@@ -27,6 +27,7 @@ export default defineConfig({
           { text: 'Shortcuts', link: '/shortcuts' },
           { text: 'Tasks', link: '/tasks' },
           { text: 'Alerts', link: '/alerts' },
+          { text: 'Workspace', link: '/workspace' },
           { text: 'Swarms', link: '/swarms' },
           { text: 'Teams', link: '/teams' },
           { text: 'Wallets', link: '/wallets' },
