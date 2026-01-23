@@ -62,6 +62,7 @@ Browse live Warps on [usewarp.to](https://usewarp.to) and inspect their Blueprin
 - [Prompt Actions](/warps/prompt-actions) - AI text generation
 - [Supported Chains](/warps/chains) - All 11 blockchain networks
 - [SDKs](/warps/sdks) - TypeScript, React, and PHP SDKs
+- [Wallets](/warps/wallets) - Cloud wallet providers
 - [Integrations](/warps/integrations) - Integrate Warps into your app
 - [Registry](/warps/registry) - Managing Warp aliases
 

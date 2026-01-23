@@ -47,6 +47,7 @@ export default defineConfig({
           { text: 'Registry', link: '/warps/registry' },
           { text: 'Integrations', link: '/warps/integrations' },
           { text: 'SDKs', link: '/warps/sdks' },
+          { text: 'Wallets', link: '/warps/wallets' },
         ],
       },
       {
