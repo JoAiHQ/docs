@@ -46,7 +46,8 @@ Warps can also be integrated into other clients like wallets:
 Our [TypeScript SDK](/warps/sdks#typescript) includes utilities that handle link detection in URLs for you:
 
 ```typescript
-const warpLink = new WarpLink(config)
+import { WarpLinkDetecter } from '@joai/warps'
+const warpLink = new WarpLinkDetecter(config)
 const result = await warpLink.detect(warpLinkUrlOrId)
 ```
 
@@ -57,7 +58,8 @@ User-generated content should be continuously screened for valid Warp Links of a
 Our [TypeScript SDK](/warps/sdks#typescript) includes utilities that handle link detection in HTML content for you:
 
 ```typescript
-const warpLink = new WarpLink(config)
+import { WarpLinkDetecter } from '@joai/warps'
+const warpLink = new WarpLinkDetecter(config)
 const result = await warpLink.detectFromHtml(contentWithHtml)
 ```
 
@@ -69,11 +71,12 @@ If your client is a wallet, ensure that you handle any transactions emitted from
 Use the following utilities from our TypeScript SDK to simplify the integration process:
 
 ```typescript
-const actionExecutor = new WarpActionExecutor(warpConfig, window.location.href)
-const tx = actionExecutor.createTransactionForExecute(
-  warpAction,
-  inputArgs,
-  inputTransfers
+import { WarpExecutor } from '@joai/warps'
+const executor = new WarpExecutor(warpConfig)
+const tx = await executor.createTransactionForExecute(
+  warp,
+  actionIndex,
+  inputValues
 )
 ```
 
