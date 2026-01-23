@@ -1,73 +1,123 @@
-# Warps: Share Transactions via Links
+# Warp Protocol
 
-Warps are on-chain data structures that provide all necessary information to construct complex UIs for generating transactions on supported blockchains. By sending a Warp to a friend or customer, they can easily access a generated UI to execute the intended transaction, such as swaps, staking, or smart contract interactions.
+Warps are executable actions that enable cross-chain transactions, smart contract interactions, off-chain API calls, and AI tool integrations through a standardized JSON format. They bridge the gap between AI agents and blockchain execution.
 
-Warps can be shared through any medium capable of encoding or displaying URLs, including web platforms, QR codes, NFC tags, etc.
+## What Are Warps?
+
+A Warp is a declarative JSON object that describes:
+
+- **What** action to perform (transfer, contract call, API request, AI prompt)
+- **How** to collect inputs from users or AI agents
+- **Where** to execute (across 11 supported blockchains)
+- **What** to do with results (chain to other Warps, display messages)
+
+Warps can be stored on-chain for immutability, shared via links, and executed by humans or AI agents.
+
+## Why Warps?
+
+### For AI Agents
+
+Warps give AI agents the ability to execute blockchain transactions. Instead of just generating text, agents can:
+
+- **Execute trades** on decentralized exchanges
+- **Stake tokens** and manage DeFi positions
+- **Mint NFTs** and interact with smart contracts
+- **Collect data** from APIs and process with AI
+- **Chain actions** into complex multi-step workflows
+
+### For Developers
+
+Warps simplify blockchain UX. Instead of building custom transaction flows:
+
+- **Portable**: Share complex transactions as simple links
+- **Multi-chain**: One format works across 11 blockchains
+- **Composable**: Chain Warps together for workflows
+- **Verifiable**: On-chain storage ensures immutability
+
+### For Users
+
+Users interact with intuitive UIs without understanding blockchain complexity:
+
+- **Click a link** → Execute a swap, stake, or mint
+- **Scan a QR code** → Complete a payment
+- **Chat with AI** → Agent executes transactions on your behalf
 
 ## Key Features
 
-- **Multi-Chain Support**: Execute actions across 11 blockchains including Ethereum, Base, Solana, Sui, MultiversX, and more.
-- **7 Action Types**: Transfer, Contract, Query, Collect, Link, MCP, and Prompt actions.
-- **AI Integration**: Built-in support for AI agents via bot metadata and MCP actions.
-- **Internationalization**: Localized titles, descriptions, and messages.
-- **Chaining**: Link Warps together for multi-step workflows.
-
-## Create Warps
-
-Create Warps using the UseWarp client at [usewarp.to/create](https://usewarp.to/create).
-
-Or build programmatically with our [SDKs](/warps/sdks):
-
-```typescript
-import { WarpBuilder } from '@joai/warps'
-
-const warp = new WarpBuilder()
-  .setProtocol('warp:3.0.0')
-  .setName('Payment: Send USDC')
-  .setTitle('Send USDC')
-  .setDescription('Transfer USDC to any address.')
-  .addContractAction({
-    label: 'Send',
-    abi: 'function transfer(address to, uint256 amount)',
-    address: '0xUSDC...',
-    func: 'transfer',
-    gasLimit: 60000
-  })
-  .build()
-```
+- **7 Action Types**: Transfer, Contract, Query, Collect, Link, MCP, Prompt
+- **11 Blockchains**: Ethereum, Base, Arbitrum, Polygon, Sui, Solana, MultiversX, and more
+- **AI-Native**: MCP tool integration and prompt actions for AI workflows
+- **Cloud Wallets**: Coinbase, Privy, and Gaupa for agentic execution
+- **i18n Support**: Localized content for global applications
+- **Chaining**: Link Warps for multi-step workflows
 
 ## Quick Start
 
-1. **Create a Warp**: Use [usewarp.to/create](https://usewarp.to/create) or the SDK
-2. **Register**: Assign an alias via the [Registry](/warps/registry)
-3. **Share**: Send the link `usewarp.to/your-alias`
+### Share Transactions
 
-## Learn from Videos
+```
+usewarp.to/your-alias
+```
 
-Watch the Warp Dev Series on YouTube: [Warp Dev Series](https://www.youtube.com/watch?v=_FLahYKlIJk).
+Create Warps at [usewarp.to/create](https://usewarp.to/create) and share the link.
 
-## Examples
+### Build with SDK
 
-Explore Warp examples on GitHub in the [specifications repository](https://github.com/JoAiHQ/warps-specs/tree/main/examples).
+```typescript
+import { WarpClient } from '@joai/warps'
 
-Browse live Warps on [usewarp.to](https://usewarp.to) and inspect their Blueprints via the "Inspect" button.
+const result = await client.executeWarp('stake-egld', [
+  'uint256:1000000000000000000'
+])
+```
+
+### AI Agent Execution
+
+```typescript
+// AI agent analyzes user request and executes Warp
+const warp = await client.detectWarp('send-usdc')
+const result = await client.executeWarp(warp, userInputs)
+```
+
+## Use Cases
+
+### Payments
+Share a link or QR code for instant crypto payments.
+
+### DeFi Automation
+AI agents manage staking, swaps, and yield optimization.
+
+### NFT Minting
+One-click minting experiences across chains.
+
+### DAO Operations
+Voting, proposals, and treasury management via Warps.
+
+### AI-Powered Workflows
+Chain AI prompts with blockchain actions for intelligent automation.
 
 ## Documentation
 
 - [Quickstart](/warps/quickstart) - Get started in minutes
 - [Creating Warps](/warps/creating-warps) - Build Warps with SDK or AI
 - [Specifications](/warps/specifications) - Complete JSON specification
-- [Action Types](/warps/action-types) - All 7 action types reference
+- [Action Types](/warps/action-types) - All 7 action types
 - [MCP Actions](/warps/mcp-actions) - AI tool integrations
 - [Prompt Actions](/warps/prompt-actions) - AI text generation
-- [Supported Chains](/warps/chains) - All 11 blockchain networks
-- [SDKs](/warps/sdks) - TypeScript, React, and PHP SDKs
+- [Chains](/warps/chains) - All 11 networks
+- [SDKs](/warps/sdks) - TypeScript, React, PHP
 - [Wallets](/warps/wallets) - Cloud wallet providers
-- [Integrations](/warps/integrations) - Integrate Warps into your app
-- [Registry](/warps/registry) - Managing Warp aliases
+- [Integrations](/warps/integrations) - Integrate into your app
+- [Registry](/warps/registry) - Managing aliases
 
-## Join the Community
+## Resources
+
+- **Try it**: [usewarp.to](https://usewarp.to)
+- **Dev Series**: [YouTube Tutorials](https://www.youtube.com/watch?v=_FLahYKlIJk)
+- **Examples**: [GitHub](https://github.com/JoAiHQ/warps-specs/tree/main/examples)
+
+## Community
 
 - **Telegram**: [telegram.usewarp.to](https://telegram.usewarp.to)
 - **GitHub**: [github.com/JoAiHQ](https://github.com/JoAiHQ)
-- **Documentation**: [docs.joai.ai](https://docs.joai.ai)
+- **X/Twitter**: [@JoAiAgents](https://x.com/JoAiAgents)
