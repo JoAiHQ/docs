@@ -36,7 +36,7 @@ See the [ChatApps documentation](/chatapps) for complete details.
 ### Custom
 
 - **Webhooks** - Custom webhook integrations
-- **API Tokens** - Use API tokens for custom integrations
+- **API Tokens** - Use API tokens for programmatic authentication. See [API Tokens documentation](/api) for complete details.
 
 ## Setting Up Integrations
 
