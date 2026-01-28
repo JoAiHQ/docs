@@ -64,6 +64,7 @@ export default defineConfig({
         items: [
           { text: 'ChatApps', link: '/chatapps' },
           { text: 'Integrations', link: '/integrations' },
+          { text: 'API', link: '/api' },
           { text: 'Blueprints', link: '/blueprints' },
           { text: 'Skills', link: '/skills' },
           { text: 'Webhooks', link: '/webhooks' },

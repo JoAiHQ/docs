@@ -1,17 +1,12 @@
 # MCP Actions
 
-MCP (Model Context Protocol) actions execute tools on MCP servers, enabling AI tool integrations in Warps.
+The `mcp` action type executes tools on **Model Context Protocol (MCP)** servers. This feature enables Warps to integrate directly with AI agents, external data processors, and complex off-chain logic.
 
 ## Overview
 
-MCP is a standard protocol for AI tool execution. MCP actions allow Warps to:
+MCP is a standard protocol for AI tool execution. MCP actions allows a Warp to "call out" to an AI agent or tool server to perform a task and return data.
 
-- Execute AI analysis and generation tools
-- Integrate with external AI services
-- Orchestrate multi-step AI workflows
-- Connect to any MCP-compatible server
-
-## Basic Structure
+## Structure
 
 ```json
 {
@@ -41,23 +36,29 @@ MCP is a standard protocol for AI tool execution. MCP actions allow Warps to:
 |----------|------|----------|-------------|
 | `type` | string | ✅ | Must be `"mcp"` |
 | `label` | WarpText | ✅ | Button text |
-| `destination` | object | ❌ | MCP server configuration |
-| `inputs` | array | ❌ | Tool arguments |
-| `auto` | boolean | ❌ | Auto-execute |
+| `destination` | object | ✅ | MCP server configuration (see below) |
+| `inputs` | array | ❌ | Tool arguments mapped to inputs |
+| `auto` | boolean | ❌ | Auto-execute on load |
 | `next` | string | ❌ | Next Warp after execution |
 
-### Destination Object
+### Destination Configuration
 
 | Property | Type | Required | Description |
 |----------|------|----------|-------------|
-| `url` | string | ✅ | MCP server SSE endpoint |
-| `tool` | string | ✅ | Tool name to execute |
-| `headers` | object | ❌ | HTTP headers for authentication |
+| `url` | string | ✅ | The MCP server's SSE (Server-Sent Events) endpoint. |
+| `tool` | string | ✅ | The name of the tool to execute on the server. |
+| `headers` | object | ❌ | HTTP headers (e.g., for authentication). |
+
+## How It Works
+
+1. **Connection**: The client connects to the `url` via SSE.
+2. **Execution**: The client sends a JSON-RPC request to execute the specified `tool` with the provided `inputs`.
+3. **Response**: The server processes the request and streams the result back.
+4. **Output**: The result is captured in the Warp's `output` (if mapped) or displayed.
 
 ## Examples
 
-### Simple Tool Call
-
+### Sentiment Analysis Tool
 ```json
 {
   "type": "mcp",
@@ -78,52 +79,15 @@ MCP is a standard protocol for AI tool execution. MCP actions allow Warps to:
 }
 ```
 
-### JoAi MCP Integration
-
-```json
-{
-  "protocol": "warp:3.0.0",
-  "name": "AI: Create Warp",
-  "title": "AI Warp Generator",
-  "description": "Generate a Warp using AI.",
-  "vars": {
-    "MCP_URL": "env:MCP_URL",
-    "MCP_TOKEN": "env:MCP_TOKEN"
-  },
-  "actions": [
-    {
-      "type": "mcp",
-      "label": "Generate",
-      "destination": {
-        "url": "{{MCP_URL}}",
-        "tool": "create_warp",
-        "headers": {
-          "Authorization": "Bearer {{MCP_TOKEN}}"
-        }
-      },
-      "inputs": [
-        {
-          "name": "Description",
-          "as": "description",
-          "type": "string",
-          "source": "field",
-          "required": true,
-          "description": "Describe the Warp you want to create"
-        }
-      ]
-    }
-  ]
-}
-```
-
-### Chained MCP + Contract
+### Chained Workflow (AI -> Blockchain)
+1. AI analyzes market data via MCP.
+2. Logic gates check the recommendation.
+3. User executes a trade if recommended.
 
 ```json
 {
   "protocol": "warp:3.0.0",
   "name": "AI: Analyze and Trade",
-  "title": "Smart Trading",
-  "description": "AI analyzes, you trade.",
   "output": {
     "RECOMMENDATION": "out.recommendation",
     "AMOUNT": "out.suggestedAmount"
@@ -137,15 +101,7 @@ MCP is a standard protocol for AI tool execution. MCP actions allow Warps to:
         "url": "https://mcp.example.com/sse",
         "tool": "analyze_market"
       },
-      "inputs": [
-        {
-          "name": "Token",
-          "as": "token",
-          "type": "string",
-          "source": "field",
-          "required": true
-        }
-      ]
+      "inputs": [{ "name": "Token", "source": "field" }]
     },
     {
       "type": "contract",
@@ -153,61 +109,18 @@ MCP is a standard protocol for AI tool execution. MCP actions allow Warps to:
       "when": "{{RECOMMENDATION}} === 'buy'",
       "address": "0xDEX...",
       "func": "swap",
-      "gasLimit": 300000,
-      "args": ["address:{{token}}", "uint256:{{AMOUNT}}"]
+      "args": ["uint256:{{AMOUNT}}"]
     }
   ]
 }
 ```
 
-## Setting Up MCP Servers
+## JoAi MCP Server Integration
 
-### JoAi MCP Server
-
-Install the JoAi MCP package:
+You can easily spin up your own MCP server using the `@joai/warps-mcp` package to host custom tools.
 
 ```bash
 npm install @joai/warps-mcp
 ```
 
-Run the server:
-
-```typescript
-import { WarpMcpServer } from '@joai/warps-mcp'
-
-const server = new WarpMcpServer({
-  config: warpConfig,
-  tools: [/* your tools */]
-})
-
-server.listen(3000)
-```
-
-### Compatible Tools
-
-MCP actions work with any MCP-compatible server:
-
-- JoAi MCP Server (`@joai/warps-mcp`)
-- Claude MCP integration
-- ChatGPT plugins
-- Custom MCP implementations
-
-## Use Cases
-
-- **Market Analysis**: Get AI insights before trading
-- **Content Generation**: Create text, images, code
-- **Data Processing**: Transform and analyze data
-- **Automation**: Trigger complex AI workflows
-- **Multi-Agent Systems**: Coordinate AI agents
-
-## Best Practices
-
-1. **Secure your endpoints**: Use authentication headers
-2. **Handle errors gracefully**: MCP calls can fail
-3. **Use environment variables**: Never hardcode tokens
-4. **Set reasonable timeouts**: MCP calls may take time
-5. **Validate outputs**: Verify AI responses before use
-
----
-
-For general action documentation, see [Action Types](/warps/action-types).
+This allows you to build custom TypeScript tools that your Warps can interact with securely.

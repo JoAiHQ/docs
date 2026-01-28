@@ -4,97 +4,88 @@ Warp Protocol v3 supports 11 blockchain networks, enabling flexible and powerful
 
 ## EVM Chains
 
+Warps support all major EVM chains. Actions on these chains use standard `abi` signatures and `wei` for values.
+
 ### Ethereum
-
-The original smart contract platform.
-
 - **Identifier**: `ethereum`
 - **Native Token**: ETH (18 decimals)
 - **Explorer**: [etherscan.io](https://etherscan.io)
 
 ### Base
-
-Coinbase's L2 built on the OP Stack.
-
 - **Identifier**: `base`
 - **Native Token**: ETH (18 decimals)
 - **Explorer**: [basescan.org](https://basescan.org)
 
 ### Arbitrum
-
-Optimistic rollup L2 for Ethereum.
-
 - **Identifier**: `arbitrum`
 - **Native Token**: ETH (18 decimals)
 - **Explorer**: [arbiscan.io](https://arbiscan.io)
 
 ### Polygon
-
-Ethereum sidechain and L2 network.
-
 - **Identifier**: `polygon`
 - **Native Token**: POL (18 decimals)
 - **Explorer**: [polygonscan.com](https://polygonscan.com)
 
 ### Somnia
-
-High-performance EVM chain.
-
 - **Identifier**: `somnia`
 - **Native Token**: STT (18 decimals)
 
 ## MultiversX Ecosystem
 
 ### MultiversX
-
-High-performance sharded blockchain.
-
 - **Identifier**: `multiversx`
 - **Native Token**: EGLD (18 decimals)
-- **Address Format**: `erd1...`
+- **Address Format**: `erd1...` (bech32)
 - **Explorer**: [explorer.multiversx.com](https://explorer.multiversx.com)
+- **Notes**: High gas limits (millions) are standard. Token transfers use the `transfers` array property.
 
-### VibeChain
-
-MultiversX LightSpeed Chain.
-
+### VibeChain (LightSpeed)
 - **Identifier**: `vibechain`
 - **Native Token**: VIBE
 - **Explorer**: [vibeox-explorer.multiversx.com](https://vibeox-explorer.multiversx.com)
+- **Notes**: LightSpeed chains are inscribed on MultiversX mainnet but execute on their own sub-networks.
 
 ## Other Chains
 
 ### Sui
-
-Move-based L1 blockchain.
-
 - **Identifier**: `sui`
 - **Native Token**: SUI (9 decimals / MIST)
 - **Address Format**: `0x...` (32 bytes hex)
 - **Explorer**: [suiscan.xyz](https://suiscan.xyz)
 
 ### Solana
-
-High-performance L1 blockchain.
-
 - **Identifier**: `solana`
 - **Native Token**: SOL (9 decimals / lamports)
 - **Address Format**: Base58
 - **Explorer**: [solscan.io](https://solscan.io)
 
 ### NEAR
-
-Sharded proof-of-stake blockchain.
-
 - **Identifier**: `near`
 - **Native Token**: NEAR (24 decimals / yoctoNEAR)
 - **Address Format**: `account.near`
 
 ### Fastset
-
-Native network with fast finality.
-
 - **Identifier**: `fastset`
+
+## Chain-Specific configurations
+
+### Gas Limit Guidelines
+
+Different chains require different gas limits for similar operations.
+
+| Operation Type | EVM Chains | MultiversX |
+|---------------|------------|------------|
+| Simple transfer | 21,000 | 50,000+ |
+| Token transfer | 50,000 - 100,000 | 500,000+ |
+| Contract call | 100,000+ | 6,000,000+ |
+| Complex DeFi | 300,000+ | 20,000,000+ |
+
+### Address Formats
+
+- **EVM / Sui**: `0x` prefix (e.g. `0x123...`)
+- **MultiversX**: `erd1` prefix (e.g. `erd1...`)
+- **Solana**: Base58 string (e.g. `H7b...`)
+- **NEAR**: Account ID (e.g. `alice.near` or 64-char hex)
 
 ## Using Chain in Warps
 
@@ -160,35 +151,6 @@ Let users choose the chain:
 }
 ```
 
-## Cross-Chain Warps
-
-Query or interact with multiple chains in a single Warp:
-
-```json
-{
-  "actions": [
-    {
-      "type": "query",
-      "chain": "ethereum",
-      "label": "ETH Balance",
-      "auto": true
-    },
-    {
-      "type": "query",
-      "chain": "base",
-      "label": "Base Balance",
-      "auto": true
-    },
-    {
-      "type": "query",
-      "chain": "arbitrum",
-      "label": "Arbitrum Balance",
-      "auto": true
-    }
-  ]
-}
-```
-
 ## Global Chain Variables
 
 Use these globals to reference chain-specific URLs:
@@ -203,29 +165,3 @@ Use these globals to reference chain-specific URLs:
   "url": "{{CHAIN_EXPLORER}}/tx/{{TX_HASH}}"
 }
 ```
-
-## LightSpeed Chains (MultiversX)
-
-LightSpeed Chains are customizable sub-networks within the MultiversX ecosystem:
-
-```json
-{
-  "actions": [
-    {
-      "type": "contract",
-      "chain": "vibechain",
-      "address": "erd1...",
-      "func": "execute",
-      "gasLimit": 10000000
-    }
-  ]
-}
-```
-
-Warps are inscribed on the MultiversX main network and can execute on whitelisted LightSpeed Chains.
-
-To register your LightSpeed chain, contact us via [Telegram](https://telegram.usewarp.to).
-
----
-
-For SDK integration, see [SDKs](/warps/sdks).

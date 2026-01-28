@@ -1,37 +1,20 @@
 # Prompt Actions
 
-Prompt actions generate text using AI/LLM models directly within Warps.
+The `prompt` action type generates text using AI/LLM models directly within the Warp interface. This is ideal for content generation, summarization, or creative writing tasks.
 
-## Overview
-
-Prompt actions enable:
-
-- AI-powered content generation
-- Dynamic text based on user input
-- Intelligent responses in workflows
-- Creative writing and analysis
-
-## Basic Structure
+## Structure
 
 ```json
 {
   "type": "prompt",
   "label": "Generate",
-  "prompt": "Write a {{style}} description of {{topic}}.",
+  "prompt": "Write a story about {{topic}}.",
   "inputs": [
     {
       "name": "Topic",
       "as": "topic",
       "type": "string",
-      "source": "field",
-      "required": true
-    },
-    {
-      "name": "Style",
-      "as": "style",
-      "type": "string",
-      "source": "field",
-      "options": ["formal", "casual", "technical"]
+      "source": "field"
     }
   ]
 }
@@ -43,167 +26,89 @@ Prompt actions enable:
 |----------|------|----------|-------------|
 | `type` | string | ✅ | Must be `"prompt"` |
 | `label` | WarpText | ✅ | Button text |
-| `prompt` | string | ✅ | Prompt template |
-| `inputs` | array | ❌ | Variables for prompt |
-| `auto` | boolean | ❌ | Auto-execute |
-| `next` | string | ❌ | Next Warp after execution |
+| `prompt` | string | ✅ | The prompt template string. |
+| `inputs` | array | ❌ | Variables injected into the prompt. |
+| `auto` | boolean | ❌ | Auto-execute on load (use carefully with costs). |
+| `next` | string | ❌ | Next Warp after execution. |
 
 ## Prompt Templates
 
-Use `{{variableName}}` to insert dynamic values:
+The `prompt` field supports standard variable interpolation using `{{variableName}}`. Values are injected from the `inputs` array or global variables.
 
-```json
-{
-  "prompt": "Write a {{length}}-word summary of {{topic}} for {{audience}}."
-}
+**Example Template:**
+```text
+Write a {{length}}-word summary of {{topic}} for {{audience}}.
+Key points to cover: {{keyPoints}}
 ```
 
 ## Examples
 
-### Email Generator
-
+### Professional Email Generator
 ```json
 {
-  "protocol": "warp:3.0.0",
-  "name": "AI: Email Writer",
-  "title": "Write Professional Email",
-  "description": "Generate a professional email.",
-  "actions": [
+  "type": "prompt",
+  "label": "Generate Email",
+  "prompt": "Write a professional email.\n\nPurpose: {{purpose}}\nRecipient: {{recipient}}\nTone: {{tone}}\n\nGenerate a complete, ready-to-send email.",
+  "inputs": [
     {
-      "type": "prompt",
-      "label": "Generate Email",
-      "prompt": "Write a professional email.\n\nPurpose: {{purpose}}\nRecipient: {{recipient}}\nTone: {{tone}}\nKey Points: {{keyPoints}}\n\nGenerate a complete, ready-to-send email.",
-      "inputs": [
-        {
-          "name": "Purpose",
-          "as": "purpose",
-          "type": "string",
-          "source": "field",
-          "required": true
-        },
-        {
-          "name": "Recipient",
-          "as": "recipient",
-          "type": "string",
-          "source": "field",
-          "required": true
-        },
-        {
-          "name": "Tone",
-          "as": "tone",
-          "type": "string",
-          "source": "field",
-          "options": {
-            "formal": "Formal & Professional",
-            "friendly": "Friendly & Warm",
-            "urgent": "Urgent & Direct"
-          },
-          "default": "formal"
-        },
-        {
-          "name": "Key Points",
-          "as": "keyPoints",
-          "type": "string",
-          "source": "field"
-        }
-      ]
+      "name": "Purpose",
+      "as": "purpose",
+      "source": "field",
+      "required": true
+    },
+    {
+      "name": "Recipient",
+      "as": "recipient",
+      "source": "field"
+    },
+    {
+      "name": "Tone",
+      "as": "tone",
+      "source": "field",
+      "options": ["Formal", "Friendly", "Urgent"],
+      "default": "Formal"
     }
   ]
 }
 ```
 
-### Smart Contract Generator
-
+### Code Generator (Solidity)
 ```json
 {
   "type": "prompt",
   "label": "Generate Contract",
-  "prompt": "Generate a Solidity smart contract for:\n\n{{requirements}}\n\nInclude:\n- All necessary functions\n- Events for key actions\n- Access control\n- Comments explaining the code",
+  "prompt": "Generate a Solidity smart contract for:\n\n{{requirements}}\n\nInclude:\n- All necessary functions\n- Events\n- Comments",
   "inputs": [
     {
       "name": "Requirements",
       "as": "requirements",
-      "type": "string",
       "source": "field",
-      "required": true,
       "description": "Describe what the contract should do"
     }
   ]
 }
 ```
 
-### Token Analysis
+### Token Analysis Helper
+Combine a `query` action to fetch data, then a `prompt` action to analyze it.
 
 ```json
 {
-  "protocol": "warp:3.0.0",
-  "name": "AI: Token Analysis",
-  "title": "Analyze Token",
-  "description": "Get AI analysis of a token.",
   "output": {
-    "TOKEN_NAME": "out.name",
-    "TOKEN_SUPPLY": "out.totalSupply"
+    "DATA": "out.1"
   },
   "actions": [
     {
       "type": "query",
       "label": "Fetch Data",
       "auto": true,
-      "abi": "function getInfo() view returns (string, uint256)",
-      "address": "0xToken...",
-      "func": "getInfo"
+      "address": "0x...",
+      "func": "getData"
     },
     {
       "type": "prompt",
       "label": "Analyze",
-      "prompt": "Analyze this token:\n\nName: {{TOKEN_NAME}}\nTotal Supply: {{TOKEN_SUPPLY}}\n\nProvide:\n1. Brief overview\n2. Supply analysis\n3. Potential use cases\n4. Risk assessment"
-    }
-  ]
-}
-```
-
-### Social Media Post
-
-```json
-{
-  "type": "prompt",
-  "label": "Generate Post",
-  "prompt": "Write a {{platform}} post about {{topic}}.\n\nStyle: {{style}}\nMax Length: {{length}} characters\nInclude: {{hashtags}} relevant hashtags",
-  "inputs": [
-    {
-      "name": "Platform",
-      "as": "platform",
-      "type": "string",
-      "source": "field",
-      "options": ["Twitter/X", "LinkedIn", "Instagram", "Facebook"]
-    },
-    {
-      "name": "Topic",
-      "as": "topic",
-      "type": "string",
-      "source": "field",
-      "required": true
-    },
-    {
-      "name": "Style",
-      "as": "style",
-      "type": "string",
-      "source": "field",
-      "options": ["professional", "casual", "humorous", "inspirational"]
-    },
-    {
-      "name": "Max Length",
-      "as": "length",
-      "type": "string",
-      "source": "hidden",
-      "default": "280"
-    },
-    {
-      "name": "Hashtags",
-      "as": "hashtags",
-      "type": "string",
-      "source": "hidden",
-      "default": "3-5"
+      "prompt": "Analyze this blockchain data: {{DATA}}. Is this a risky transaction?"
     }
   ]
 }
@@ -211,49 +116,9 @@ Use `{{variableName}}` to insert dynamic values:
 
 ## Best Practices
 
-### Be Specific
+1.  **Be Specific**: The better the prompt template, the better the result.
+2.  **Use Context**: Provide the AI with a role (e.g., "You are a Solidity expert").
+3.  **Structured Output**: Ask for specific formats like bullet points or JSON if needed.
+4.  **AI Hints**: Use the `bot` property on inputs to help AI agents understand *what* to input if an agent is executing the Warp.
 
-```json
-// ❌ Vague
-"prompt": "Write about {{topic}}"
-
-// ✅ Specific
-"prompt": "Write a 200-word blog introduction about {{topic}} for beginners. Use a friendly tone and include a hook in the first sentence."
 ```
-
-### Use Structured Output
-
-```json
-"prompt": "Analyze {{data}} and respond with:\n1. Summary (2-3 sentences)\n2. Key findings (bullet points)\n3. Recommendation (1 sentence)"
-```
-
-### Provide Context
-
-```json
-"prompt": "You are a blockchain expert. Explain {{concept}} to a Web2 developer learning Web3."
-```
-
-### Use AI-Friendly Inputs
-
-```json
-{
-  "name": "Purpose",
-  "as": "purpose",
-  "bot": "The main goal of this content. Help user articulate clearly.",
-  "type": "string",
-  "source": "field"
-}
-```
-
-## Use Cases
-
-- **Content Generation**: Blog posts, social media, emails
-- **Code Generation**: Smart contracts, scripts, configs
-- **Analysis**: Token analysis, market insights
-- **Translation**: Multi-language content
-- **Summarization**: Document and data summaries
-- **Creative Writing**: Stories, descriptions, taglines
-
----
-
-For general action documentation, see [Action Types](/warps/action-types).
