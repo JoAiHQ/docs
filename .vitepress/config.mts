@@ -54,6 +54,7 @@ export default defineConfig({
         text: 'Protocols',
         items: [
           { text: 'MCP', link: '/protocols/mcp' },
+          { text: 'OpenBond Protocol', link: '/protocols/openbond' },
           { text: 'x402', link: '/protocols/x402' },
           { text: 'EIP-8004 (Ethereum)', link: '/protocols/8004' },
           { text: 'Google A2A', link: '/protocols/google-a2a' },
@@ -62,7 +63,7 @@ export default defineConfig({
       {
         text: 'Advanced',
         items: [
-          { text: 'ChatApps', link: '/chatapps' },
+          { text: 'Warps', link: '/warps' },
           { text: 'Integrations', link: '/integrations' },
           { text: 'API', link: '/api' },
           { text: 'Blueprints', link: '/blueprints' },
