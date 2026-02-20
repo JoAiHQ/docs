@@ -34,6 +34,7 @@ The SDK is organized as a monorepo with the following packages:
 
 #### Utilities
 - `@joai/warps-mcp` - MCP (Model Context Protocol) server
+- `@joai/warps-openapi` - [OpenAPI to Warps converter](/warps/openapi-conversion)
 - `@joai/warps-vm-browser` - Browser VM for transforms
 - `@joai/warps-vm-node` - Node.js VM for transforms
 

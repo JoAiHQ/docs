@@ -86,6 +86,10 @@ While Warp Unwrapping significantly enhances the user experience, not all users 
 
 If your client is a browser extension, consider providing this setting toggle per visited site.
 
+## OpenAPI Sources
+
+Warps can be generated from OpenAPI 3.x specifications, enabling any REST API to be wrapped as executable Warp actions. The `@joai/warps-openapi` package handles parsing, parameter mapping, and warp generation. See the [OpenAPI Conversion documentation](/warps/openapi-conversion) for details.
+
 ## ChatApps: Building AI Apps with Warps
 
 **ChatApps** is a framework for building native web3 AI applications powered by Warps. It enables you to create apps that integrate supported blockchain networks into popular AI platforms like ChatGPT, Claude, Cursor, and other MCP-enabled interfaces.
