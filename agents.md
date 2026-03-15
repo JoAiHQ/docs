@@ -66,3 +66,9 @@ Add quick access information cards that appear in the agent interface:
 
 - Create cards with important information
 - Cards provide quick reference without searching
+
+## MCP Access
+
+Each agent can be connected to external AI applications (ChatGPT, Claude, Cursor, and others) via the [Model Context Protocol (MCP)](/protocols/mcp). When connected, those applications can invoke your agent's Warps as tools.
+
+MCP tool calls consume **credits** from your plan's monthly allowance. See [MCP Credits & Usage](/protocols/mcp#credits--usage) for plan limits and overage pricing.
