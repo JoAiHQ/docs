@@ -41,6 +41,7 @@ export default defineConfig({
           { text: 'Creating Warps', link: '/warps/creating-warps' },
           { text: 'Specifications', link: '/warps/specifications' },
           { text: 'Action Types', link: '/warps/action-types' },
+          { text: 'Mini-Apps', link: '/warps/mini-apps' },
           { text: 'MCP Actions', link: '/warps/mcp-actions' },
           { text: 'Prompt Actions', link: '/warps/prompt-actions' },
           { text: 'Chains', link: '/warps/chains' },

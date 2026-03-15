@@ -1,6 +1,6 @@
 # Action Types Reference
 
-Warp Protocol v3 supports 7 action types, each designed for specific use cases. This guide provides detailed specifications for each action.
+Warp Protocol v3 supports 11 action types, each designed for specific use cases. This guide provides detailed specifications for each action.
 
 ## Overview
 
@@ -10,6 +10,10 @@ Warp Protocol v3 supports 7 action types, each designed for specific use cases. 
 | `contract` | Execute smart contract | ✅ Yes |
 | `query` | Read contract state | ❌ No |
 | `collect` | HTTP data collection | ❌ No |
+| `compute` | Local-only transform execution | ❌ No |
+| `state` | Read/write key-value store | ❌ No |
+| `mount` | Activate a warp trigger in a room | ❌ No |
+| `unmount` | Deactivate a warp trigger in a room | ❌ No |
 | `link` | Navigate to URL | ❌ No |
 | `mcp` | Execute MCP tools | ❌ No |
 | `prompt` | AI text generation | ❌ No |
@@ -194,6 +198,203 @@ The `collect` action type sends HTTP requests to external endpoints.
   }
 }
 ```
+
+---
+
+## Compute
+
+The `compute` action type executes local-only JavaScript transforms. It never makes HTTP requests or blockchain calls — all logic runs client-side. Always returns `success`, making it ideal for hidden input derivation, conditional value computation, and pure data transformation steps inside a warp chain.
+
+### Structure
+
+```json
+{
+  "type": "compute",
+  "label": "Calculate",
+  "inputs": [
+    {
+      "name": "result",
+      "as": "result",
+      "type": "uint64",
+      "source": "hidden",
+      "modifier": "transform:() => Math.floor(Math.random() * 100) + 1"
+    }
+  ]
+}
+```
+
+### Properties
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| `type` | string | ✅ | Must be `"compute"` |
+| `label` | WarpText | ✅ | Button/step label |
+| `inputs` | WarpActionInput[] | ❌ | Hidden inputs with `transform:` modifiers to derive values |
+| `description` | WarpText | ❌ | Additional context |
+| `primary` | boolean | ❌ | Marks this as the primary action |
+| `auto` | boolean | ❌ | Auto-execute on load |
+| `next` | string | ❌ | Warp ID or URL to navigate to after success |
+| `when` | string | ❌ | Conditional expression — skips this action if false |
+
+### Key Differences from `collect`
+
+| | `compute` | `collect` |
+|--|-----------|-----------|
+| Execution | Always local | Sends HTTP request if `destination` is set |
+| Result status | Always `success` | `unhandled` if no destination |
+| Use case | Pure transforms, derivations | Submitting data to an endpoint |
+
+### Example: Random Number Generation
+
+```json
+{
+  "type": "compute",
+  "label": "Generate secret",
+  "inputs": [
+    {
+      "name": "secret",
+      "as": "secret",
+      "type": "uint64",
+      "source": "hidden",
+      "modifier": "transform:() => Math.floor(Math.random() * 100) + 1"
+    }
+  ]
+}
+```
+
+After execution, `{{secret}}` is available in all subsequent actions.
+
+---
+
+## State
+
+The `state` action type reads from or writes to a persistent key-value store scoped to the current room and agent. Backed by the existing store infrastructure — no external services required.
+
+### Structure
+
+```json
+{ "type": "state", "op": "write", "store": "game", "data": { "secret": "{{secret}}", "active": true } }
+{ "type": "state", "op": "read",  "store": "game", "keys": ["secret", "active"] }
+{ "type": "state", "op": "clear", "store": "game" }
+```
+
+### Properties
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| `type` | string | ✅ | Must be `"state"` |
+| `op` | string | ✅ | Operation: `"read"`, `"write"`, or `"clear"` |
+| `store` | string | ✅ | Store namespace (e.g. `"game"`, `"quiz"`) |
+| `keys` | string[] | ❌ | Keys to read (required for `op: "read"`) |
+| `data` | object | ❌ | Key-value pairs to write (required for `op: "write"`) |
+| `when` | string | ❌ | Conditional expression |
+
+### Reading State
+
+After a `read`, all keys merge into the injectable context as `state.KEY` — available as `{{state.KEY}}` in all subsequent actions within the same execution.
+
+```json
+{
+  "type": "state",
+  "op": "read",
+  "store": "guessing-game",
+  "keys": ["secret", "active"]
+}
+```
+
+Use the values in later actions:
+
+```json
+{
+  "modifier": "transform:() => parseInt('{{JOAI_MESSAGE_TEXT}}') === {{state.secret}}"
+}
+```
+
+### Writing State
+
+```json
+{
+  "type": "state",
+  "op": "write",
+  "store": "guessing-game",
+  "data": { "secret": "{{secret}}", "active": true }
+}
+```
+
+### Clearing State
+
+```json
+{
+  "type": "state",
+  "op": "clear",
+  "store": "guessing-game"
+}
+```
+
+---
+
+## Mount / Unmount
+
+The `mount` and `unmount` action types manage warp triggers in a specific room. When a warp is mounted, its `trigger` pattern is tested against every incoming message in that room — if it matches, the warp executes automatically (suppressing the LLM for that turn).
+
+### Mount
+
+Activates a warp's trigger in the current room:
+
+```json
+{
+  "type": "mount",
+  "warp": "check-guess"
+}
+```
+
+### Unmount
+
+Deactivates a previously mounted trigger:
+
+```json
+{
+  "type": "unmount",
+  "warp": "check-guess"
+}
+```
+
+### Properties
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| `type` | string | ✅ | `"mount"` or `"unmount"` |
+| `warp` | string | ✅ | The warp identifier to mount/unmount |
+| `when` | string | ❌ | Conditional expression |
+
+### Trigger Declaration
+
+The mounted warp must declare a `trigger` at the root level:
+
+```json
+{
+  "protocol": "warp:3.0.0",
+  "name": "check-guess",
+  "trigger": { "type": "message", "pattern": "^\\d+$" },
+  "actions": [...]
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `type` | string | `"message"` — pattern-matched against incoming message text |
+| `pattern` | string | Regular expression (anchored as needed) |
+
+### How It Works
+
+1. `mount` stores `(room_id → warp_identifier)` in the room-scoped cache
+2. On every incoming message, the system checks mounted warps for the room
+3. If `trigger.pattern` matches the message text → execute the warp, skip the LLM
+4. `unmount` removes the entry from the cache
+
+Triggers only fire in rooms where `mount` was explicitly called — no background noise in other rooms.
+
+See [Mini-Apps](/warps/mini-apps) for a complete example using `state`, `mount`, `unmount`, and `compute` together.
 
 ---
 

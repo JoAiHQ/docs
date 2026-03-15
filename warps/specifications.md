@@ -12,7 +12,7 @@ This section provides the complete technical specification for the Warp Protocol
 - **[Inputs](/warps/inputs)**: Input types, sources (`field`, `query`, `wallet`), positions, and modifiers.
 - **[Variables](/warps/variables)**: Variable scoping, dynamic sources, and interpolation.
 - **[Outputs & Transforms](/warps/outputs)**: Extracting results and using JavaScript transforms.
-- **[Action Types](/warps/action-types)**: Detailed reference for all 7 action types (`transfer`, `contract`, `mcp`, etc.).
+- **[Action Types](/warps/action-types)**: Detailed reference for all 11 action types (`transfer`, `contract`, `compute`, `state`, `mount`, `unmount`, etc.).
 - **[Alerts](/warps/alerts)**: Configuring execution notifications and triggers.
 - **[Supported Chains](/warps/chains)**: List of all 11 supported networks and specific configurations.
 - **[Chaining](/warps/chaining)**: Creating multi-step workflows and passing data.
@@ -30,6 +30,7 @@ The root structure of a Warp JSON object:
   "title": "User-Facing Title",
   "description": "Description for the user.",
   "chain": "ethereum",
+  "trigger": { "type": "message", "pattern": "^\\d+$" },
   "vars": {},
   "actions": [],
   "output": {},
@@ -50,6 +51,7 @@ The root structure of a Warp JSON object:
 ### Optional Fields
 
 - **`chain`**: Default blockchain for actions.
+- **`trigger`**: Declares a message trigger used when this warp is [`mount`ed](/warps/action-types#mount-unmount) in a room. See [Mini-Apps](/warps/mini-apps).
 - **`bot`**: AI-only metadata (hidden from users).
 - **`preview`**: URL to a preview image.
 - **`vars`**: Static or dynamic variables.

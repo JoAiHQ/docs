@@ -57,6 +57,49 @@ These are pre-defined and available in all Warps without declaration:
 | `{{CHAIN_API}}` | The API URL for the current chain. |
 | `{{CHAIN_EXPLORER}}` | The block explorer URL for the current chain. |
 
+## Agent Context Variables
+
+When a warp runs inside a JoAi agent (web PWA or social integration), these additional variables are injected automatically:
+
+| Variable | Description |
+|----------|-------------|
+| `{{JOAI_MESSAGE_TEXT}}` | The raw text of the message that triggered execution. |
+| `{{JOAI_SENDER_NAME}}` | Display name of the user who sent the message. |
+| `{{JOAI_SENDER_ID}}` | Unique identifier of the sender. |
+| `{{JOAI_ROOM_ID}}` | The room/conversation where execution is taking place. |
+| `{{JOAI_AGENT_UUID}}` | UUID of the current agent. |
+
+These are especially useful in [`compute`](/warps/action-types#compute) and [`state`](/warps/action-types#state) actions:
+
+```json
+{
+  "type": "compute",
+  "label": "Evaluate guess",
+  "inputs": [
+    {
+      "name": "correct",
+      "type": "bool",
+      "source": "hidden",
+      "modifier": "transform:() => parseInt('{{JOAI_MESSAGE_TEXT}}') === {{state.secret}}"
+    }
+  ]
+}
+```
+
+## State Variables
+
+After a [`state` read action](/warps/action-types#state), the retrieved keys become available as `state.KEY`:
+
+| Variable | Description |
+|----------|-------------|
+| `{{state.KEY}}` | Value for `KEY` from the most recent `state` read in this execution. |
+
+```json
+{ "type": "state", "op": "read", "store": "game", "keys": ["secret", "active"] }
+```
+
+Then use `{{state.secret}}` and `{{state.active}}` in subsequent actions.
+
 ## Using Variables (Interpolation)
 
 Use the mustache syntax `{{variableName}}` to inject values.
