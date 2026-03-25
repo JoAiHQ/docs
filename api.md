@@ -1,487 +1,89 @@
-# API Tokens
+# API
 
-API tokens provide secure authentication for integrating your agents with external applications and services. Generate tokens to authenticate API requests without requiring OAuth flow.
+The JoAi API lets you manage your AI workspace programmatically — agents, contacts, items, memories, goals, reminders, and more.
 
-## Overview
+**Base URL:** `https://api.joai.ai/api/v1`
 
-API tokens are long-lived credentials that allow applications to interact with your agents via the JoAi API. Each token is scoped to a specific team and agent pair.
+## API Reference
 
-## Creating API Tokens
+The full reference with interactive request builder is available at:
 
-1. Go to **Agent Settings > Apps** or **Integrations**
-2. Find **API Tokens** section
-3. Click **"Create Token"** or **"Generate Token"**
-4. Configure:
-   - **Name** - Descriptive name for the token (e.g., "Production Integration", "N8N Bot")
-   - **Token** - Automatically generated unique token (copy and save securely)
-5. Click **"Create"** or **"Save"**
-6. Token is created and ready to use
-
-**Important:** Save your API token securely when created. You won't be able to view it again after closing the dialog.
-
-## API Token Settings
-
-Configure token properties:
-
-- **Name** - Identify token purpose (e.g., "Production App", "Test Integration")
-- **Token Value** - Automatically generated unique identifier for authentication
-- **Created At** - Timestamp when token was generated
-- **Status** - Active or revoked
-
-## Managing API Tokens
-
-- **View All Tokens** - See all active API tokens
-- **Token Status** - Check if token is active
-- **Creation Date** - View when token was created
-- **Revoke Token** - Deactivate and remove token permanently
+**[api.joai.ai/docs](https://api.joai.ai/docs)**
 
 ## Authentication
 
-Use API tokens by including them in the `Authorization` header with the `Bearer` scheme:
+All endpoints require a Bearer token:
 
 ```http
-Authorization: Bearer <your-api-token>
+Authorization: Bearer <your-token>
 ```
 
-### Example Request
+Pass your team slug to scope requests:
+
+```http
+X-Team-Slug: my-team
+```
+
+You can also authenticate as an agent using its auth key — the team is resolved automatically:
+
+```http
+X-Agent-Auth-Key: <agent-auth-key>
+```
+
+## API Tokens
+
+API tokens are long-lived credentials for programmatic access. Each token is tied to your account and scoped to a team via the `X-Team-Slug` header.
+
+**Create a token in the app:**
+
+1. Go to **Agent Settings → Apps** (or **Integrations**)
+2. Find the **API Tokens** section
+3. Click **Create Token**, give it a name, and save the value securely
+
+> You won't be able to view the token again after closing the dialog.
+
+**Or create one via the API** (requires an authenticated session):
 
 ```bash
-curl -X GET https://cortex.joai.ai/mcp/agents/agent-uuid \
-  -H "Authorization: Bearer <your-api-token>" \
-  -H "Content-Type: application/json"
-```
-
-### Example with Node.js
-
-```javascript
-const response = await fetch("https://cortex.joai.ai/mcp/agents/agent-uuid", {
-  method: "POST",
-  headers: {
-    Authorization: "Bearer <your-api-token>",
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    jsonrpc: "2.0",
-    method: "tools/list",
-  }),
-});
-
-const data = await response.json();
-console.log(data);
-```
-
-### Example with Python
-
-```python
-import requests
-
-headers = {
-  'Authorization': 'Bearer <your-api-token>',
-  'Content-Type': 'application/json'
-}
-
-response = requests.post(
-  'https://cortex.joai.ai/mcp/agents/agent-uuid',
-  json={
-    'jsonrpc': '2.0',
-    'method': 'tools/list'
-  },
-  headers=headers
-)
-
-print(response.json())
-```
-
-## Using with OAuth
-
-API tokens provide a simpler alternative to OAuth for programmatic access:
-
-| Feature          | OAuth                    | API Token            |
-| ---------------- | ------------------------ | -------------------- |
-| Flow             | Multi-step authorization | Single token         |
-| User Interaction | Required                 | Not required         |
-| Agent Selection  | Required                 | Pre-specified        |
-| Scope            | Configured per flow      | Full access to agent |
-| Expiration       | Can expire               | Until revoked        |
-| Revocation       | Supported                | Supported            |
-
-When using OAuth, include `agent_uuid` parameter to pre-select and lock agent selection:
-
-```
-https://api.joai.ai/oauth/authorize?agent_uuid=<agent-uuid>
-```
-
-## Endpoints
-
-### MCP Agent Endpoint
-
-Access your agent via MCP (Model Context Protocol):
-
-```
-https://cortex.joai.ai/mcp/agents/<agent-uuid>
-```
-
-**Headers:**
-
-- `Authorization: Bearer <api-token>` (Required)
-
-**Supported Methods:**
-
-- `GET` - List tools and resources
-- `POST` - Execute tools, interact with agent
-
-### Agent Discovery
-
-Query available agents on your team:
-
-```
-GET https://api.joai.ai/api/agents
-Authorization: Bearer <api-token>
-```
-
-## MCP Operations
-
-### List Tools
-
-```bash
-curl -X POST https://cortex.joai.ai/mcp/agents/<agent-uuid> \
-  -H "Authorization: Bearer <token>" \
+curl -X POST https://api.joai.ai/api/v1/tokens \
+  -H "Authorization: Bearer <session-token>" \
   -H "Content-Type: application/json" \
-  -d '{
-    "jsonrpc": "2.0",
-    "id": 1,
-    "method": "tools/list"
-  }'
+  -d '{"name": "My Integration"}'
 ```
 
-### Call Tool
+**List tokens:**
 
 ```bash
-curl -X POST https://cortex.joai.ai/mcp/agents/<agent-uuid> \
-  -H "Authorization: Bearer <token>" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "jsonrpc": "2.0",
-    "id": 1,
-    "method": "tools/call",
-    "params": {
-      "name": "prompt_agent",
-      "arguments": {
-        "message": "Hello from API!"
-      }
-    }
-  }'
+curl https://api.joai.ai/api/v1/tokens \
+  -H "Authorization: Bearer <session-token>"
 ```
 
-### List Resources
+**Revoke a token:**
 
 ```bash
-curl -X POST https://cortex.joai.ai/mcp/agents/<agent-uuid> \
-  -H "Authorization: Bearer <token>" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "jsonrpc": "2.0",
-    "id": 1,
-    "method": "resources/list"
-  }'
+curl -X DELETE https://api.joai.ai/api/v1/tokens/{id} \
+  -H "Authorization: Bearer <session-token>"
 ```
 
-### Read Resource
+**Security tips:**
+- Never commit tokens to version control — use environment variables or a secrets manager
+- Create separate tokens per integration
+- Revoke tokens that are no longer needed
+
+## Quick Start
 
 ```bash
-curl -X POST https://cortex.joai.ai/mcp/agents/<agent-uuid> \
-  -H "Authorization: Bearer <token>" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "jsonrpc": "2.0",
-    "id": 1,
-    "method": "resources/read",
-    "params": {
-      "uri": "mcp://agent/<agent-uuid>/info"
-    }
-  }'
-```
-
-## Available Tools
-
-### prompt_agent
-
-Send a message to your agent and receive a response.
-
-```json
-{
-  "name": "prompt_agent",
-  "description": "Send a message to the agent and get a response",
-  "inputSchema": {
-    "type": "object",
-    "properties": {
-      "message": {
-        "type": "string",
-        "description": "The message to send to the agent"
-      }
-    },
-    "required": ["message"]
-  }
-}
-```
-
-### create_memory
-
-Create a new memory entry for the agent.
-
-```json
-{
-  "name": "create_memory",
-  "description": "Create a new memory for the agent",
-  "inputSchema": {
-    "type": "object",
-    "properties": {
-      "content": {
-        "type": "string",
-        "description": "The memory content to store"
-      }
-    },
-    "required": ["content"]
-  }
-}
-```
-
-### update_memory
-
-Update an existing memory entry.
-
-```json
-{
-  "name": "update_memory",
-  "description": "Update an existing memory entry",
-  "inputSchema": {
-    "type": "object",
-    "properties": {
-      "memoryId": {
-        "type": "string",
-        "description": "The ID of the memory to update"
-      },
-      "content": {
-        "type": "string",
-        "description": "The new memory content"
-      }
-    },
-    "required": ["memoryId", "content"]
-  }
-}
-```
-
-## Available Resources
-
-### Agent Info
-
-General information about the agent.
-
-```
-mcp://agent/<agent-uuid>/info
-```
-
-### Agent Character
-
-Character system prompt and personality.
-
-```
-mcp://agent/<agent-uuid>/character
-```
-
-### Agent Memories
-
-All memories stored by the agent.
-
-```
-mcp://agent/<agent-uuid>/memories
-```
-
-## Error Handling
-
-### Authentication Errors
-
-**401 Unauthorized**
-
-- Token is invalid or expired
-- Verify token is correctly copied
-- Check token hasn't been revoked
-
-```json
-{
-  "error": "unauthorized",
-  "error_description": "Invalid or expired token"
-}
-```
-
-### Token Missing Context
-
-**400 Bad Request**
-
-- API token requires explicit agent selection
-- Use OAuth flow with `agent_uuid` parameter instead
-- Or ensure token has associated agent context
-
-```json
-{
-  "error": "missing_context",
-  "error_description": "API tokens require explicit agent selection"
-}
-```
-
-### Agent Not Found
-
-**404 Not Found**
-
-- Agent UUID is incorrect
-- Agent doesn't exist or is not accessible
-
-```json
-{
-  "error": "not_found",
-  "error_description": "Agent not found"
-}
-```
-
-## Best Practices
-
-### Security
-
-- **Never commit tokens** - Don't store API tokens in version control
-- **Use environment variables** - Store tokens in `.env` or secrets manager
-- **Rotate tokens regularly** - Generate new tokens periodically
-- **Revoke unused tokens** - Remove tokens that are no longer needed
-- **Use HTTPS only** - Never send tokens over HTTP connections
-- **Limit token scope** - Create separate tokens for different applications
-- **Monitor usage** - Track which tokens are being used and how often
-
-### Usage
-
-- **Name meaningfully** - Use descriptive names for easy identification
-- **Test with sandbox** - Verify tokens work before production deployment
-- **Handle errors gracefully** - Implement proper error handling and retries
-- **Rate limiting** - Respect API rate limits
-- **Cache responses** - Reduce unnecessary API calls
-- **Log requests** - Monitor API usage for debugging
-
-### Application Design
-
-- **Store securely** - Use secure storage for tokens (keychain, secrets manager)
-- **Error recovery** - Implement re-authentication flow when tokens are revoked
-- **Token rotation** - Build support for rotating tokens without downtime
-- **Fallback mechanisms** - Implement OAuth as backup authentication method
-
-## Testing API Tokens
-
-### Quick Test
-
-Verify your token works:
-
-```bash
-curl -X POST https://cortex.joai.ai/mcp/agents/<agent-uuid> \
+# List your agents
+curl https://api.joai.ai/api/v1/agents \
   -H "Authorization: Bearer <your-token>" \
+  -H "X-Team-Slug: my-team"
+
+# Create a contact
+curl -X POST https://api.joai.ai/api/v1/contacts \
+  -H "Authorization: Bearer <your-token>" \
+  -H "X-Team-Slug: my-team" \
   -H "Content-Type: application/json" \
-  -d '{
-    "jsonrpc": "2.0",
-    "id": 1,
-    "method": "tools/list"
-  }'
+  -d '{"name": "Jane Doe", "email": "jane@example.com"}'
 ```
 
-Success response:
-
-```json
-{
-  "jsonrpc": "2.0",
-  "id": 1,
-  "result": {
-    "tools": [...]
-  }
-}
-```
-
-### Troubleshooting
-
-**Token Not Working:**
-
-- Verify token is complete (no extra spaces or characters)
-- Check token hasn't been revoked in settings
-- Ensure correct agent UUID
-- Verify token is active (not expired if using OAuth)
-
-**Authentication Failing:**
-
-- Check `Authorization` header format (must be `Bearer <token>`)
-- Verify request includes all required headers
-- Check token hasn't been rotated or changed
-- Review application logs for errors
-
-**Agent Not Accessible:**
-
-- Verify you have access to the agent
-- Check agent is in the correct team
-- Ensure agent is active and not deleted
-- Verify API endpoint URL is correct
-
-## Use Cases
-
-### Automation
-
-- **Custom Workflows** - Build automations using your agents
-- **Batch Processing** - Process multiple requests programmatically
-- **Scheduled Tasks** - Run agent actions on schedules
-- **Event-driven** - Trigger agent actions from external systems
-
-### Integrations
-
-- **Custom Applications** - Build apps that interact with agents
-- **Backend Services** - Connect your backend to JoAi agents
-- **Monitoring & Analytics** - Track agent usage programmatically
-- **Data Sync** - Synchronize agent data with external systems
-
-### Development
-
-- **API Testing** - Test agent tools and resources
-- **Local Development** - Develop against MCP endpoints locally
-- **CI/CD Pipelines** - Integrate agent actions in deployment workflows
-- **SDK Development** - Build libraries around JoAi MCP API
-
-## Rate Limiting
-
-API tokens are subject to rate limits to ensure fair usage:
-
-- **Requests per minute** - Limit on total requests
-- **Concurrent requests** - Maximum simultaneous connections
-- **Burst allowance** - Temporary increase for short periods
-
-Exceeding limits returns `429 Too Many Requests` with `Retry-After` header.
-
-Implement exponential backoff for retries:
-
-```javascript
-async function makeRequest(url, options, retries = 3) {
-  for (let i = 0; i < retries; i++) {
-    try {
-      const response = await fetch(url, options);
-      if (response.status !== 429) return response;
-
-      const retryAfter = response.headers.get("Retry-After");
-      const delay = Math.min(1000 * Math.pow(2, i), retryAfter * 1000);
-      await new Promise((resolve) => setTimeout(resolve, delay));
-    } catch (error) {
-      if (i === retries - 1) throw error;
-    }
-  }
-}
-```
-
-## Support
-
-For issues with API tokens:
-
-- **Documentation** - [https://docs.joai.ai](https://docs.joai.ai)
-- **Status Page** - [https://status.joai.ai](https://status.joai.ai)
-- **Community** - [https://telegram.joai.ai](https://telegram.joai.ai)
-- **GitHub** - [https://github.com/JoAiHQ](https://github.com/JoAiHQ)
-
-See our [Integrations](/integrations) documentation for more integration options.
+For the full endpoint reference, visit **[api.joai.ai/docs](https://api.joai.ai/docs)**.
