@@ -13,6 +13,7 @@ This section provides the complete technical specification for the Warp Protocol
 - **[Variables](/warps/variables)**: Variable scoping, dynamic sources, and interpolation.
 - **[Outputs & Transforms](/warps/outputs)**: Extracting results and using JavaScript transforms.
 - **[Action Types](/warps/action-types)**: Detailed reference for all 11 action types (`transfer`, `contract`, `compute`, `state`, `mount`, `unmount`, etc.).
+- **[Sections](/warps/sections)**: Grouping inputs into a multi-step wizard UI.
 - **[Alerts](/warps/alerts)**: Configuring execution notifications and triggers.
 - **[Supported Chains](/warps/chains)**: List of all 11 supported networks and specific configurations.
 - **[Chaining](/warps/chaining)**: Creating multi-step workflows and passing data.
@@ -61,6 +62,7 @@ The root structure of a Warp JSON object:
 - **`next`**: Warp ID or URL for next step.
 - **`related`**: Array of related Warp IDs.
 - **`ui`**: Custom UI identifier.
+- **`sections`**: Groups inputs into a multi-step wizard. See [Sections](/warps/sections).
 
 ## Internationalization (i18n)
 

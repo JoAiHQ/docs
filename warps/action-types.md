@@ -1,6 +1,6 @@
 # Action Types Reference
 
-Warp Protocol v3 supports 11 action types, each designed for specific use cases. This guide provides detailed specifications for each action.
+Warp Protocol v3 supports 12 action types, each designed for specific use cases. This guide provides detailed specifications for each action.
 
 ## Overview
 
@@ -14,6 +14,7 @@ Warp Protocol v3 supports 11 action types, each designed for specific use cases.
 | `state` | Read/write key-value store | ❌ No |
 | `mount` | Activate a warp trigger in a room | ❌ No |
 | `unmount` | Deactivate a warp trigger in a room | ❌ No |
+| `loop` | Re-execute the warp continuously | ❌ No |
 | `link` | Navigate to URL | ❌ No |
 | `mcp` | Execute MCP tools | ❌ No |
 | `prompt` | AI text generation | ❌ No |
@@ -395,6 +396,80 @@ The mounted warp must declare a `trigger` at the root level:
 Triggers only fire in rooms where `mount` was explicitly called — no background noise in other rooms.
 
 See [Mini-Apps](/warps/mini-apps) for a complete example using `state`, `mount`, `unmount`, and `compute` together.
+
+---
+
+## Loop
+
+The `loop` action type re-executes the entire warp after each iteration. It is a cortex-native action — no transaction is created. Use it for continuous polling, recurring sends, or any pattern that needs to keep running until a condition changes.
+
+### Structure
+
+```json
+{
+  "type": "loop",
+  "label": "Keep sending",
+  "delay": 0,
+  "maxIterations": 10000
+}
+```
+
+### Properties
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| `type` | string | ✅ | Must be `"loop"` |
+| `label` | WarpText | ✅ | Step label |
+| `when` | string | ❌ | Condition evaluated before each iteration. Loop stops when falsy. Omit to run indefinitely. |
+| `delay` | number | ❌ | Milliseconds to wait between iterations. Default: `0` (runs as fast as possible). |
+| `maxIterations` | number | ❌ | Hard cap on total iterations as a safety stop. Default: `10000`. |
+
+### How It Works
+
+Each time the loop action is reached, it schedules a full re-execution of the same warp — including re-reading all state, re-evaluating all `when` conditions, and re-running all SDK actions. This means every iteration picks up the latest state.
+
+The `when` condition is evaluated against the current output bag (including values from `state` reads and previous action outputs). When it evaluates to false, the loop stops cleanly and resets its counter — so it can restart if conditions change later.
+
+### Example: Conditional Continuous Transfer
+
+Send tokens on every iteration while a state flag is active. Stop when it flips to inactive.
+
+```json
+{
+  "protocol": "warp:3.0.0",
+  "name": "continuous-send",
+  "chain": "multiversx",
+  "actions": [
+    {
+      "type": "state",
+      "label": "Load active flag",
+      "op": "read",
+      "store": "control",
+      "keys": ["active"]
+    },
+    {
+      "type": "transfer",
+      "label": "Send EGLD",
+      "address": "erd1target...",
+      "value": "native:0.001",
+      "when": "{{state.active}} == 1"
+    },
+    {
+      "type": "loop",
+      "label": "Repeat",
+      "maxIterations": 10000
+    }
+  ]
+}
+```
+
+Another warp (e.g. triggered by a webhook) writes `active = 0` to the same store to stop the loop on the next iteration.
+
+### Notes
+
+- `loop` is a **cortex-native** action — the SDK skips it automatically (`auto: false`). It only executes inside the JoAi agent runtime.
+- With `delay: 0`, iterations run back-to-back as fast as the event loop allows.
+- The iteration counter is scoped to `warpIdentifier + roomId`. It resets when `when` evaluates to false, allowing the loop to restart later.
 
 ---
 
