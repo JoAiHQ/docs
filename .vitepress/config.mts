@@ -28,6 +28,7 @@ export default defineConfig({
           { text: 'Tasks', link: '/tasks' },
           { text: 'Alerts', link: '/alerts' },
           { text: 'Workspace', link: '/workspace' },
+          { text: 'CLI', link: '/cli' },
           { text: 'Swarms', link: '/swarms' },
           { text: 'Teams', link: '/teams' },
           { text: 'Wallets', link: '/wallets' },
