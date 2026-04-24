@@ -28,8 +28,8 @@ Messages provide feedback to the user (or AI agent) after a Warp executes. They 
 
 ## Variable Interpolation
 
-Messages support full variable interpolation using `{{variable}}`. You can access:
--   **Resolved output keys** from your `output` mapping (e.g., `{{TX_HASH}}`).
+Messages support full variable interpolation using <span v-pre>`{{variable}}`</span>. You can access:
+-   **Resolved output keys** from your `output` mapping (e.g., <span v-pre>`{{TX_HASH}}`</span>).
 -   To use an input in messages, map it into `output` first (e.g., `"AMOUNT": "in.amount"`).
 
 Unknown placeholders resolve to an empty string.
@@ -81,7 +81,7 @@ Warp clients can use this to render compact info widgets/cards; for example, JoA
 
 #### Card Placeholders
 
-- Use `{{KEY}}` placeholders in `messages.card`.
+- Use <span v-pre>`{{KEY}}`</span> placeholders in `messages.card`.
 - `KEY` must exist in resolved output values (usually from your `output` mapping).
 - Missing keys resolve to an empty string.
 

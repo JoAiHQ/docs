@@ -12,9 +12,9 @@ Warp mini-apps are stateful, interactive experiences built from a small set of c
 | [`unmount`](/warps/action-types#mount-unmount) | Deactivate a mounted trigger |
 | `trigger` | Declares the pattern a warp listens for when mounted |
 | `when` | Conditional expression — skip an action when false |
-| `{{JOAI_MESSAGE_TEXT}}` | The raw message that triggered execution |
-| `{{JOAI_SENDER_NAME}}` | Display name of the sender |
-| `{{state.KEY}}` | Values read from the state store |
+| <span v-pre>`{{JOAI_MESSAGE_TEXT}}`</span> | The raw message that triggered execution |
+| <span v-pre>`{{JOAI_SENDER_NAME}}`</span> | Display name of the sender |
+| <span v-pre>`{{state.KEY}}`</span> | Values read from the state store |
 
 ## How Triggers Work
 

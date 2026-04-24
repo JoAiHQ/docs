@@ -105,7 +105,7 @@ Positions dictate where the input value is applied in the action.
 ### HTTP Positions
 - **`destination`**: The HTTP endpoint to send to.
 - **`payload:path`**: Maps to a nested JSON path in the request body (e.g. `payload:data.customer`).
-- **`local`**: Value is available for `{{interpolation}}` in subsequent actions but is **not included** in the HTTP request body. Use for inputs needed by a `prompt` action but not by the API destination.
+- **`local`**: Value is available for <span v-pre>`{{interpolation}}`</span> in subsequent actions but is **not included** in the HTTP request body. Use for inputs needed by a `prompt` action but not by the API destination.
 
 ### Object Positions
 For complex inputs like assets, you can map fields to multiple arguments:

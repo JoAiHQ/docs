@@ -263,7 +263,7 @@ The `compute` action type executes local-only JavaScript transforms. It never ma
 }
 ```
 
-After execution, `{{secret}}` is available in all subsequent actions.
+After execution, <span v-pre>`{{secret}}`</span> is available in all subsequent actions.
 
 ---
 
@@ -292,7 +292,7 @@ The `state` action type reads from or writes to a persistent key-value store sco
 
 ### Reading State
 
-After a `read`, all keys merge into the injectable context as `state.KEY` — available as `{{state.KEY}}` in all subsequent actions within the same execution.
+After a `read`, all keys merge into the injectable context as `state.KEY` — available as <span v-pre>`{{state.KEY}}`</span> in all subsequent actions within the same execution.
 
 ```json
 {
@@ -496,7 +496,7 @@ The `link` action type navigates to an external URL or another Warp.
 | `url` | string | ✅ | Target URL |
 
 ### URL Patterns
-- **Global Variables**: `{{CHAIN_EXPLORER}}`, `{{USER_WALLET}}`
+- **Global Variables**: <span v-pre>`{{CHAIN_EXPLORER}}`</span>, <span v-pre>`{{USER_WALLET}}`</span>
 - **Warp Links**: `https://usewarp.to/alias`
 
 ---

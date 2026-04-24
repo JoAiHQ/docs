@@ -110,7 +110,7 @@ if (isGeneratedSourcePrivateIdentifier(warp.meta?.identifier)) {
 1. The OpenAPI spec's `paths` object is parsed to extract operations (GET, POST, PUT, DELETE)
 2. For each operation:
    - Path, query, and request body parameters are extracted and typed
-   - A URL is constructed with `{{paramName}}` template syntax for path parameters
+   - A URL is constructed with <span v-pre>`{{paramName}}`</span> template syntax for path parameters
    - A Warp with a `collect` action is created
    - POST/PUT operations with request bodies get `Content-Type: application/json` headers
 3. A deterministic identifier is generated from the source URL and operation key

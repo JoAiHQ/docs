@@ -33,7 +33,7 @@ The `prompt` action type generates text using AI/LLM models directly within the 
 
 ## Prompt Templates
 
-The `prompt` field supports standard variable interpolation using `{{variableName}}`. Values are injected from the `inputs` array or global variables.
+The `prompt` field supports standard variable interpolation using <span v-pre>`{{variableName}}`</span>. Values are injected from the `inputs` array or global variables.
 
 **Example Template:**
 ```text

@@ -155,8 +155,8 @@ Let users choose the chain:
 
 Use these globals to reference chain-specific URLs:
 
-- `{{CHAIN_API}}` - Chain's API endpoint
-- `{{CHAIN_EXPLORER}}` - Chain's block explorer URL
+- <span v-pre>`{{CHAIN_API}}`</span> - Chain's API endpoint
+- <span v-pre>`{{CHAIN_EXPLORER}}`</span> - Chain's block explorer URL
 
 ```json
 {

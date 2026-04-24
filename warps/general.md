@@ -75,7 +75,7 @@ Read contract state without creating a transaction. Results are captured in the 
 }
 ```
 
-`out.1` is the first return value from the contract view. `BALANCE` is then available for display or as a variable (`{{BALANCE}}`) in any chained warp.
+`out.1` is the first return value from the contract view. `BALANCE` is then available for display or as a variable (<span v-pre>`{{BALANCE}}`</span>) in any chained warp.
 
 ## Inputs
 

@@ -53,9 +53,9 @@ These are pre-defined and available in all Warps without declaration:
 
 | Variable | Description |
 |----------|-------------|
-| `{{USER_WALLET}}` | The currently connected wallet address. |
-| `{{CHAIN_API}}` | The API URL for the current chain. |
-| `{{CHAIN_EXPLORER}}` | The block explorer URL for the current chain. |
+| <span v-pre>`{{USER_WALLET}}`</span> | The currently connected wallet address. |
+| <span v-pre>`{{CHAIN_API}}`</span> | The API URL for the current chain. |
+| <span v-pre>`{{CHAIN_EXPLORER}}`</span> | The block explorer URL for the current chain. |
 
 ## Agent Context Variables
 
@@ -63,11 +63,11 @@ When a warp runs inside a JoAi agent (web PWA or social integration), these addi
 
 | Variable | Description |
 |----------|-------------|
-| `{{JOAI_MESSAGE_TEXT}}` | The raw text of the message that triggered execution. |
-| `{{JOAI_SENDER_NAME}}` | Display name of the user who sent the message. |
-| `{{JOAI_SENDER_ID}}` | Unique identifier of the sender. |
-| `{{JOAI_ROOM_ID}}` | The room/conversation where execution is taking place. |
-| `{{JOAI_AGENT_UUID}}` | UUID of the current agent. |
+| <span v-pre>`{{JOAI_MESSAGE_TEXT}}`</span> | The raw text of the message that triggered execution. |
+| <span v-pre>`{{JOAI_SENDER_NAME}}`</span> | Display name of the user who sent the message. |
+| <span v-pre>`{{JOAI_SENDER_ID}}`</span> | Unique identifier of the sender. |
+| <span v-pre>`{{JOAI_ROOM_ID}}`</span> | The room/conversation where execution is taking place. |
+| <span v-pre>`{{JOAI_AGENT_UUID}}`</span> | UUID of the current agent. |
 
 These are especially useful in [`compute`](/warps/action-types#compute) and [`state`](/warps/action-types#state) actions:
 
@@ -92,17 +92,17 @@ After a [`state` read action](/warps/action-types#state), the retrieved keys bec
 
 | Variable | Description |
 |----------|-------------|
-| `{{state.KEY}}` | Value for `KEY` from the most recent `state` read in this execution. |
+| <span v-pre>`{{state.KEY}}`</span> | Value for `KEY` from the most recent `state` read in this execution. |
 
 ```json
 { "type": "state", "op": "read", "store": "game", "keys": ["secret", "active"] }
 ```
 
-Then use `{{state.secret}}` and `{{state.active}}` in subsequent actions.
+Then use <span v-pre>`{{state.secret}}`</span> and <span v-pre>`{{state.active}}`</span> in subsequent actions.
 
 ## Using Variables (Interpolation)
 
-Use the mustache syntax `{{variableName}}` to inject values.
+Use the mustache syntax <span v-pre>`{{variableName}}`</span> to inject values.
 
 ### Valid Locations
 You can use variables in:
