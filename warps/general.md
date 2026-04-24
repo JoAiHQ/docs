@@ -1,123 +1,93 @@
 # Warp Protocol
 
-Warps are executable actions that enable cross-chain transactions, smart contract interactions, off-chain API calls, and AI tool integrations through a standardized JSON format. They bridge the gap between AI agents and blockchain execution.
+A Warp is a JSON object that declares an executable action — a smart contract call, a read query, an HTTP request, or an AI prompt. It can be executed by a user, an app, or an AI agent.
 
-## What Are Warps?
+## Structure
 
-A Warp is a declarative JSON object that describes:
+Every Warp has a protocol version, a name, a target chain, and one or more actions:
 
-- **What** action to perform (transfer, contract call, API request, AI prompt)
-- **How** to collect inputs from users or AI agents
-- **Where** to execute (across 11 supported blockchains)
-- **What** to do with results (chain to other Warps, display messages)
-
-Warps can be stored on-chain for immutability, shared via links, and executed by humans or AI agents.
-
-## Why Warps?
-
-### For AI Agents
-
-Warps give AI agents the ability to execute blockchain transactions. Instead of just generating text, agents can:
-
-- **Execute trades** on decentralized exchanges
-- **Stake tokens** and manage DeFi positions
-- **Mint NFTs** and interact with smart contracts
-- **Collect data** from APIs and process with AI
-- **Chain actions** into complex multi-step workflows
-
-### For Developers
-
-Warps simplify blockchain UX. Instead of building custom transaction flows:
-
-- **Portable**: Share complex transactions as simple links
-- **Multi-chain**: One format works across 11 blockchains
-- **Composable**: Chain Warps together for workflows
-- **Verifiable**: On-chain storage ensures immutability
-
-### For Users
-
-Users interact with intuitive UIs without understanding blockchain complexity:
-
-- **Click a link** → Execute a swap, stake, or mint
-- **Scan a QR code** → Complete a payment
-- **Chat with AI** → Agent executes transactions on your behalf
-
-## Key Features
-
-- **7 Action Types**: Transfer, Contract, Query, Collect, Link, MCP, Prompt
-- **11 Blockchains**: Ethereum, Base, Arbitrum, Polygon, Sui, Solana, MultiversX, and more
-- **AI-Native**: MCP tool integration and prompt actions for AI workflows
-- **Cloud Wallets**: Coinbase, Privy, and Gaupa for agentic execution
-- **i18n Support**: Localized content for global applications
-- **Chaining**: Link Warps for multi-step workflows
-
-## Quick Start
-
-### Share Transactions
-
-```
-usewarp.to/your-alias
+```json
+{
+  "protocol": "warp:3.0.0",
+  "name": "my-warp",
+  "chain": "multiversx",
+  "actions": [...]
+}
 ```
 
-Create Warps at [usewarp.to/create](https://usewarp.to/create) and share the link.
+`chain` identifies the target network. Supported values: `multiversx`, `ethereum`, `base`, `arbitrum`, `polygon`, `solana`, `sui`, and [more](/warps/chains).
 
-### Build with SDK
+## Contract Call
 
-```typescript
-import { WarpClient } from '@joai/warps'
+The example below calls a `stake` function on a contract. The user provides the amount at execution time — the input is mapped directly to the first contract argument.
 
-const result = await client.executeWarp('stake-egld', [
-  'uint256:1000000000000000000'
-])
+```json
+{
+  "protocol": "warp:3.0.0",
+  "name": "stake-tokens",
+  "chain": "multiversx",
+  "actions": [
+    {
+      "type": "contract",
+      "label": "Stake",
+      "address": "erd1qqqqqqqq...contract",
+      "func": "stake",
+      "gasLimit": 5000000,
+      "inputs": [
+        {
+          "name": "Amount",
+          "as": "amount",
+          "type": "uint256",
+          "source": "field",
+          "position": "arg:1",
+          "modifier": "scale:18"
+        }
+      ]
+    }
+  ]
+}
 ```
 
-### AI Agent Execution
+`position: "arg:1"` maps the input to the first contract argument. `modifier: "scale:18"` converts a human-readable number (e.g. `1.5`) to its 18-decimal on-chain form.
 
-```typescript
-// AI agent analyzes user request and executes Warp
-const warp = await client.detectWarp('send-usdc')
-const result = await client.executeWarp(warp, userInputs)
+## Query
+
+Read contract state without creating a transaction. Results are captured in the `output` map — for display or as inputs to a subsequent warp.
+
+```json
+{
+  "protocol": "warp:3.0.0",
+  "name": "get-staked-balance",
+  "chain": "multiversx",
+  "actions": [
+    {
+      "type": "query",
+      "label": "Check Staked Balance",
+      "address": "erd1qqqqqqqq...contract",
+      "func": "getStakedAmount",
+      "args": ["address:erd1caller..."],
+      "auto": true
+    }
+  ],
+  "output": {
+    "BALANCE": "out.1"
+  }
+}
 ```
 
-## Use Cases
+`out.1` is the first return value from the contract view. `BALANCE` is then available for display or as a variable (`{{BALANCE}}`) in any chained warp.
 
-### Payments
-Share a link or QR code for instant crypto payments.
+## Inputs
 
-### DeFi Automation
-AI agents manage staking, swaps, and yield optimization.
+Inputs can come from a form field (`source: "field"`), a URL query parameter (`source: "query"`), or injected directly by an AI agent. See [Inputs](/warps/inputs) for the full reference.
 
-### NFT Minting
-One-click minting experiences across chains.
+The same Warp format works for HTTP service calls ([`collect`](/warps/action-types#collect)) and AI/LLM text generation ([`prompt`](/warps/action-types#prompt)).
 
-### DAO Operations
-Voting, proposals, and treasury management via Warps.
+## Next Steps
 
-### AI-Powered Workflows
-Chain AI prompts with blockchain actions for intelligent automation.
-
-## Documentation
-
-- [Quickstart](/warps/quickstart) - Get started in minutes
-- [Creating Warps](/warps/creating-warps) - Build Warps with SDK or AI
-- [Specifications](/warps/specifications) - Complete JSON specification
-- [Action Types](/warps/action-types) - All 7 action types
-- [MCP Actions](/warps/mcp-actions) - AI tool integrations
-- [Prompt Actions](/warps/prompt-actions) - AI text generation
-- [Chains](/warps/chains) - All 11 networks
-- [SDKs](/warps/sdks) - TypeScript, React, PHP
-- [Wallets](/warps/wallets) - Cloud wallet providers
-- [Integrations](/warps/integrations) - Integrate into your app
-- [Registry](/warps/registry) - Managing aliases
-
-## Resources
-
-- **Try it**: [usewarp.to](https://usewarp.to)
-- **Dev Series**: [YouTube Tutorials](https://www.youtube.com/watch?v=_FLahYKlIJk)
-- **Examples**: [GitHub](https://github.com/JoAiHQ/warps-specs/tree/main/examples)
-
-## Community
-
-- **Telegram**: [telegram.usewarp.to](https://telegram.usewarp.to)
-- **GitHub**: [github.com/JoAiHQ](https://github.com/JoAiHQ)
-- **X/Twitter**: [@JoAiAgents](https://x.com/JoAiAgents)
+- [Action Types](/warps/action-types) — all 12 action types with full specs
+- [Inputs](/warps/inputs) — collecting and transforming values
+- [Chaining](/warps/chaining) — multi-step workflows and output passing
+- [Chains](/warps/chains) — all supported networks
+- [SDKs](/warps/sdks) — TypeScript, React, PHP
+- [Specifications](/warps/specifications) — complete JSON reference
