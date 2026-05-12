@@ -95,3 +95,33 @@ Pass results as query parameters to the next Warp.
   "next": "view-profile?id={{USER_ID}}"
 }
 ```
+
+## Inline Action Output Mapping
+
+The `output` field can also be used on [`inline` actions](/warps/action-types#inline) to extract values from a sub-warp's execution:
+
+```json
+{
+  "type": "inline",
+  "warp": "@joai/service-create",
+  "output": {
+    "SERVICE_ID": "out.data.id"
+  }
+}
+```
+
+### Append to Array
+
+Prefix the path with `append:` to add the resolved value to an existing array rather than replacing it:
+
+```json
+{
+  "type": "inline",
+  "warp": "@joai/product-fetch",
+  "output": {
+    "productIds": "append:out.data.id"
+  }
+}
+```
+
+If the target variable doesn't exist yet, it's created as a new array. If the `when` condition skips the action, no output mapping occurs.

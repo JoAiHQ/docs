@@ -540,6 +540,73 @@ See [Prompt Actions](/warps/prompt-actions) for full details.
 
 ---
 
+## Inline
+
+The `inline` action type executes another Warp as a sub-action within the current flow. The sub-warp runs its full action chain, and its outputs are available to subsequent actions.
+
+This enables composition — you can chain generic warps together without duplicating logic.
+
+### Structure
+
+```json
+{
+  "type": "inline",
+  "label": "Create Contact",
+  "warp": "@joai/contact-create",
+  "when": "{{hours}} > 0"
+}
+```
+
+### Properties
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| `warp` | string | ✅ | Identifier of the warp to execute |
+| `output` | object | ❌ | Map sub-warp outputs to named variables (see below) |
+| `when` | string | ❌ | Conditional expression to skip this action |
+| `silent` | boolean | ❌ | Suppress WARP_VIEW events for this action |
+
+### Output Mapping
+
+Use the `output` field to extract values from the sub-warp's execution result and make them available to subsequent actions via `{{variable}}` placeholders.
+
+```json
+{
+  "type": "inline",
+  "warp": "@joai/service-create?name=Hourly%20Rate&price={{hourlyRate}}",
+  "when": "hourlyRate !== '0'",
+  "output": {
+    "newServiceId": "out.id",
+    "serviceName": "out.name"
+  }
+}
+```
+
+The path follows the same resolution rules as the warp-level [`output`](/warps/outputs) field — `out.data.id` traverses the sub-warp's response.
+
+### Append to Array (`append:`)
+
+To add the resolved value to an existing array instead of replacing it, prefix the path with `append:`.
+
+```json
+{
+  "type": "inline",
+  "warp": "@joai/service-create?name=Hourly%20Rate&price={{hourlyRate}}",
+  "when": "hourlyRate !== '0'",
+  "output": {
+    "serviceIds": "append:out.id"
+  }
+}
+```
+
+When the `when` condition is `false` (the action is skipped), no output mapping occurs and the existing variable stays untouched.
+
+### Passing Inputs
+
+Query parameters in the `warp` identifier are passed as inputs to the sub-warp. Template variables in query values are resolved from the parent warp's accumulated outputs.
+
+---
+
 ## Common Action Properties
 
 All actions support these properties:
