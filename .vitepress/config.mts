@@ -78,6 +78,7 @@ export default defineConfig({
         text: 'Resources',
         items: [
           { text: 'App Store', link: '/app-store' },
+          { text: 'Kiosk', link: '/kiosk' },
           { text: 'Troubleshooting', link: '/troubleshooting' },
           { text: 'Best Practices', link: '/best-practices' },
           { text: 'Need Help?', link: '/help' },
