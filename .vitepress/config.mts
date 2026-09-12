@@ -24,6 +24,7 @@ export default defineConfig({
           { text: 'Agents', link: '/agents' },
           { text: 'Chat & Commands', link: '/chat-commands' },
           { text: 'Campaigns', link: '/campaigns' },
+          { text: 'Artifacts', link: '/artifacts' },
           { text: 'Knowledge', link: '/knowledge' },
           { text: 'Shortcuts', link: '/shortcuts' },
           { text: 'Tasks', link: '/tasks' },
