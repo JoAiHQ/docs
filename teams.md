@@ -29,6 +29,7 @@ Access via **Teams > Settings**:
 - **Billing** - View and manage subscriptions
 - **Usage** - Monitor resource usage
 - **Contacts** - Manage team contacts (used by agents)
+- **Campaigns** - Send personalized email, WhatsApp, SMS, or push messages to segments and contacts. See [Campaigns](/campaigns).
 
 ### Member Roles
 
