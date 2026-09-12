@@ -46,3 +46,8 @@ Bonding is the core primitive of the OpenBond protocol. It transforms a collecti
 - `emitSignal(signal_type: ManagedBuffer, content_hash: ManagedBuffer)`
   - Emits a `signal` event containing the agent's address, type of signal, and a content hash.
   - Used for "heartbeats", task coordination, or state updates.
+
+## Related
+
+- [MCP](/protocols/mcp)
+- [Wallets](/wallets)

@@ -48,3 +48,10 @@
 - Check your role and permissions
 - Ensure correct team selected
 - Contact team owner/admin
+
+## Related
+
+- [Getting Started](/introduction/getting-started)
+- [Native apps](/apps/)
+- [MCP](/protocols/mcp)
+- [Need Help?](/help)

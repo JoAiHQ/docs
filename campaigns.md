@@ -2,6 +2,8 @@
 
 Campaigns send personalized messages to an audience of contacts over email, WhatsApp, SMS, or push. They are created as **drafts**, then sent when ready. Campaigns belong to a **team** and use that team's contacts, segments, and agent channel integrations.
 
+Install the **Campaigns** native app under **Team settings → Apps** (see [Native apps](/apps/)).
+
 ## Overview
 
 - Target a **saved segment**, contacts with specific **tags**, or explicit **contact IDs**
@@ -25,19 +27,40 @@ AI placeholders (`aiParams`) require an **agent** on the campaign with that chan
 
 ### In the UI
 
-Choose one mode when creating:
+Choose one mode when creating a campaign:
 
-1. **Segment** — a saved audience (recommended for recurring sends; tag rules usually live here)
+1. **Segment** — a saved audience (recommended for recurring sends). Pick an existing segment, or create one with **New segment**. The Campaigns page also has a **Segments** section to list, view, edit, and delete segments.
 2. **Contacts** — pick specific contacts
 
 Audience is fixed at create time. You can edit message content later, not who is targeted.
+
+UI audience modes are **segment or contacts only**. Targeting by `tags` alone is available via MCP / API, not as a separate UI mode.
+
+### Segment builder
+
+Segments are groups of conditions with match **all** or **any** per group. The editor shows a live match count.
+
+| Condition type | Meaning |
+| --- | --- |
+| `tag` | Has tag |
+| `has_email` / `has_phone` / `has_user` | Channel / user presence |
+| `never_purchased` | No orders yet |
+| `last_purchase_after` / `last_purchase_before` | Purchase window |
+| `order_count_at_least` | Order count |
+| `total_order_amount` / `avg_order_value_at_least` | Spend metrics |
+| `last_contact_after` / `last_contact_before` | Last contact window |
+| `waiting_on` | Waiting / follow-up state |
+| `created_after` / `created_before` | Contact created window |
+| `email_contains` | Email substring |
+
+MCP: `list_segments`, `create_segment`, `delete_segment` (requires [Contacts](/apps/contacts)). There is **no `update_segment`** — edit in the Campaigns UI.
 
 ### Via MCP / API
 
 Pass one or more of:
 
 - `segmentId` — saved segment hashid
-- `tags` — contacts with any of these tags
+- `tags` — contacts with any of these tags (API-only audience path)
 - `contactIds` — explicit contact hashids
 
 At least one audience source is required. Tags and contact IDs can be combined; a segment resolves on its own.
@@ -186,3 +209,11 @@ For live schemas, call `tools/list` on the agent MCP endpoint. See also [MCP](/p
 - Pick an agent that actually has the channel integration before using AI slots
 - For email, set up outbound sending on the agent (provider + from address you control). The inbox address alone is for receiving
 - Archive completed campaigns so the active list stays focused on work in progress
+
+## Related
+
+- [Native apps](/apps/) — install Campaigns on the team
+- [Contacts](/apps/contacts) — CRM; segments are managed in Campaigns (MCP segment tools still need Contacts installed)
+- [Forms](/apps/forms) — form follow-ups
+- [MCP](/protocols/mcp)
+

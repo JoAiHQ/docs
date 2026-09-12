@@ -1,4 +1,8 @@
-# App Store
+# Mobile apps
+
+Download JoAi for iPhone and Android. This page is the **App Store / Play Store** listing copy.
+
+Looking for **team modules** (Shop, Contacts, Forms)? See [Native apps](/apps/).
 
 ## JoAi - Next-Gen AI Agents
 
@@ -43,7 +47,7 @@ Image Understanding
 Analyze and describe images with AI vision. Upload photos and get detailed descriptions and insights.
 
 Works Everywhere
-Integrate with Slack, Telegram, Apple Health, n8n, and more. Your agents can act within your favorite apps and services.
+Integrate with Slack, Telegram, email, WhatsApp, n8n, and more. Your agents can act within your favorite apps and services.
 
 PERFECT FOR
 
@@ -60,7 +64,7 @@ KEY FEATURES
 - Unlimited custom skills - create any skill you need with warps (no coding)
 - Web3 digital wallets for Sui, Solana, Ethereum, Base, MultiversX, EVM chains
 - All core AI capabilities: web search, PDF analysis, image understanding, voice, reminders
-- Integrations with Slack, Telegram, Apple Health, n8n, and more
+- Integrations with Slack, Telegram, email, WhatsApp, n8n, and more
 - Swarms and teams for collaboration
 - Pre-configured blueprints to get started instantly
 

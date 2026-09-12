@@ -27,9 +27,11 @@ features:
   - title: ⛓️ Blockchain Ready
     details: Web3 digital wallets for Sui, Solana, Ethereum, Base, MultiversX, and more.
   - title: 🔗 Works Everywhere
-    details: Integrate with Slack, Telegram, Apple Health, and more.
+    details: Integrate with Slack, Telegram, email, WhatsApp, and more.
   - title: 📋 Blueprints
     details: Pre-configured templates to get started in seconds.
+  - title: 🧩 Native apps
+    details: Install Shop, Contacts, Forms, Appointments, and more per team — UI plus MCP tools for agents.
   - title: 🚀 ChatApps
-    details: Build and publish native web3 AI apps for ChatGPT, Claude, Cursor, and more.
+    details: Build and publish web3 AI apps for ChatGPT, Claude, Cursor, and more.
 ---

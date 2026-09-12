@@ -1,38 +1,61 @@
 # Sites
 
-Sites lets you turn any Warp collection into a fully AI-native web app — automatically. Define routes in a brand config, enable the site, and your agent gets a live booking page, intake form, or any other multi-step workflow as a standalone web app.
+Sites turns Warp brands into live, branded web apps — booking pages, intake flows, CMS content, and more. Install **Sites** under **Team settings → Apps**, then open **Sites** in the sidebar (`/sites`).
 
-## What are Sites?
+## Overview
 
-A Site is a branded web app generated from a set of Warps. Instead of building a frontend from scratch, you define which Warps map to which URL paths in the brand config — and Sites renders them automatically with your team's name, logo, and colors.
+- Enable a **site** per brand for your team
+- Public URL on **sites.joai.ai** (optional custom domain on premium)
+- Edit **CMS content** and **elements** (pages, sections, variations)
+- Same Warps power the browser UI and agent MCP calls — no duplicate logic
+- Pair with [Appointments](/apps/appointments) for booking brands, [Forms](/apps/forms) for intake, [Contracts](/apps/contracts) for on-chain apps
 
-The first built-in example: **Appointment Sites**. When a team enables appointment booking, they get a fully functional booking page with calendar, form, and confirmation flow — no frontend work required.
+## URL structure
 
-## URL Structure
-
-Sites are served at path-based URLs under `joai.ai`:
+Production:
 
 ```
-joai.ai/sites/{agent-slug}/
-joai.ai/sites/{agent-slug}/configure
+https://sites.joai.ai/{teamSlug}/{brandSlug}
+https://sites.joai.ai/{teamSlug}/{brandSlug}/configure
 ```
 
-There are no subdomains — each site lives under its own path segment on the joai.ai domain.
+| Environment | Host |
+| --- | --- |
+| Mainnet | `sites.joai.ai` |
+| Testnet | `testnet-sites.joai.ai` |
+| Devnet | `devnet-sites.joai.ai` |
 
-## How It Works
+Optional **custom domain** (premium): point a CNAME at the Sites host for your environment. See [Public surfaces](/apps/public-surfaces).
 
-Sites use **convention over configuration**:
+> Older docs that mentioned `joai.ai/sites/{agent}` are outdated — Sites are team + brand path URLs on the Sites host.
 
-1. **Brand config** (in `joai--warps`) defines the webapp routes — which Warp renders at which path
-2. **DB** stores only what can't be inferred: which agent enabled the site and their slug
-3. **Team identity** (name, logo, colors) flows from the brand + team settings automatically
-4. **Warp UIs** handle the visual experience — including embedded ChatApps via iframes with full MCP protocol support
+## In the app
 
-No custom builder needed. The structure comes from the Warp definitions.
+### Site manager (`/sites`)
 
-## Routes and Warps
+1. Install **Sites**
+2. Open **Sites**
+3. Create / list sites for brands available to the team
+4. Per site:
+   - Copy or open the public URL
+   - Toggle **enabled**
+   - Set **custom domain** (premium) and follow CNAME instructions
+5. Open **Content** (`/sites/content`) for CMS pages and elements
 
-Routes in a brand config map URL paths to Warp identifiers:
+### Content and elements (`/sites/content`)
+
+From Sites → **Content**:
+
+1. **Create content** with a field schema (structured page data)
+2. Edit drafts; **preview** before going live
+3. **Publish** or **rollback** to a previous version
+4. Manage **elements** and **variations** (reusable blocks; generate variations when supported)
+
+These map 1:1 to the Sites MCP tools below.
+
+### How routes work (brand config)
+
+Brand configs in `joai--warps` map URL paths to Warps:
 
 ```json
 {
@@ -46,55 +69,56 @@ Routes in a brand config map URL paths to Warp identifiers:
 }
 ```
 
-The `warp` field is the relative Warp name within the brand. The full alias is resolved automatically: `appointment` + `book` → `@appointment-book`.
+Warps can be standard collect/action forms or **Warp UI (ChatApps)** embedded with the MCP App Bridge (calendars, wizards, multi-step flows).
 
-Warps can be:
-- **Standard collect/action Warps** — rendered as forms with inputs and submit
-- **Warp UI (ChatApps)** — embedded as iframes with the MCP App Bridge protocol for full interactive experiences (calendars, wizards, multi-step flows)
-
-## AI-Native by Design
-
-Sites are fully AI-native: every Warp behind a route can be called by AI agents via MCP. The same Warp that powers the web form is also the MCP tool — there's no duplication. A booking flow that works in the browser also works when invoked by an AI agent in Claude or ChatGPT.
-
-This means you can:
-
-- Build a **booking page** that users interact with directly, and agents book on their behalf
-- Build an **intake form** that collects structured data and executes logic automatically
-- Build a **dashboard** using Warp UI that renders live agent state
-
-## From Smart Contract to App
-
-Sites can be generated directly from smart contracts. Warps can be auto-generated from on-chain ABIs — every readable and writable function becomes a Warp action. Add a brand config with site routes, and you have a fully functional app that lets users interact with the contract through a clean web UI, while AI agents call the same actions via MCP.
-
-The path from contract to live app:
-
-1. Deploy contract → run `generate-warps-from-abi` script with the contract's `.abi.json`
-2. Review and tune the generated Warp JSONs (labels, hidden fields, gas limits)
-3. Define `brand.ts` with `site` routes pointing to the generated Warps
-4. Publish the brand to the catalog
-5. Enable the site for your agent → live at `joai.ai/sites/{slug}`
+Team identity (name, logo, colors) comes from team / brand settings automatically.
 
 ## Authentication
 
-Sites support optional JoAi authentication. When `auth: true` is set in the brand config, unauthenticated visitors are shown a sign-in prompt with the team's branding. After login, the session token is passed to Warp actions, enabling user-specific data and gated functionality.
+When `auth: true` is set in the brand config, visitors sign in with JoAi branding. After login, the session token is passed to Warp actions for gated data. New users can sign up on the sign-in page; wallet and agent can be provisioned on first visit when required by the flow.
 
-New users can sign up directly on the sign-in page — wallet and agent are auto-provisioned on first visit.
+## AI-native by design
 
-## Example: Appointment App
+Every Warp behind a route is callable by agents via MCP / `execute`. A booking page that works in the browser also works when an agent books on the user’s behalf.
 
-`joai.ai/sites/mybarbershop/` → Booking calendar (Warp UI: `appointment/book`)  
-`joai.ai/sites/mybarbershop/configure` → Settings panel (ChatApp UI, login-gated)
+## From smart contract to app
 
-Branding: team name and logo from agent settings. Routes and logic from the `appointment` brand config in `joai--warps`.
+1. Deploy a contract → generate Warps from ABI
+2. Tune labels / hidden fields / gas
+3. Define `brand.ts` `site` routes
+4. Publish the brand
+5. Enable the site for the team → live at `sites.joai.ai/{team}/{brand}`
 
-## Building Your Own Brand
+See [Contracts](/apps/contracts) and [ChatApps](/chatapps).
 
-To create a new Site brand:
+## For agents (MCP)
 
-1. Add a brand folder in `joai--warps/warps/{brand}/`
-2. Create `brand.ts` with a `site` config listing your routes and Warp IDs
-3. Create the Warp definitions (JSON or TypeScript) for each route — or generate them from an ABI
-4. Publish the brand to the catalog
-5. Agents that install the brand get a site automatically
+Requires the **Sites** app.
 
-See [ChatApps](/chatapps) for building interactive Warp UI experiences that embed inside Sites.
+| Tool | Purpose |
+| --- | --- |
+| `list_contents` / `get_content` / `create_content` / `update_content` | CMS pages |
+| `preview_content` / `publish_content` / `rollback_content` | Lifecycle |
+| `list_content_versions` | Version history |
+| `list_elements` / `create_element` / `update_element` / `delete_element` | Elements |
+| `list_element_variations` / `generate_element_variation` / `update_element_variation` / `delete_element_variation` | Variations |
+
+Live schemas: `tools/list`. See [MCP](/protocols/mcp) and [SKILL.md](https://joai.ai/SKILL.md).
+
+## Building your own brand
+
+1. Add `joai--warps/warps/{brand}/`
+2. Create `brand.ts` with a `site` config
+3. Add Warp definitions (or generate from ABI)
+4. Publish to the catalog
+5. Agents/teams that install the brand can enable the site
+
+## Related
+
+- [Native apps](/apps/)
+- [Public surfaces](/apps/public-surfaces)
+- [Appointments](/apps/appointments)
+- [Forms](/apps/forms)
+- [ChatApps](/chatapps)
+- [Contracts](/apps/contracts)
+- [Warps](/warps/general)

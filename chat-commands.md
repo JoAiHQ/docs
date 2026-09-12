@@ -1,195 +1,78 @@
-# Chat and Commands
+# Chat and commands
 
-JoAi agents support natural language chat, voice conversations, and special commands. You can talk to your agent naturally, use voice mode for hands-free conversations, or type commands for quick actions. All commands start with `/` (forward slash).
+Chat with your agent in natural language, use voice, or type slash commands for precise actions. All commands start with `/`.
 
 ## Overview
 
-Chat commands provide quick access to common actions and workflows:
+- Natural language chat in rooms
+- Slash commands for warps, desk, secrets, discovery, and approvals
+- Some commands are **local** (client-side UI) — `warp-test`, `warp-bulk`, `multi`
 
-- Execute warps and flows
-- Create and test warps
-- Batch process operations
-- Access advanced features
+## Warp commands
 
-All commands are typed directly in the chat interface and executed immediately.
+| Command | Purpose |
+| --- | --- |
+| `/warp <id> [inputs…]` | Run a warp (alias / identifier) |
+| `/warp-direct <id> [inputs…]` | Run with direct execution path |
+| `/warp-create <chain> <name>` | Create a new warp on a chain |
+| `/warp-input <id> [inputs…]` | Supply inputs for a waiting warp |
+| `/warp-select` / `/warp-select-none` | Selection helpers in warp UI flows |
+| `/warp-approve` / `/warp-always-approve` / `/warp-decline` | Respond to approval prompts |
+| `/warp-test` | **Local** — open warp test UI |
+| `/warp-batch` / `/warp-bulk` | Batch / bulk warp runs (`warp-bulk` is the local bulk UI) |
 
-## Warp Commands
-
-### `/flow [warp-identifier]`
-
-Execute a flow-based warp action. Flow warps are chat-based and can be executed through natural conversation.
-
-**Usage:**
-
-```
-/flow @transfer
-/flow abc123def456...
-```
-
-**Parameters:**
-
-- `warp-identifier` - The warp identifier (can be a name with @ prefix or a full identifier)
-
-**Example:**
-
-```
-/flow @transfer
-/flow abc123def456...
-```
-
-### `/warp [warp-identifier] [inputs...]`
-
-Execute a warp action directly with optional inputs.
-
-**Usage:**
+Examples:
 
 ```
 /warp @transfer
-/warp abc123def456 recipient amount
-```
-
-**Parameters:**
-
-- `warp-identifier` - The warp identifier (can be a name with @ prefix or a full identifier)
-- `inputs...` - Optional input values for the warp
-
-**Example:**
-
-```
-/warp @transfer
-/warp abc123def456 recipient amount
-```
-
-### `/warp-create [chain] [name]`
-
-Create a new warp on a specific blockchain.
-
-**Usage:**
-
-```
 /warp-create multiversx MyCustomWarp
-```
-
-**Parameters:**
-
-- `chain` - The blockchain network (e.g., `multiversx`)
-- `name` - The name for your new warp
-
-**Example:**
-
-```
-/warp-create multiversx MyCustomWarp
-```
-
-### `/warp-input [warp-identifier] [inputs...]`
-
-Provide input values for a warp that requires additional information.
-
-**Usage:**
-
-```
-/warp-input @transfer recipient@example.com 100
-```
-
-**Parameters:**
-
-- `warp-identifier` - The warp identifier (can be a name with @ prefix or a full identifier)
-- `inputs...` - Input values for the warp
-
-**Example:**
-
-```
-/warp-input @transfer recipient@example.com 100
-```
-
-## Local Commands (Client-Side)
-
-These commands are processed locally in your browser and don't require agent processing.
-
-### `/warp-test`
-
-Test a warp with custom inputs before actual execution. Opens a testing interface where you can:
-
-- Enter raw warp data or transaction hash
-- Provide test inputs
-- Validate warp structure
-- Execute test run
-
-**Usage:**
-
-1. Type `/warp-test` in chat
-2. Testing interface appears
-3. Enter warp data (transaction hash or raw warp data, minimum 50 characters)
-4. System validates the warp
-5. Optionally provide test inputs
-6. Click "Execute" to test or "Dismiss" to cancel
-
-**Use Cases:**
-
-- Testing custom warps before deployment
-- Validating warp structure
-- Debugging warp execution
-- Previewing warp behavior
-
-**Example:**
-
-```
 /warp-test
+/warp-bulk
 ```
 
-### `/warp-batch`
+## Desk commands
 
-Execute a warp multiple times with different inputs in batch. Opens a batch processing wizard.
-
-**Usage:**
-
-1. Type `/warp-batch` in chat
-2. Batch wizard opens with steps:
-   - **Info**: Select or enter warp identifier
-   - **Static Inputs**: Set inputs that stay the same for all batch items
-   - **Dynamic Inputs**: Define inputs that vary for each batch item (CSV format or manual entry)
-   - **Process**: Review batch configuration, set pause between operations (milliseconds), execute
-   - **Done**: Batch completion summary
-
-**Use Cases:**
-
-- Processing multiple transactions
-- Bulk operations
-- Testing with different inputs
-- Automated batch workflows
-
-**Example:**
+Session media workbench — see [Desk](/desk).
 
 ```
-/warp-batch
+/desk-add <media-id>
+/desk-list
+/desk-sync
+/desk-remove <item-id>
+/desk-clear
+/desk-pin <item-id>
+/desk-unpin <item-id>
 ```
 
-## Command Best Practices
+## Secrets
 
-- Use descriptive warp identifiers
-- Test warps with `/warp-test` before production use
-- Use `/warp-batch` for efficient bulk operations
-- Verify warp identifiers before execution
-- Check command syntax before sending
+| Command | Purpose |
+| --- | --- |
+| `/secret-set` | Set a secret via the secrets flow |
+| `/secret-approve` / `/secret-decline` | Approve or decline secret prompts |
 
-## Troubleshooting Commands
+## Other
 
-**Command not recognized:**
+| Command | Purpose |
+| --- | --- |
+| `/discover` | Discovery flows |
+| `/adapt` | Adapt / transform flows |
+| `/multi` | **Local** multi-step helper UI |
+| `/swarm-proposal-activate` | Activate a swarm proposal |
 
-- Ensure command starts with `/`
-- Check spelling and syntax
-- Verify warp identifier is correct
+There is **no** `/flow` command. Chat-based warps use `/warp` (and related) or shortcuts under [Automations](/shortcuts).
 
-**Warp execution fails:**
+## Tips
 
-- Validate warp structure with `/warp-test`
-- Check required inputs are provided
-- Verify warp is properly configured
-- Review error messages for details
+- Test unfamiliar warps with `/warp-test` before production amounts
+- Use `/warp-bulk` for many input rows
+- After chain actions, agents can confirm with `check_warp_executions` over MCP
 
-**Batch processing issues:**
+## Related
 
-- Verify CSV format for dynamic inputs
-- Check pause duration between operations
-- Ensure all required inputs are provided
-- Review batch configuration before execution
+- [Desk](/desk)
+- [Agents](/agents)
+- [Warps](/warps/general)
+- [Shortcuts](/shortcuts)
+- [CLI](/cli)
+- [MCP](/protocols/mcp)

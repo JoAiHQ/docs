@@ -1,67 +1,42 @@
-# Shortcuts
+# Shortcuts, flows & automations
 
-Shortcuts are quick actions for frequently used workflows that appear in the chat interface for easy access. They allow you to execute common tasks with a single click or command.
+Quick actions and automation builders live under **Agent settings → Automations**:
 
-## Overview
+| Tab | Purpose |
+| --- | --- |
+| **Shortcuts** | One-click warp launches in chat |
+| **Alerts** | On-chain / warp event subscriptions — [Alerts](/alerts) |
+| **Flows** | Visual / structured flow builder |
+| **Hooks** | Internal event → warp, and outbound web hooks — [Webhooks](/webhooks) |
 
-Create quick actions for frequently used workflows:
+## Shortcuts
 
-- **Flow Shortcuts** - Chat-based execution (agents execute via conversation)
-- **Warp Shortcuts** - Form-based execution (structured input forms)
+1. Open **Automations → Shortcuts**
+2. **Create shortcut** — pick a warp (optional chat/presentation mode)
+3. Shortcut appears for quick launch in the agent UI
 
-## Shortcut Types
+Shortcuts are warp-backed quick actions — not a separate “Flow shortcut type” product. Flows have their own tab.
 
-### Flow Shortcuts
+## Flows
 
-Flow shortcuts are chat-based and allow agents to execute actions through natural conversation:
+1. Open **Automations → Flows**
+2. Use **Flow builder** to create or edit flows
+3. Publish / manage from the flows overview
 
-- Triggered via chat interface
-- Agents execute via conversation
-- Flexible input handling
-- Natural language interaction
+Public flow pages can appear on the store host — see [Public surfaces](/apps/public-surfaces).
 
-### Warp Shortcuts
+## Hooks
 
-Warp shortcuts use structured input forms for precise execution:
+- **Internal** — e.g. `contact.created` → run a warp (MCP `create_hook` with `source=internal`)
+- **Web** — agent output events → POST to your URL (`source=web`)
 
-- Form-based input
-- Structured data collection
-- Clear parameter definition
-- Validation before execution
+Manage under **Automations → Hooks**. Distinct from the **Webhooks** integration install under Integrations.
 
-## Creating Shortcuts
+## Related
 
-1. Go to **Agent Settings > Shortcuts**
-2. Click **"Create Shortcut"**
-3. Define:
-   - Name and description
-   - Action to execute
-   - Input parameters
-   - Execution type (Flow or Warp)
-4. Save shortcut
-5. Shortcut appears in chat interface for quick access
-
-## Using Shortcuts
-
-- Shortcuts appear in the chat interface
-- Click to execute or use command
-- Flow shortcuts work through conversation
-- Warp shortcuts open input forms
-- Results appear in chat
-
-## Managing Shortcuts
-
-- **View All** - See all created shortcuts
-- **Edit** - Modify shortcut configuration
-- **Delete** - Remove unused shortcuts
-- **Reorder** - Organize shortcut display order
-- **Test** - Verify shortcut works correctly
-
-## Best Practices
-
-- Create shortcuts for frequently used actions
-- Use clear, descriptive names
-- Provide helpful descriptions
-- Choose appropriate type (Flow vs Warp)
-- Test shortcuts after creation
-- Organize shortcuts logically
+- [Agents](/agents)
+- [Alerts](/alerts)
+- [Tasks](/tasks)
+- [Webhooks](/webhooks)
+- [Warps](/warps/general)
+- [Chat & Commands](/chat-commands)

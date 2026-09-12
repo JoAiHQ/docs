@@ -1,81 +1,86 @@
 # Wallets
 
-Wallets enable agents to interact with blockchain networks, manage digital assets, and execute transactions across multiple blockchain ecosystems.
+Wallets let agents hold keys, receive and send assets, and sign on-chain actions across supported chains. Install the **Wallets** native app under **Team settings → Apps**. Day-to-day wallet UI lives under **agent settings** and **team settings**, not a main sidebar item.
 
-## Supported Blockchains
+## Overview
 
-JoAi supports multiple next-generation blockchain networks:
+- Generate, import, or connect wallets per chain
+- Modes: **local**, **cloud**, and **external**
+- Deposit / withdraw / sync; optional on-ramp providers
+- Cloud wallets enable autonomous multi-step warp execution without browser signing
+- Agents get wallet MCP tools when **Wallets** is installed
 
-- **Sui** - High-performance blockchain with instant finality
-- **Solana** - Fast, scalable blockchain for decentralized apps
-- **Ethereum** - The world's leading smart contract platform
-- **Base** - Ethereum L2 by Coinbase
-- **MultiversX (EGLD)** - Scalable blockchain with sharding
-- **NIR** - Next-generation blockchain network
-- **EVM Chains** - All Ethereum Virtual Machine compatible chains including Arbitrum, Somnia, and other EVM-compatible networks
+Deep product detail (chains, security, export) stays on this page. Install context: [Native apps](/apps/).
 
-Each network requires a separate wallet. JoAi's Web3 digital wallets enable your AI agents to interact with blockchain networks across Sui, Solana, Ethereum, Base, MultiversX, NIR, and EVM chains.
+## Where to open wallets
 
-## Wallet Management Modes
+| Surface | Path / place |
+| --- | --- |
+| **Agent wallets** | Agent settings → Wallets (`/agents/settings/wallets`) — generate, import, cloud/local/external per chain |
+| **Your personal wallet** | Settings → Wallets (`/teams/settings/wallets`) — user wallet prefs (not the agent’s chain wallets) |
+| **Install** | Team settings → Apps → **Wallets** (required for MCP wallet tools) |
 
-JoAi offers three distinct modes for managing agent wallets:
+For autonomous execution, ensure the agent has a **cloud** wallet on the target chain and Auto Mode is on — otherwise warps fall back to local browser signing.
 
-### Local Mode
+## Supported blockchains
 
-In Local mode, your private seed is stored exclusively on your device. You maintain full ownership and control of your private key. The private key is never stored on JoAi servers.
+- **Sui**, **Solana**, **Ethereum**, **Base**, **MultiversX (EGLD)**, **NIR**
+- Other **EVM** chains (Arbitrum, Somnia, and compatible networks)
 
-### Cloud Mode
+Each network needs its own wallet entry.
 
-Cloud mode utilizes secure wallet infrastructure services like Privy, Gaupa, and other enterprise-grade wallet service solutions. Your wallet is managed through these trusted third-party services.
+## Management modes
 
-### External Mode
+### Local
 
-External mode allows agents to assist you in managing and suggesting actions for any existing wallet you already own. Agents can help you interact with wallets from various providers including Phantom, Slush from Sui, and other wallet applications. The agent provides guidance and suggestions while you maintain full control over your external wallet.
+Private seed stays on the device. Full ownership; key never stored on JoAi servers.
 
-## Wallet Capabilities
+### Cloud
 
-### Generating Wallets
+Managed through trusted wallet infrastructure (e.g. Privy, Gaupa, and related providers). Required for reliable agent auto-execution of multi-step chain warps.
 
-Agents can generate new wallets for any supported blockchain network. Each wallet is created with a unique 24-word mnemonic phrase that serves as the recovery mechanism. The mnemonic phrase is critical for wallet recovery and must be stored securely.
+### External
 
-### Importing Wallets
+Agent assists with an existing wallet (Phantom, Slush, etc.). You keep signing control; the agent proposes actions.
 
-You can import existing wallets using mnemonic phrases. Import functionality supports 24-word recovery phrases and validates that the network matches your wallet configuration. This enables you to bring existing wallets into your agent ecosystem.
+## Capabilities
 
-### Depositing Assets
+| Capability | Notes |
+| --- | --- |
+| **Generate** | New wallet + 24-word mnemonic — store securely |
+| **Import** | Existing 24-word phrase; network must match |
+| **Deposit / withdraw** | Address receive; validated send with approval rules |
+| **On-ramp / off-ramp** | External providers (e.g. Coinbase) where available |
+| **Sync** | Auto + manual refresh of balances / history |
+| **Export** | Backup phrase / key with password confirmation — use carefully |
+| **Multi-wallet** | Extra wallets often plan-gated (`wallet-multi`) |
 
-Agents can receive assets from external wallets. Each wallet has a unique address that can be used to receive tokens and assets from any compatible source. Deposits are automatically detected and synchronized with your wallet balance.
+## Security
 
-### Withdrawing Assets
+- Backup mnemonics offline; never share phrases or private keys
+- Prefer encrypted backups; test recovery
+- Local mode: keys stay on device
+- Cloud / external: follow provider + JoAi approval prompts
+- Sensitive export always requires identity confirmation
 
-Agents can send assets to any valid address on the supported blockchain networks. Withdrawal functionality includes address validation, amount specification, and transaction confirmation. All transactions require approval before execution.
+## For agents (MCP)
 
-### On-Ramp and Off-Ramp
+Requires the **Wallets** app.
 
-You can deposit funds into your Agent Wallet and withdraw them at any time using external providers like Coinbase. On-ramp allows you to convert fiat currency to blockchain assets, while off-ramp converts assets back to traditional payment methods.
+| Tool | Purpose |
+| --- | --- |
+| `list_wallets` | List wallets for the agent / team context |
+| `create_wallet` | Create a wallet on a chain |
+| `get_wallet_assets` | Balances / assets |
+| `fund_wallet` | Fund / top-up flows where supported |
 
-### Wallet Synchronization
+Warps such as `joai-wallet-create` also appear in product shortcuts. Live schemas: `tools/list`. See [MCP](/protocols/mcp) and [SKILL.md](https://joai.ai/SKILL.md).
 
-Wallets automatically synchronize with their respective blockchain networks to maintain up-to-date balances and transaction history. Manual synchronization is available to refresh wallet state on demand.
+## Related
 
-### Exporting Wallets
-
-Wallet export functionality allows you to backup your mnemonic phrases and private keys. Export operations require identity verification through password confirmation. Private key export is available but should be used with extreme caution as private keys provide full wallet access.
-
-## Wallet Security
-
-**Critical Best Practices:**
-
-- Always backup mnemonic phrases securely
-- Never share recovery phrases or private keys
-- Store backups in multiple secure locations
-- Use encrypted storage for digital backups
-- Test recovery procedures periodically
-
-**Wallet Protection:**
-
-- Wallets encrypted at rest
-- Password protection for sensitive operations
-- Access control and permission management
-- Transaction approval requirements (in manual mode)
-- Private keys never stored on servers in Local mode
+- [Native apps](/apps/)
+- [Contracts](/apps/contracts)
+- [Heartbeats](/apps/heartbeats)
+- [Agents](/agents)
+- [Warps wallets](/warps/wallets)
+- [Sites](/sites)

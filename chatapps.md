@@ -30,6 +30,10 @@ ChatApps combine:
 - Cursor cloud agents
 - Native blockchain actions (transfers, swaps, staking, etc.) on all supported chains
 
+## Widgets vs ChatApps
+
+**Agent settings → Widgets** (cards) shows warp cards inside JoAi. That is **not** the same as publishing a ChatApp to the ChatGPT App Store. Use this ChatApps guide for store publishing; use Widgets for in-product cards.
+
 ## Publishing to App Stores
 
 ChatApps can be published to the ChatGPT App Store and other compatible platforms. Publishing tooling helps ship ChatApps at scale.
@@ -49,3 +53,10 @@ To build ChatApps:
 - **GitHub Repository**: [https://github.com/JoAiHQ](https://github.com/JoAiHQ) - Open-source ChatApp framework and examples
 - **Warps Documentation**: [Warps framework](/warps/general)
 - **MCP Documentation**: [Dynamic MCP details](/protocols/mcp)
+
+## Related
+
+- [Native apps](/apps/) — team modules (different from ChatApps)
+- [Sites](/sites)
+- [MCP](/protocols/mcp)
+- [Warps](/warps/general)

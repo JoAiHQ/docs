@@ -1,35 +1,69 @@
-# Knowledge Base
+# Knowledge
 
-The Knowledge Base allows you to upload documents that agents can reference to improve their context and responses. This enables agents to have access to specific information, documentation, or data that enhances their capabilities.
+Knowledge is everything your agent remembers and references: memories, documents, ingestions, skills, goals, and reminders. Open **Agent settings → Knowledge**.
 
 ## Overview
 
-Upload documents (PDFs, text files) that agents can reference:
+Tabs in Knowledge:
 
-- Documents improve agent context and responses
-- Agents can answer questions based on uploaded content
-- Knowledge base is searchable by agents
-- Multiple documents can be uploaded per agent
+| Tab | Purpose |
+| --- | --- |
+| **Memory** | Durable facts the agent should keep |
+| **Documents** | Uploaded reference files (PDF, text, …) |
+| **Ingestions** | Pipeline runs from transcripts, articles, connectors |
+| **Skills** | Markdown skill files (scope, tools, media) — see [Skills](/skills) |
+| **Goals** | Measurable goals (also Board MCP) |
+| **Reminders** | Time-based reminders |
 
-## Uploading Documents
+## In the app
 
-1. Go to **Agent Settings > Knowledge**
-2. Click **"Upload Document"** or **"Add Document"**
-3. Select file (PDF, text files supported)
-4. Wait for upload and processing
-5. Document is available for agent reference
+1. Open **Agent settings → Knowledge**
+2. Pick a tab
+3. Create or upload; wait for processing on documents/ingestions
+4. Delete or update outdated entries
 
-## Managing Documents
+### Memories
 
-- **View Documents** - See all uploaded documents
-- **Delete Documents** - Remove documents no longer needed
-- **Document Status** - Check if document is processed and ready
-- **Document Details** - View document information and metadata
+Short durable facts. Prefer memories for stable preferences and CRM-adjacent truths; prefer documents for long manuals.
 
-## Best Practices
+### Documents
 
-- Upload relevant, well-structured documents
-- Keep documents up to date
-- Remove outdated information
-- Use clear, descriptive file names
-- Organize documents logically
+Upload PDFs and text. Agents search and cite them in chat / MCP.
+
+### Ingestions
+
+Queued structured ingestion (meeting transcripts, Readwise, X mentions, notes). Monitor status here; agents can use `ingest_knowledge`, `ingest_meeting_transcript`, `get_ingestion_ops`, `reprocess_ingestion` where available.
+
+### Goals & reminders
+
+Create goals and reminders in Knowledge. Board MCP also exposes `list_goals`, `create_goal`, `list_reminders`, `create_reminder`, etc.
+
+## For agents (MCP)
+
+| Tool | Purpose |
+| --- | --- |
+| `create_memory` / `update_memory` / `search_memories` | Memories |
+| `list_documents` / `create_document` / `update_document` / `delete_document` | Documents |
+| `ingest_knowledge` | Queue structured ingestion |
+| `list_skills` / `create_skill` / `update_skill` / `delete_skill` | Skills |
+| `list_goals` / `create_goal` / `update_goal_progress` | Goals (Board) |
+| `list_reminders` / `create_reminder` / `delete_reminder` | Reminders (Board) |
+
+Meeting ops (when exposed): `ingest_meeting_transcript`, `get_ingestion_ops`, `reprocess_ingestion`.
+
+Live schemas: `tools/list`. See [MCP](/protocols/mcp) and [SKILL.md](https://joai.ai/SKILL.md).
+
+## Tips
+
+- Keep memories short and factual
+- Re-ingest when source docs change materially
+- Use [Desk](/desk) for temporary session media, not Knowledge
+
+## Related
+
+- [Agents](/agents)
+- [Skills](/skills)
+- [Board](/apps/board)
+- [Meetings](/apps/meeting)
+- [Desk](/desk)
+- [Workspace](/apps/files)

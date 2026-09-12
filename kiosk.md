@@ -1,10 +1,33 @@
 # Kiosk
 
-The Kiosk is a touch-optimized ordering interface for your store. Customers browse products and services, add items to their cart, and place orders — all without signing in.
+The Kiosk is a touch-optimized ordering interface for your [Shop](/apps/shop). Customers browse products and services, add items to their cart, and place orders — without signing in.
 
-## Supported Tags
+Enable it under **Shop → Settings → Storefront** (requires the Shop native app).
 
-Product tags are used as category filters in the Kiosk. Use English lowercase tags from this list for automatic translation across all supported languages:
+## Public URL
+
+```
+https://store.joai.ai/{locale}/{teamSlug}/kiosk
+```
+
+Optional query params:
+
+| Param | Purpose |
+| --- | --- |
+| `table` | Table number / label for food & drink |
+| `lid` | Smart Link variation id (per-table QR tracking) |
+
+Example with [Smart Links](/apps/smart-links) table QR:
+
+```
+https://store.joai.ai/en/{teamSlug}/kiosk?table=3&lid={variationId}
+```
+
+See [Public surfaces](/apps/public-surfaces). Devnet / testnet use the matching store host.
+
+## Supported tags
+
+Product tags are used as category filters. Use English lowercase tags from this list for automatic translation:
 
 | Tag | EN | DE | FR | ES | IT | RO |
 |-----|----|----|----|----|----|----|
@@ -20,22 +43,32 @@ Product tags are used as category filters in the Kiosk. Use English lowercase ta
 
 Tags not in this list are displayed as-is (untranslated).
 
-## How It Works
+## How it works
 
-1. A dedicated store page at `/{locale}/{team}/kiosk` renders as a full-screen touch interface
-2. Customers browse products and services, grouped by tags when present
-3. Items are added to a slide-out cart with quantity controls
-4. Related upsells are suggested after adding an item
-5. Orders are submitted as kiosk orders (`source: kiosk`) with offline payment, no authentication required
-6. A success screen confirms the order and auto-resets after 60 seconds for the next customer
+1. Open the kiosk URL (fullscreen touch UI)
+2. Browse products/services, grouped by tags when present
+3. Add items to the slide-out cart; adjust quantities
+4. Products with a **configurator** open an options dialog before add
+5. Related upsells may appear after adding an item; cards respect stock when inventory is on
+6. Submit as a kiosk order (`source: kiosk`) with offline payment, no auth
+7. Success screen confirms, then auto-resets (~60s) for the next guest
 
-## Kiosk Orders
+## Kiosk orders
 
-Kiosk orders are created with:
+| Field | Value |
+| --- | --- |
+| **Source** | `kiosk` |
+| **Payment** | Offline (handled outside JoAi checkout) |
+| **Auth** | None (anonymous) |
+| **Context** | Optional `table` / `lid` via URL |
+| **Catalog** | Catalog lines only — **custom** merchant price lines are not allowed on kiosk |
 
-- **Source:** `kiosk`
-- **Payment:** Offline (processed outside the system)
-- **Auth:** None (anonymous ordering)
-- **Context:** Optional table number or custom data via URL params (e.g. `?table=3`)
+Order notifications arrive in the main JoAi app in real time. Food & drink teams can also watch open table orders under **Shop → Tables**.
 
-Order notifications are delivered via the main JoAi app's real-time event system.
+## Related
+
+- [Shop](/apps/shop)
+- [Smart Links](/apps/smart-links)
+- [Public surfaces](/apps/public-surfaces)
+- [Native apps](/apps/)
+- [Contacts](/apps/contacts)

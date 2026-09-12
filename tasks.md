@@ -1,90 +1,43 @@
 # Tasks
 
-Tasks allow you to set up automated, recurring actions that agents execute automatically based on schedules, conditions, or triggers.
+Tasks schedule a **warp** to run on a **cron** expression in a chosen **room**. Open **Agent settings → Tasks**.
 
 ## Overview
 
-Tasks enable automated workflows that run without manual intervention:
+- Pick a warp + room
+- Schedule with presets or a custom cron
+- Optional **max runs**, **starts at**, **ends at**
+- Runs in the background; toggle or delete from the tasks list
+- MCP: `list_tasks`, `create_task`, `toggle_task`, `delete_task` (Board-gated)
 
-- Scheduled execution
-- Conditional triggers
-- Recurring actions
-- Success and failure handling
-- Background processing
+## Creating a task
 
-## Creating Tasks
+1. **Agent settings → Tasks**
+2. **Create task**
+3. Select **warp**
+4. Select **room**
+5. Choose schedule:
+   - Preset (e.g. daily midnight), or
+   - Custom cron
+6. Optional: max runs, start/end window
+7. Save and leave enabled
 
-1. Go to **Agent Settings > Tasks**
-2. Click **"Create Task"** or **"New Task"**
-3. Define:
-   - Action to perform
-   - Schedule (when to execute)
-   - Conditions
-   - Success/failure handling
-4. Enable task
-5. Task runs automatically
+## What tasks are not
 
-## Task Configuration
+There is no separate product UI for “conditions”, “on-success / on-failure chains”, or generic interval-only schedulers beyond cron. Use warp logic, [Automations → Hooks](/webhooks), or [Flows](/shortcuts) for branching workflows.
 
-### Action Definition
+## For agents (MCP)
 
-Define what the task should do:
+Requires [Board](/apps/board) (default):
 
-- Select action type
-- Configure action parameters
-- Set input values
-- Define expected outputs
+- `list_tasks`, `create_task`, `toggle_task`, `delete_task`
 
-### Scheduling
+Live schemas: `tools/list`.
 
-Set when tasks execute:
+## Related
 
-- **One-time** - Execute once at specific time
-- **Recurring** - Repeat on schedule (daily, weekly, monthly)
-- **Interval-based** - Run every X minutes/hours
-- **Cron expressions** - Advanced scheduling patterns
-
-### Conditions
-
-Add conditions that must be met:
-
-- Check balances or values
-- Verify states or statuses
-- Validate data or inputs
-- Conditional logic gates
-
-### Success/Failure Handling
-
-Configure what happens after execution:
-
-- **On Success** - Actions to take if task succeeds
-- **On Failure** - Actions to take if task fails
-- **Retry Logic** - Automatic retry attempts
-- **Notifications** - Alert on completion or failure
-
-## Task Management
-
-- **View All Tasks** - See all created tasks
-- **Task Status** - Check if task is active, paused, or completed
-- **Execution History** - View past task runs
-- **Edit Task** - Modify task configuration
-- **Enable/Disable** - Start or stop task execution
-- **Delete Task** - Remove task permanently
-
-## Task Execution
-
-- Tasks run automatically based on schedule
-- Execution happens in background
-- Results logged for review
-- Errors captured and reported
-- Can be triggered manually for testing
-
-## Best Practices
-
-- Test tasks before enabling
-- Set appropriate schedules
-- Add error handling
-- Monitor task execution
-- Review execution history regularly
-- Use conditions to prevent unnecessary runs
-- Set up notifications for important tasks
+- [Agents](/agents)
+- [Board](/apps/board)
+- [Shortcuts](/shortcuts)
+- [Alerts](/alerts)
+- [Rooms](/agents#connections) (rooms live under agent settings)

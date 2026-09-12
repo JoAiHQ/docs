@@ -84,3 +84,9 @@ Agents in swarms share:
 - Monitor swarm interactions
 - Test coordination before relying on it
 - Use auto mode for seamless collaboration
+
+## Related
+
+- [Agents](/agents)
+- [Wallets](/wallets)
+- [Warps](/warps/general)

@@ -2,63 +2,76 @@
 
 Teams are collaborative workspaces where multiple users work together, share agents, and manage resources collectively.
 
-## Team Features
+## Team features
 
-- **Shared Agents** - Team members access shared agents
-- **Resource Sharing** - Share wallets, integrations, configurations
-- **Centralized Billing** - Team-wide subscriptions and billing
-- **Usage Limits** - Track team usage of messages and features
-- **Permission Management** - Control who can do what
+- **Shared agents** — members use team agents
+- **Native apps** — install Shop, Contacts, Forms, and more per team ([Native apps](/apps/))
+- **Resource sharing** — wallets, integrations, configurations
+- **Centralized billing** — team-wide subscriptions
+- **Usage limits** — messages and feature quotas
+- **Permission management** — roles and access
 
-## Creating Teams
+## Creating teams
 
-1. Navigate to **Teams** in main navigation
-2. Click **"Create Team"** or use team selector
-3. Fill in name, description, logo (optional)
+1. Open the team selector / **Teams**
+2. **Create Team**
+3. Set name, description, logo (optional)
 4. Configure initial settings
 5. Team is created
 
-## Team Management
+## Settings layout
 
-### Team Settings
+**Settings** combines personal and team sections in one navigator.
 
-Access via **Teams > Settings**:
+### Personal
 
-- **General** - Update name, description, logo, language, locale
-- **Members** - Manage team members and roles
-- **Billing** - View and manage subscriptions
-- **Usage** - Monitor resource usage
-- **Contacts** - Manage team contacts (used by agents)
-- **Campaigns** - Send personalized email, WhatsApp, SMS, or push messages to segments and contacts. See [Campaigns](/campaigns).
+| Item | Path / notes |
+| --- | --- |
+| **Profile** | Your user profile |
+| **Wallets** | Your personal wallet settings (`/teams/settings/wallets`) — not agent wallets |
+| **Notifications** | User notification prefs |
+| **Voice** | Desktop only — [Voice dictation](/apps/voice-dictation) controls |
+| **Clipboard** | Desktop only |
+| **API** | API tokens |
+| **Logs** | Client logs |
 
-### Member Roles
+### Team
 
-- **Owner** - Full control, can delete team
-- **Admin** - Can manage settings, members, resources
-- **Member** - Standard access, can use team resources
-- **Viewer** - Read-only access
+| Item | What you configure |
+| --- | --- |
+| **General** | Name, tagline, description, logo, cover, timezone, locale, category, custom key/value settings, **location**, **Wi‑Fi**, **preferred channel**, delete team (non-personal) |
+| **Apps** | Install [native apps](/apps/) and [integrations](/integrations) |
+| **Members** | Invite, roles, remove |
+| **Branding** | Brand colors (background / foreground / label) for public surfaces |
+| **Usage & Billing** | Consumption vs plan limits, subscription, payment methods, invoices |
 
-### Adding Members
+Agent wallets live under **Agent settings → Wallets** ([Wallets](/wallets)). Loyalty lives under the **Contacts** app ([Contacts](/apps/contacts)), not Team settings.
 
-1. Go to **Team Settings > Members**
-2. Click **"Add Member"**
+### Native apps on a team
+
+Install modules under **Team settings → Apps**. See the full matrix in [Native apps](/apps/).
+
+Installed apps appear in the sidebar when they have a nav entry and unlock matching MCP tools for agents.
+
+### Member roles
+
+- **Owner** — full control, can delete team
+- **Admin** — manage settings, members, resources
+- **Member** — use team resources
+- **Viewer** — read-only
+
+### Adding members
+
+1. **Team settings → Members**
+2. **Add Member**
 3. Enter email or username
 4. Assign role
 5. Send invitation
 
-### Team Usage
-
-Teams have limits on:
-
-- **Messages** - Number per billing cycle
-- **Agents** - Number of agents (plan-dependent)
-- **Features** - Access to premium features
-
-Monitor usage in **Team Settings > Usage** to track consumption and plan upgrades.
-
-## Team Billing
-
-- **Subscriptions** - Team-wide plans providing premium features, higher limits, priority support
-- **Payment Methods** - Manage payment information
-- **Billing History** - View past invoices
-- **Upgrade/Downgrade** - Change subscription level
+- [Billing](/billing) — plans, usage, Extra Usage
+- [Desktop](/desktop) — clipboard, hotkeys, voice
+- [Native apps](/apps/)
+- [Agents](/agents)
+- [Integrations](/integrations)
+- [Wallets](/wallets)
+- [Contacts](/apps/contacts)

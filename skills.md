@@ -1,134 +1,42 @@
 # Skills
 
-Skills are the capabilities that agents can use - from built-in features to custom workflows you create. JoAi agents can have unlimited skills because you can create new ones using [Warps](https://vleap.ai/warps), no coding required.
+Skills are **markdown skill files** attached to an agent — scoped instructions, allowed tools, and optional media. Manage them under **Agent settings → Knowledge → Skills**.
 
-## What Are Skills?
+> Product Skills ≠ [Warps](/warps/general). Warps are executable workflows. Skills teach the agent *how* to behave and which tools to prefer. You often use both.
 
-Skills enable agents to:
-- Execute tasks and workflows
-- Interact with services and APIs
-- Process and manipulate data
-- Handle payments and blockchain transactions
-- Send notifications and alerts
-- Perform custom operations you define
+## Overview
 
-## Built-In Skills
+- Create / edit / delete skill documents in Knowledge
+- Scope and allowed-tools metadata guide the agent
+- MCP: `list_skills`, `create_skill`, `update_skill`, `delete_skill`
+- Public skill pages may appear on the store host — [Public surfaces](/apps/public-surfaces)
 
-Agents come with powerful built-in skills:
+## In the app
 
-- **Payments** - Send/receive payments, check balances, transaction history
-- **Smart Contracts** - Execute functions, read state, deploy contracts
-- **Data Operations** - Process and manipulate data
-- **Service Calls** - Interact with external APIs
-- **Notifications** - Send alerts and messages
-- **Web Search** - Search the web for real-time information
-- **PDF Analysis** - Analyze and summarize documents
-- **Image Understanding** - Analyze and describe images
-- **Voice Conversations** - Natural voice interactions
+1. **Agent settings → Knowledge → Skills**
+2. Create a skill (title + markdown body + options)
+3. Update when procedures change
+4. Delete unused skills
 
-## Creating Custom Skills with Warps
+## For agents (MCP)
 
-The power of JoAi is that you can create unlimited custom skills using [Warps](https://vleap.ai/warps) - no coding required. This makes JoAi the AI agent with the most skills.
+| Tool | Purpose |
+| --- | --- |
+| `list_skills` | List |
+| `create_skill` | Create |
+| `update_skill` | Update |
+| `delete_skill` | Delete |
 
-Learn more about [Warps](https://vleap.ai/warps) and how to create custom skills.
+Also see platform skill packs / `SKILL.md` for external runtimes: [https://joai.ai/SKILL.md](https://joai.ai/SKILL.md).
 
-### Warp Capabilities
+## Related to Warps
 
-- **Multiple Steps** - Chain actions together
-- **Conditional Logic** - Make decisions based on data
-- **Loops** - Repeat operations
-- **Error Handling** - Handle failures gracefully
-- **Data Processing** - Transform and manipulate data
-- **Service Integration** - Connect to external APIs
-- **Notifications** - Send alerts and messages
+To give an agent a new *action*, create a [Warp](/warps/general) and optionally a [Shortcut](/shortcuts). To teach policy and tool choice, add a Skill.
 
-## Skill Approval Modes
+## Related
 
-### Manual Mode
-
-- Skill execution prompts appear for review
-- Approve or dismiss each execution
-- Review details before running
-- Full control over skills
-
-### Auto Mode
-
-- Skills execute automatically
-- No approval needed
-- Faster workflows
-- Less manual oversight
-
-Toggle auto mode in chat header.
-
-## Using Skills
-
-### In Chat
-
-Simply ask your agent to use a skill:
-- "Send a payment to..."
-- "Analyze this PDF..."
-- "Search the web for..."
-- "Use my custom workflow..."
-
-### Via Shortcuts
-
-1. Skills appear as shortcuts in the chat interface
-2. Click a shortcut to execute the skill
-3. Provide any required inputs
-4. Skill runs automatically
-
-## Automated Tasks
-
-Set up skills to run automatically:
-
-1. Go to **Agent Settings > Tasks**
-2. Create new task
-3. Select skill to execute
-4. Define:
-   - When to execute (schedule)
-   - Conditions to check
-   - Success/failure handling
-5. Enable task
-6. Skill runs automatically on schedule
-
-## Skill Examples
-
-### Custom Workflow Skill
-Create a skill that:
-1. Fetches data from an API
-2. Processes the data
-3. Sends a notification
-4. Updates a database
-
-### Document Processing Skill
-Create a skill that:
-1. Receives a PDF
-2. Extracts key information
-3. Summarizes content
-4. Sends summary via email
-
-### Blockchain Skill
-Create a skill that:
-1. Monitors wallet balance
-2. Triggers when threshold reached
-3. Executes smart contract function
-4. Sends confirmation notification
-
-## Best Practices
-
-- **Start Simple** - Begin with basic skills and add complexity
-- **Test Thoroughly** - Test skills before using in production
-- **Document Skills** - Add clear descriptions for each skill
-- **Use Conditions** - Add logic to handle different scenarios
-- **Error Handling** - Plan for failures and edge cases
-- **Security** - Review important skills before auto-approval
-- **Reusability** - Create skills that can be used multiple times
-
-## Security Considerations
-
-- Review important skills before approval
-- Set transaction limits on payment skills
-- Control who can trigger skills
-- Track skill execution in audit logs
-- Monitor for errors and failures
-- Test skills in safe environments first
+- [Knowledge](/knowledge)
+- [Agents](/agents)
+- [Warps](/warps/general)
+- [MCP](/protocols/mcp)
+- [Blueprints](/blueprints)

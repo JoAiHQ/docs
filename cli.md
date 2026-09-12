@@ -272,6 +272,10 @@ This verifies:
 
 - [Agents](/agents) — Learn about AI agents
 - [Chat & Commands](/chat-commands) — Chat commands in the web app
-- [Workspace](/workspace) — Desktop workspace features
+- [Desk](/desk) — chat media workbench
+- [Workspace](/apps/files) — folder sync + media library
+- [Agents](/agents)
+- [API](/api)
+- [MCP](/protocols/mcp)
 - [API](/api) — REST API documentation
 - [Integrations](/integrations) — Connect external services

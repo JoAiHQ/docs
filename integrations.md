@@ -1,45 +1,78 @@
 # Integrations
 
-Integrations connect agents to external services, extending capabilities and enabling automation.
+Integrations connect agents to external channels and services. Install from **Team settings → Apps** (integrations grid) or configure under **Agent settings → Integrations**.
 
-## Available Integrations
+## Catalog
 
-### Communication
+### Productivity
 
-- **Slack** - Agents can act within Slack workspaces, respond to messages, and interact with team channels
-- **Telegram** - Send/receive messages via Telegram bots
-- **Webhooks** - Real-time notifications via HTTP callbacks
+| Integration | Purpose |
+| --- | --- |
+| **Calendars** | Google / Microsoft 365 / device calendar |
 
 ### Automation
 
-- **N8N** - Verified n8n integration node for connecting JoAi agents with n8n workflows and 1000+ apps
+| Integration | Purpose |
+| --- | --- |
+| **N8N** | Workflow automation node |
 
-### Health & Wellness
+### Communication
 
-- **Apple Health** - Connect Apple Health data for agents to use in actions and workflows. Health data can inform agent decisions and automations.
+| Integration | Purpose |
+| --- | --- |
+| **Telegram** | Bot messaging |
+| **Slack** | Workspace channels / DMs |
+| **WhatsApp Business** | Business messaging |
+| **WhatsApp Personal** | Desktop-paired personal WhatsApp → hooks |
+| **Discord** | Servers / DMs |
+| **Email** | Agent-owned inbox address |
+| **Twilio** | Voice + SMS |
+| **X (Twitter)** | Mention ingest → knowledge |
+| **XChat** | Encrypted XChat bot |
+| **Instagram** | Professional DMs |
 
-### Virtual Worlds
+### Development
 
-- **AI Nexus** - Connect agents to virtual world environments
+| Integration | Purpose |
+| --- | --- |
+| **GitHub** | @mentions on issues/PRs |
+| **Sentry** | Errors → tasks / items |
 
-### AI Platforms (ChatApps)
+### Knowledge
 
-ChatApps enable native web3 AI applications that integrate supported blockchain networks into popular AI platforms:
+| Integration | Purpose |
+| --- | --- |
+| **Readwise Reader** | Saved articles → ingestions |
 
-- **ChatGPT** - Build and publish web3-native ChatGPT Apps using the ChatApps framework
-- **Claude** - Create Claude-compatible apps with blockchain capabilities
-- **Cursor** - Integrate web3 functionality into Cursor workflows
-- **Other MCP-enabled interfaces** - Works with any platform supporting MCP (Model Context Protocol)
+### AI
 
-See the [ChatApps documentation](/chatapps) for complete details.
+| Integration | Purpose |
+| --- | --- |
+| **Grok Voice** | xAI live voice engine |
+| **MCP** | Connect outbound MCP / agent bridges |
 
-### Custom
+### Integration utilities
 
-- **Webhooks** - Custom webhook integrations
-- **API Tokens** - Use API tokens for programmatic authentication. See [API Tokens documentation](/api) for complete details.
+| Integration | Purpose |
+| --- | --- |
+| **API Tokens** | Long-lived HTTP tokens — [API](/api) |
+| **Webhooks** | Outbound HTTP callbacks — [Webhooks](/webhooks) |
+| **Website Widget** | Embed chat on any site |
 
-## Setting Up Integrations
+## ChatApps vs integrations
 
-All integrations can be found in **Agent Settings > Apps**. Navigate there to see available integrations and follow the setup instructions provided for each integration.
+[ChatApps](/chatapps) publish JoAi experiences into ChatGPT / Claude / Cursor via MCP. That is separate from installing Slack/Telegram-style integrations above.
 
-If you need help setting up integrations, check out our [Need Help?](/help) page.
+## Not in the catalog
+
+**Apple Health** and **AI Nexus** are not current installer integrations.
+
+## Related
+
+- [Agents](/agents)
+- [Teams](/teams)
+- [Native apps](/apps/)
+- [API](/api)
+- [Webhooks](/webhooks)
+- [MCP](/protocols/mcp)
+- [ChatApps](/chatapps)

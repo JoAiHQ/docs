@@ -1,74 +1,85 @@
 # Agents
 
-Agents are the core of JoAi. They are next-generation AI assistants that understand natural language, use powerful skills, manage Web3 digital wallets, and connect to services. Each agent comes with built-in capabilities for web search, PDF analysis, image understanding, voice conversations, reminders, and blockchain interactions across Sui, Solana, Ethereum, Base, MultiversX, and EVM chains.
+Agents are JoAi’s AI assistants: chat, tools, wallets, automations, and MCP access. Each agent belongs to a [team](/teams) and can run Cortex (default) or OpenClaw engines where configured.
 
-## Agent Modes
+## Creating agents
 
-Agents operate in three modes:
+### From Blueprints (recommended)
 
-- **Local Mode** - Runs on your device
-- **Cloud Mode** - Runs on JoAi servers (always available, recommended)
-- **External Mode** - Runs on external infrastructure
+1. Open the public [Blueprints](/blueprints) store or Identity → create from blueprint
+2. Review features, wallets, shortcuts
+3. **Create Agent** and name it
 
-## Creating Agents
+### From scratch
 
-### From Blueprints (Recommended)
+1. **Agents → Create**
+2. Set name, avatar, character
+3. Configure wallets, knowledge, and integrations after creation
 
-1. Navigate to **Blueprints** page
-2. Browse available blueprints
-3. Click on a blueprint to see details (features, required wallets, shortcuts)
-4. Click **"Create Agent now"**
-5. Enter agent name
-6. Agent is created with all blueprint configurations
+## Agent settings map
 
-### From Scratch
+Open **Agents → Settings**. Nav is filtered by engine (`cortex` / `openclaw`) and sometimes interests.
 
-1. Go to **Agents** section
-2. Click **"Create Agent"**
-3. Fill in:
-   - Name and description
-   - Avatar (optional)
-   - Mode (Local/Cloud/External)
-   - Character/personality (optional)
-4. After creation, configure wallets, integrations, and settings
+### Core
 
-## Agent Settings
+| Section | What you configure |
+| --- | --- |
+| **Identity** | Name, character, voice, public visibility, blueprint create, move/delete |
+| **Knowledge** | Memories, documents, ingestions, skills, goals, reminders — [Knowledge](/knowledge) |
 
-Access via **Agents > Settings** or agent settings button.
+### Automation (Cortex)
 
-### General Settings
+| Section | What you configure |
+| --- | --- |
+| **Tasks** | Scheduled warp runs — [Tasks](/tasks) |
+| **Automations** | Tabs: **Shortcuts**, **Alerts**, **Flows**, **Hooks** — see [Shortcuts](/shortcuts), [Alerts](/alerts), [Webhooks](/webhooks) |
 
-- **Name & Description** - Update agent information
-- **Avatar** - Change visual representation
-- **Mode** - Switch between Local/Cloud/External
-- **Character** - Customize personality traits
-- **Password** - Set agent password protection
+### Connections
 
-### Knowledge Base
+| Section | What you configure |
+| --- | --- |
+| **Integrations** | Slack, Telegram, email, MCP, embed, … — [Integrations](/integrations) |
+| **Rooms** | Chat rooms for channels / MCP conversations |
+| **Widgets** | Warp cards + brand apps in the agent UI (plan-gated `cards`) — not the same as publishing [ChatApps](/chatapps) |
 
-Upload documents that agents can reference to improve their context and responses. See [Knowledge Base](/knowledge) for detailed information.
+### Business
 
-### Shortcuts
+| Section | What you configure |
+| --- | --- |
+| **Wallets** | Per-chain wallets — [Wallets](/wallets). Modes: **local**, **cloud**, **external** (wallet modes — not “agent run modes”) |
+| **Contracts** | When [Contracts](/apps/contracts) is installed |
+| **Monetization** | Per-prompt paid access (`store.pricing`) for public agents / x402 |
 
-Create quick actions for frequently used workflows. See [Shortcuts](/shortcuts) for detailed information.
+### Advanced (Cortex)
 
-### Tasks
+| Section | What you configure |
+| --- | --- |
+| **Missions** | Long-running monitor / research missions |
+| **Desk** | Session media workbench prefs — [Desk](/desk) |
+| **Upgrades** | Pending agent upgrades |
 
-Set up automated, recurring tasks. See [Tasks](/tasks) for detailed information.
+## Engines
 
-### Alerts
+- **Cortex** — full JoAi automation surface (tasks, studio, board execution, …)
+- **OpenClaw** — alternate engine; settings nav hides Cortex-only sections
 
-Configure notifications for important events. See [Alerts](/alerts) for detailed information.
+`settings.engine` controls which settings appear.
 
-### Cards
+## MCP access
 
-Add quick access information cards that appear in the agent interface:
+Connect Cursor, Claude, ChatGPT, and other clients via [MCP](/protocols/mcp). Tools depend on installed [native apps](/apps/). Calls use [billing](/billing) MCP credits.
 
-- Create cards with important information
-- Cards provide quick reference without searching
+Core tools always relevant: `prompt_agent`, `joai_agent_info`, `joai_list_agents`, `ingest_knowledge`, …
 
-## MCP Access
+## Related
 
-Each agent can be connected to external AI applications (ChatGPT, Claude, Cursor, and others) via the [Model Context Protocol (MCP)](/protocols/mcp). When connected, those applications can invoke your agent's Warps as tools.
-
-MCP tool calls consume **credits** from your plan's monthly allowance. See [MCP Credits & Usage](/protocols/mcp#credits--usage) for plan limits and overage pricing.
+- [Native apps](/apps/)
+- [Knowledge](/knowledge)
+- [Studio](/studio)
+- [Wallets](/wallets)
+- [Billing](/billing)
+- [MCP](/protocols/mcp)
+- [x402](/protocols/x402)
+- [ChatApps](/chatapps)
+- [Blueprints](/blueprints)
+- [Teams](/teams)

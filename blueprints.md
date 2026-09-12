@@ -1,50 +1,40 @@
 # Blueprints
 
-Blueprints are pre-configured agent templates that provide complete setups with wallets, shortcuts, tasks, and more.
+Blueprints are pre-configured agent templates: character, wallets, shortcuts, tasks, and more. Browse the public store or create from **Agent settings → Identity**.
 
-## Why Use Blueprints
+## Overview
 
-- Save time (skip manual configuration)
-- Learn best practices
-- Get working agents in minutes
-- Use proven configurations
-- Start with purpose-built agents
+- Public catalog on the **store** host: `https://store.joai.ai/{locale}/blueprint/{slug}`
+- Verified / free / purchase badges where applicable
+- Create an agent from a blueprint in one step
+- Authors can publish from Identity / blueprint create flows
+- Board MCP: `list_blueprints`, `get_blueprint`, `create_blueprint`, `update_blueprint`
 
-## Creating from Blueprints
+## Creating an agent from a blueprint
 
-1. Go to **Blueprints** page
-2. Browse available blueprints
-3. Click blueprint to see details:
-   - Description and use cases
-   - Included features
-   - Required wallets
-   - Pre-configured shortcuts
-   - Included tasks
-4. Click **"Create Agent now"**
-5. Enter agent name
-6. Agent created with all configurations
+1. Open Blueprints (store listing or in-app blueprints browser)
+2. Open a blueprint — review features, wallets, shortcuts
+3. **Create Agent** and name it
+4. Fund wallets / connect integrations as prompted
 
-## What Gets Created
+## What gets created
 
-- **Agent** - With blueprint settings
-- **Wallets** - Required wallets (may need funding)
-- **Shortcuts** - Pre-configured quick actions
-- **Tasks** - Automated tasks (if included)
-- **Knowledge** - Relevant knowledge base (if included)
-- **Integrations** - Connected services (if configured)
+Depending on the blueprint:
 
-## Blueprint Components
+- Agent + character
+- Required wallets
+- Shortcuts / tasks
+- Knowledge seeds
+- Integration hints
 
-- **Character** - Personality traits and communication style
-- **Wallets** - Required blockchain networks and configuration
-- **Shortcuts** - Flow and Warp shortcuts
-- **Tasks** - Scheduled and triggered tasks
-- **Knowledge** - Relevant documents
+## Creating / publishing blueprints
 
-## Customizing After Creation
+From **Agent settings → Identity** (and related create flows), authors can turn a configured agent into a blueprint for the catalog. MCP blueprint write tools require [Board](/apps/board).
 
-- Modify settings
-- Add features
-- Remove components
-- Customize behavior
-- Add integrations
+## Related
+
+- [Agents](/agents)
+- [Board](/apps/board)
+- [Public surfaces](/apps/public-surfaces)
+- [Wallets](/wallets)
+- [Skills](/skills)

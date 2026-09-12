@@ -6,84 +6,51 @@ The JoAi API lets you manage your AI workspace programmatically — agents, cont
 
 ## API Reference
 
-The full reference with interactive request builder is available at:
+Interactive reference:
 
 **[api.joai.ai/docs](https://api.joai.ai/docs)**
 
 ## Authentication
 
-All endpoints require a Bearer token:
+Bearer token:
 
 ```http
 Authorization: Bearer <your-token>
 ```
 
-Pass your team slug to scope requests:
+Scope to a team:
 
 ```http
 X-Team-Slug: my-team
 ```
 
-You can also authenticate as an agent using its auth key — the team is resolved automatically:
+Or authenticate as an agent (team resolved automatically):
 
 ```http
 X-Agent-Auth-Key: <agent-auth-key>
 ```
 
-## API Tokens
+## Creating API tokens
 
-API tokens are long-lived credentials for programmatic access. Each token is tied to your account and scoped to a team via the `X-Team-Slug` header.
+Tokens are long-lived credentials scoped via `X-Team-Slug`.
 
-**Create a token in the app:**
+Create them in the product from either:
 
-1. Go to **Agent Settings → Apps** (or **Integrations**)
-2. Find the **API Tokens** section
-3. Click **Create Token**, give it a name, and save the value securely
+1. **Settings → API** (personal settings navigator), or
+2. **Developers → API** (`/developers`), or
+3. **Integrations → API Tokens** install card
 
-> You won't be able to view the token again after closing the dialog.
+MCP: `create_api_token` (agent tooling).
 
-**Or create one via the API** (requires an authenticated session):
+## OpenAPI & agents
 
-```bash
-curl -X POST https://api.joai.ai/api/v1/tokens \
-  -H "Authorization: Bearer <session-token>" \
-  -H "Content-Type: application/json" \
-  -d '{"name": "My Integration"}'
-```
+Prefer OpenAPI + [SKILL.md](https://joai.ai/SKILL.md) for machine contracts. Product guides stay human-focused.
 
-**List tokens:**
+## Related
 
-```bash
-curl https://api.joai.ai/api/v1/tokens \
-  -H "Authorization: Bearer <session-token>"
-```
-
-**Revoke a token:**
-
-```bash
-curl -X DELETE https://api.joai.ai/api/v1/tokens/{id} \
-  -H "Authorization: Bearer <session-token>"
-```
-
-**Security tips:**
-- Never commit tokens to version control — use environment variables or a secrets manager
-- Create separate tokens per integration
-- Revoke tokens that are no longer needed
-
-## Quick Start
-
-```bash
-# List your agents
-curl https://api.joai.ai/api/v1/agents \
-  -H "Authorization: Bearer <your-token>" \
-  -H "X-Team-Slug: my-team"
-
-# Create a contact
-curl -X POST https://api.joai.ai/api/v1/contacts \
-  -H "Authorization: Bearer <your-token>" \
-  -H "X-Team-Slug: my-team" \
-  -H "Content-Type: application/json" \
-  -d '{"name": "Jane Doe", "email": "jane@example.com"}'
-```
-
-For the full endpoint reference, visit **[api.joai.ai/docs](https://api.joai.ai/docs)**.
+- [Developers](/developers)
+- [MCP](/protocols/mcp)
+- [CLI](/cli)
+- [Webhooks](/webhooks)
+- [Integrations](/integrations)
+- [Teams](/teams)
