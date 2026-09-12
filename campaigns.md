@@ -14,12 +14,12 @@ Campaigns send personalized messages to an audience of contacts over email, What
 
 | Channel | Content | Placeholders | Extra requirements |
 | --- | --- | --- | --- |
-| **Email** | Subject + body | Static + AI | — |
+| **Email** | Subject + body | Static + AI | Outbound provider + owned from address (inbox alone is receive-only) |
 | **WhatsApp** | Template body | Static only | Slug-style name, language, category, approval before send |
 | **SMS** | Body | Static + AI | — |
 | **Push** | Title + body | Static + AI | — |
 
-AI placeholders (`aiParams`) require an **agent** on the campaign with an **active integration** for that channel. Delivery itself also runs through the team's messaging setup for the channel.
+AI placeholders (`aiParams`) require an **agent** on the campaign with a **fully configured** integration for that channel. For email, activating `@inbox.joai.ai` is not enough — enable outbound sending with a from address you control.
 
 ## Audience
 
@@ -184,4 +184,5 @@ For live schemas, call `tools/list` on the agent MCP endpoint. See also [MCP](/p
 - Map every placeholder before send — empty `templateParams` is the usual reason `{{name}}` arrives blank
 - For WhatsApp, use a slug name and map all placeholders up front or create/submit will fail validation
 - Pick an agent that actually has the channel integration before using AI slots
+- For email campaigns, enable **outbound sending** on the agent (own provider + from address you control). Activating the inbox address alone is receive-only and cannot send as `@inbox.joai.ai`
 - Archive completed campaigns so the active list stays focused on work in progress
