@@ -53,6 +53,12 @@ From Sites → **Content**:
 
 These map 1:1 to the Sites MCP tools below.
 
+### Metrics
+
+Teams with Sites can read normalized metrics through the active team agent. The first provider is **Cloudflare zone analytics**. Store the Cloudflare API token as the agent secret `CLOUDFLARE_API_TOKEN`, then use a zone tag and an explicit date range to query it.
+
+The response distinguishes `web.requests` and `web.pageViews`; neither is labelled as visitors. Historical periods are cached for one day; a period that includes today is cached for 15 minutes. Metrics are read-only and are not sent to clients automatically.
+
 ### How routes work (brand config)
 
 Brand configs in `joai--warps` map URL paths to Warps:
@@ -102,6 +108,7 @@ Requires the **Sites** app.
 | `list_content_versions` | Version history |
 | `list_elements` / `create_element` / `update_element` / `delete_element` | Elements |
 | `list_element_variations` / `generate_element_variation` / `update_element_variation` / `delete_element_variation` | Variations |
+| `query_metrics` | Read normalized metrics for a source, resource, and period |
 
 Live schemas: `tools/list`. See [MCP](/protocols/mcp) and [SKILL.md](https://joai.ai/SKILL.md).
 

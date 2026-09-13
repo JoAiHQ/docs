@@ -6,7 +6,7 @@ Install the **Artifacts** native app from team **Apps** to manage deliverables i
 
 ## Overview
 
-- Register a deliverable with title, type, optional URL / password, and extra link
+- Register a deliverable with title, type, optional URL / password, uploaded files, and extra link
 - Attach a **contact** (and optionally an **order** / quote)
 - Status flow: **draft → ready → sent** (or **archived**)
 - **Deliver** drafts a message from the artifact, lets you edit it, then sends on email / SMS / WhatsApp and marks the artifact **sent**
@@ -34,9 +34,15 @@ Install the **Artifacts** native app from team **Apps** to manage deliverables i
 
 ## Recommended flow
 
-1. Create each deliverable (deck, demo, agreement, …) with contact and URLs, status `ready`
+1. Create each deliverable (deck, demo, agreement, …) with contact, files and/or URLs, status `ready`
 2. Deliver with **one or more** artifact IDs and **one or more** recipients — one message covering all links/passwords → edit → approve → send
 3. All included artifacts become **sent**; one delivery record is stored per recipient
+
+Artifacts can contain an ordered document made of generic blocks (`heading`, `richText`, `metrics`, `table`, `callout`, `actions`, `media`, and `divider`). The envelope remains the same for every artifact; blocks make long-form reports, agreements, and proposals possible without special artifact types.
+
+When an artifact with blocks is delivered, JoAi appends its document to the delivery message automatically. Email receives a safe, structured HTML version; SMS and WhatsApp receive the equivalent readable plaintext. The message you write remains the introduction, so do not repeat the artifact contents manually.
+
+For a client report, query the source metrics first, use the reporting skill to keep facts and recommendations separate, then create a normal **update** artifact with structured blocks. Artifacts remain generic; reporting does not introduce a separate artifact type.
 
 ## Ownership vs delivery
 
