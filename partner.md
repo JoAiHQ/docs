@@ -468,7 +468,8 @@ Since launching our partnership, [PARTNER_NAME] users have:
 
 - [JoAi Documentation](https://docs.joai.ai)
 - [Warps Overview](https://joai.ai/warps)
-- [API Integration Guide](https://docs.joai.ai/integrations)
+- [API](https://docs.joai.ai/api)
+- [Integrations](https://docs.joai.ai/integrations/)
 - [Contact Support](https://joai.ai/contact)
 
 ---
@@ -1757,7 +1758,8 @@ Track these metrics to measure partnership success:
 - **Documentation**: https://docs.joai.ai/partners
 - **JoAi Website**: https://joai.ai
 - **Warps Overview**: https://joai.ai/warps
-- **API Docs**: https://docs.joai.ai/integrations
+- **API Docs**: https://docs.joai.ai/api
+- **Integrations**: https://docs.joai.ai/integrations/
 
 ---
 

@@ -278,4 +278,5 @@ This verifies:
 - [API](/api)
 - [MCP](/protocols/mcp)
 - [API](/api) — REST API documentation
-- [Integrations](/integrations) — Connect external services
+- [Integrations](/integrations/) — Connect external services
+- [WhatsApp Personal](/integrations/whatsapp-personal) — desktop WhatsApp CLI sync

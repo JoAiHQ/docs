@@ -79,7 +79,7 @@ Notes:
 | Direct link | Share `/book` or `/book/{service}` |
 | [Smart Links](/apps/smart-links) | Short tracked URL to the book page |
 | [Sites](/sites) | Appointment brand site on `sites.joai.ai` |
-| Website Widget | Agent **chat** embed ([Integrations](/integrations)) — not the calendar booking UI |
+| Website Widget | Agent **chat** embed ([Website Widget](/integrations/embed)) — not the calendar booking UI |
 
 See [Public surfaces](/apps/public-surfaces).
 

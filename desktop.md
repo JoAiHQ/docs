@@ -27,7 +27,9 @@ Connect a local project folder via the [Workspace](/apps/files) chat control (de
 ## Related
 
 - [Voice dictation](/apps/voice-dictation)
+- [WhatsApp Personal](/integrations/whatsapp-personal) — desktop CLI pairing + sync
 - [Teams](/teams)
 - [Desk](/desk)
 - [Workspace](/apps/files)
 - [Meetings](/apps/meeting)
+- [Integrations](/integrations/)

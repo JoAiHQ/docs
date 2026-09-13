@@ -10,7 +10,7 @@ AI agents that actually do things — chat, tools, native business apps, and Web
 - **Automate** — warps, tasks, shortcuts, hooks
 - **Run the business** — install [native apps](/apps/) (Shop, Contacts, Forms, …)
 - **Chains** — wallets on Sui, Solana, Ethereum, Base, MultiversX, and more
-- **Connect** — Slack, Telegram, email, WhatsApp, GitHub, … — [Integrations](/integrations)
+- **Connect** — Slack, Telegram, email, WhatsApp, GitHub, … — [Integrations](/integrations/)
 
 ## Key concepts
 

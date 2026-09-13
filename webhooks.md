@@ -8,9 +8,9 @@ Install **Webhooks** under Integrations / Apps. Agent output events POST to your
 
 Typical triggers: `agent.action`, `agent.message`, `user.message`.
 
-Configure URL, secret, retries, headers in the Webhooks integration UI. See also [Integrations](/integrations).
+Configure URL, secret, retries, headers in the Webhooks integration UI. Installer guide: [Webhooks integration](/integrations/webhooks).
 
-## 2) Automations → Hooks (agent hooks)
+## 2) Automations → Hooks
 
 Under **Agent settings → Automations → Hooks**:
 
@@ -32,12 +32,13 @@ Supported `type` values include:
 - `session.start` — returns curated context (character + memories)
 - `permission.request` — waits for JoAi approval (UI or signed link)
 
-Also used for board auto-execution callbacks and Claude stop-hook adapters. Agent index: [SKILL.md](https://joai.ai/SKILL.md).
+Also used for board auto-execution callbacks and Claude stop-hook adapters. Full contract: [SKILL.md](https://joai.ai/SKILL.md).
 
 ## Related
 
+- [Webhooks integration](/integrations/webhooks) — installer / outbound setup
 - [Shortcuts](/shortcuts) (Automations tabs)
-- [Integrations](/integrations)
+- [Integrations](/integrations/)
 - [Agents](/agents)
 - [Board](/apps/board)
 - [API](/api)

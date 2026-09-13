@@ -44,13 +44,14 @@ MCP: `create_api_token` (agent tooling).
 
 ## OpenAPI & agents
 
-Prefer OpenAPI for schemas and [SKILL.md](https://joai.ai/SKILL.md) as the agent entry index into these docs. Product guides stay human-focused.
+Prefer OpenAPI + [SKILL.md](https://joai.ai/SKILL.md) for machine contracts. Product guides stay human-focused.
 
 ## Related
 
+- [API Tokens](/integrations/api-tokens) — create tokens in Integrations
 - [Developers](/developers)
 - [MCP](/protocols/mcp)
 - [CLI](/cli)
 - [Webhooks](/webhooks)
-- [Integrations](/integrations)
+- [Integrations](/integrations/)
 - [Teams](/teams)

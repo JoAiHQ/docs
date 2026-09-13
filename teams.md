@@ -40,7 +40,7 @@ Teams are collaborative workspaces where multiple users work together, share age
 | Item | What you configure |
 | --- | --- |
 | **General** | Name, tagline, description, logo, cover, timezone, locale, category, custom key/value settings, **location**, **Wi‑Fi**, **preferred channel**, delete team (non-personal) |
-| **Apps** | Install [native apps](/apps/) and [integrations](/integrations) |
+| **Apps** | Install [native apps](/apps/) and [integrations](/integrations/) |
 | **Members** | Invite, roles, remove |
 | **Branding** | Brand colors (background / foreground / label) for public surfaces |
 | **Usage & Billing** | Consumption vs plan limits, subscription, payment methods, invoices |
@@ -72,6 +72,6 @@ Installed apps appear in the sidebar when they have a nav entry and unlock match
 - [Desktop](/desktop) — clipboard, hotkeys, voice
 - [Native apps](/apps/)
 - [Agents](/agents)
-- [Integrations](/integrations)
+- [Integrations](/integrations/)
 - [Wallets](/wallets)
 - [Contacts](/apps/contacts)

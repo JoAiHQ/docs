@@ -230,6 +230,9 @@ For live schemas, call `tools/list` on the agent MCP endpoint. See also [MCP](/p
 ## Related
 
 - [Native apps](/apps/) — install Campaigns on the team
+- [WhatsApp Business](/integrations/whatsapp) — Meta Cloud API channel (not Personal)
+- [Email](/integrations/email) — agent email for campaigns
+- [Twilio](/integrations/twilio) — SMS / voice channel
 - [Contacts](/apps/contacts) — CRM; segments are managed in Campaigns (MCP segment tools still need Contacts installed)
 - [Forms](/apps/forms) — form follow-ups
 - [MCP](/protocols/mcp)

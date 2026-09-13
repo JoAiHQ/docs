@@ -65,5 +65,7 @@ Live schemas: `tools/list`. See [MCP](/protocols/mcp) and [SKILL.md](https://joa
 - [Skills](/skills)
 - [Board](/apps/board)
 - [Meetings](/apps/meeting)
+- [Readwise Reader](/integrations/readwise)
+- [X (Twitter)](/integrations/x)
 - [Desk](/desk)
 - [Workspace](/apps/files)

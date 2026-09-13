@@ -57,6 +57,8 @@ To build ChatApps:
 ## Related
 
 - [Native apps](/apps/) — team modules (different from ChatApps)
+- [Integrations](/integrations/) — Slack/Telegram-style channels (different from ChatApps)
+- [MCP integration](/integrations/mcp) — connect an agent into MCP clients
 - [Sites](/sites)
 - [MCP](/protocols/mcp)
 - [Warps](/warps/general)

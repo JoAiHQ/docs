@@ -12,7 +12,7 @@ MCP (Model Context Protocol) connects JoAi agents to Cursor, Claude, ChatGPT, an
 
 Discover OAuth: `GET https://cortex.joai.ai/.well-known/oauth-authorization-server`
 
-Agent entry index: [SKILL.md](https://joai.ai/SKILL.md).
+Full machine contract: [SKILL.md](https://joai.ai/SKILL.md).
 
 ## Two MCP ideas
 
@@ -81,6 +81,7 @@ Exact numbers appear in-app under Usage & Billing. Credits reset each billing cy
 
 ## Related
 
+- [MCP integration](/integrations/mcp) — connect from Agent settings
 - [Agents](/agents)
 - [Native apps](/apps/)
 - [Billing](/billing)
@@ -88,4 +89,5 @@ Exact numbers appear in-app under Usage & Billing. Credits reset each billing cy
 - [Google A2A](/protocols/google-a2a)
 - [ChatApps](/chatapps)
 - [API](/api)
+- [Integrations](/integrations/)
 - [SKILL.md](https://joai.ai/SKILL.md)

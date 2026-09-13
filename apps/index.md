@@ -42,7 +42,7 @@ You can change installs anytime under Apps.
 
 Native apps are **not** the same as:
 
-- **[Integrations](/integrations)** — Slack, Telegram, email providers, etc.
+- **[Integrations](/integrations/)** — Slack, Telegram, email providers, etc.
 - **[ChatApps](/chatapps)** — AI apps you publish to ChatGPT / Claude / Cursor
 - **[Mobile App Store listing](/app-store)** — iOS / Android download page copy
 - **[Desk](/desk)** — `/desk-*` chat media commands (not the Workspace native app)
@@ -76,12 +76,12 @@ Customer-facing hosts (store, forms, sites, passes): **[Public surfaces](/apps/p
 
 - Install the app on the team **before** expecting MCP tools for it
 - Call `tools/list` on the agent MCP endpoint for live schemas
-- Prefer OpenAPI / `tools/list` for schemas and [SKILL.md](https://joai.ai/SKILL.md) as the agent entry index — these guides stay product-focused
+- Prefer [SKILL.md](https://joai.ai/SKILL.md) and OpenAPI for machine contracts — these guides stay product-focused
 - See [MCP](/protocols/mcp) for connection and credits
 
 ## Related
 
 - [Teams](/teams) — who owns apps and billing
 - [Agents](/agents) — connect agents to MCP
-- [Integrations](/integrations) — third-party connections in the same Apps screen
+- [Integrations](/integrations/) — third-party connections in the same Apps screen
 - [Public surfaces](/apps/public-surfaces)
