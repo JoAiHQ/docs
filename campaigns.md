@@ -16,7 +16,7 @@ Install the **Campaigns** native app under **Team settings → Apps** (see [Nati
 
 | Channel | Content | Placeholders | Extra requirements |
 | --- | --- | --- | --- |
-| **Email** | Subject + body | Static + AI | Own outbound provider + from address |
+| **Email** | Subject + body (plain or HTML) | Static + AI | Own outbound provider + from address |
 | **WhatsApp** | Template body | Static only | Slug-style name, language, category, approval before send |
 | **SMS** | Body | Static + AI | — |
 | **Push** | Title + body | Static + AI | — |
@@ -30,11 +30,10 @@ AI placeholders (`aiParams`) require an **agent** on the campaign with that chan
 Choose one mode when creating a campaign:
 
 1. **Segment** — a saved audience (recommended for recurring sends). Pick an existing segment, or create one with **New segment**. The Campaigns page also has a **Segments** section to list, view, edit, and delete segments.
-2. **Contacts** — pick specific contacts
+2. **Tags** — contacts that have any of the selected tags
+3. **Contacts** — pick specific contacts
 
 Audience is fixed at create time. You can edit message content later, not who is targeted.
-
-UI audience modes are **segment or contacts only**. Targeting by `tags` alone is available via MCP / API, not as a separate UI mode.
 
 ### Segment builder
 
@@ -132,6 +131,7 @@ Editing a **pending** or **approved** campaign resets it to **draft** and clears
 | **Pending** | Waiting on WhatsApp template approval. |
 | **Approved** | WhatsApp template approved; ready to send. |
 | **Rejected** | Approval failed; edit and resubmit. |
+| **Scheduled** | Send queued for a future time. **Cancel schedule** returns to draft. |
 | **Sending** | Delivery in progress. Can be **cancelled** if stuck. |
 | **Completed** | Finished. Can be archived. |
 | **Failed** | Finished with failures. Can be archived. |
@@ -140,9 +140,23 @@ Editing a **pending** or **approved** campaign resets it to **draft** and clears
 
 Unsent campaigns (draft, pending, approved, rejected) can be edited. Sending / completed / failed cannot. Editing pending or approved content returns the campaign to draft.
 
+### Schedule send
+
+When starting delivery, pass an optional **`scheduledAt`** ISO datetime (API, SDK, or `send_campaign` with `scheduledAt`). Future times set status **scheduled** and dispatch when due; omit or use a past time to send immediately.
+
+**Cancel schedule** (`POST …/cancel-schedule`) is only available while **scheduled**. It clears `scheduledAt` and returns the campaign to **draft**.
+
 ### Cancel send
 
 Cancel is only available while **sending**. It closes open delivery approval cards and marks remaining contacts as failed so the campaign can leave the stuck state.
+
+### Email HTML mode
+
+For **email** campaigns, set **`contentHtml`** on create/update. The body is sent as HTML (fragment tags like `<p>` work — no full `<html>` document required). Plain-text campaigns keep the 5 000 character limit; HTML allows up to 50 000. The marketing **unsubscribe** footer is appended in HTML when applicable.
+
+### Opens and clicks (Resend only)
+
+When outbound email is sent through **Resend**, the provider message id is stored on the outbound message and campaign contact. Resend **email.opened** / **email.clicked** webhooks update per-contact `opened_at` / `clicked_at` and campaign `openedCount` / `clickedCount`. Other email providers do not populate these metrics today.
 
 ### Delete
 
@@ -170,7 +184,8 @@ Agent MCP tools:
 | Tool | Purpose |
 | --- | --- |
 | `create_campaign` | Create a draft (`joai-campaign-create`) |
-| `send_campaign` | Start delivery (`joai-campaign-send`) |
+| `preview_campaign_audience` | Preview sendable vs skipped counts (`joai-campaign-audience-preview`) — call **before** `send_campaign` |
+| `send_campaign` | Start delivery (`joai-campaign-send`); optional `scheduledAt` (ISO 8601, future) |
 | `list_campaigns` | List campaigns (`joai-campaign-list`) |
 | `campaign_stats` | Team campaign stats (`joai-campaign-stats`) |
 | `delete_campaign` | Delete a campaign (`joai-campaign-delete`) |
@@ -196,6 +211,8 @@ When creating via MCP, pass placeholders explicitly — they are **not** inferre
 ```
 
 If `aiParams` is set and no `agentId` is passed, MCP defaults to the **connected agent**. That agent still needs an active channel integration.
+
+Before `send_campaign`, call `preview_campaign_audience` (with `campaignId`, or `channel` plus `segmentId` / `tags` / `contactIds`) to confirm sendable recipients and skip reasons (`pending_consent`, `opted_out`, `missing_channel`, `approval_skipped`).
 
 After `send_campaign`, delivery may wait on warp approval when the sending agent is not in **auto mode**. Approve in JoAi or poll `check_warp_executions` until messages go out.
 
