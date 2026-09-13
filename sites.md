@@ -7,9 +7,9 @@ Sites are website instances belonging to a team. A team can have many sites.
 A site can optionally link a Warp **brand** (`brandSlug`):
 
 - **With brand** — live app on sites.joai.ai at `/{teamSlug}/{brandSlug}`
-- **Without brand** — site record only (e.g. agency portfolio / external websites; metrics later)
+- **Without brand** — site record only (e.g. agency portfolio / external websites), with optional client contact, metrics source/resource, and monthly reports
 
-Create without a brand via `POST /v1/sites` with `team` + `slug` (omit brand). Provisioning a brand still creates/links a brand-backed site.
+Create without a brand from **Sites → Create site**, or via `POST /v1/sites` / warp `joai/site-create` with `team` + `slug`. Provisioning a brand still creates/links a brand-backed site (`joai/site-provision`).
 
 Install **Sites** under **Team settings → Apps**, then open **Sites** in the sidebar (`/sites`).
 
@@ -17,6 +17,7 @@ Install **Sites** under **Team settings → Apps**, then open **Sites** in the s
 
 - Many **sites** per team (`slug` is unique per team)
 - Brand-backed sites: live URL on **sites.joai.ai** (optional custom domain on premium)
+- Brandless sites: portfolio records, contact linkage, metrics source + resource, optional monthly report
 - Edit **CMS content** and **elements** on brand-backed sites
 - Same Warps power the browser UI and agent MCP calls — no duplicate logic
 - Pair with [Appointments](/apps/appointments) for booking brands, [Forms](/apps/forms) for intake, [Contracts](/apps/contracts) for on-chain apps
@@ -38,18 +39,23 @@ https://sites.joai.ai/{teamSlug}/{brandSlug}/configure
 
 Optional **custom domain** (premium, brand-backed sites): point a CNAME at the Sites host for your environment. See [Public surfaces](/apps/public-surfaces).
 
+Brandless sites are **not** published on sites.joai.ai.
+
 ## In the app
 
 ### Site manager (`/sites`)
 
 1. Install **Sites**
 2. Open **Sites**
-3. Create / list sites for brands available to the team, or create a site without a brand via API (`POST /v1/sites` with `team` + `slug`)
-4. Per brand-backed site:
-   - Copy or open the public URL
+3. **Create site** (slug only) for portfolio / external sites, or use **Add brand** for live Warp brands
+4. Per site:
    - Toggle **enabled**
+   - Link a **contact** and a **metrics source** + **resource** (same pair as `metrics-query`)
+   - Optionally enable **monthly report** (platform job on the 1st at 09:00; queues last month’s requests and page views for approval via the same contact-message warp as campaigns — not “visitors”)
+5. Per brand-backed site:
+   - **Add brand** → provision missing brands, then copy/open the public URL
    - Set **custom domain** (premium) and follow CNAME instructions
-5. Open **Content** (`/sites/content`) for CMS pages and elements
+6. Open **Content** (`/sites/content`) for CMS pages and elements
 
 ### Content and elements (`/sites/content`)
 
@@ -112,22 +118,15 @@ Requires the **Sites** app.
 | `list_elements` / `create_element` / `update_element` / `delete_element` | Elements |
 | `list_element_variations` / `generate_element_variation` / `update_element_variation` / `delete_element_variation` | Variations |
 
+Related Warps: `joai/site-create`, `joai/site-update`, `joai/site-provision`, `joai/metrics-query`, `joai/contact-message-send` (monthly reports queue this warp for approval, same path as campaigns).
+
 Live schemas: `tools/list`. See [MCP](/protocols/mcp) and [SKILL.md](https://joai.ai/SKILL.md).
 
 ## Building your own brand
 
 1. Add `joai--warps/warps/{brand}/`
 2. Create `brand.ts` with a `site` config
-3. Add Warp definitions (or generate from ABI)
-4. Publish to the catalog
-5. Agents/teams that install the brand can enable the site
+3. Publish the brand catalog
+4. Teams enable the site from Sites settings
 
-## Related
-
-- [Native apps](/apps/)
-- [Public surfaces](/apps/public-surfaces)
-- [Appointments](/apps/appointments)
-- [Forms](/apps/forms)
-- [ChatApps](/chatapps)
-- [Contracts](/apps/contracts)
-- [Warps](/warps/general)
+See contributor docs in `joai--warps`.
