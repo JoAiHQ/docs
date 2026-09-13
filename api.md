@@ -44,7 +44,7 @@ MCP: `create_api_token` (agent tooling).
 
 ## OpenAPI & agents
 
-Prefer OpenAPI + [SKILL.md](https://joai.ai/SKILL.md) for machine contracts. Product guides stay human-focused.
+Prefer OpenAPI for schemas and [SKILL.md](https://joai.ai/SKILL.md) as the agent entry index into these docs. Product guides stay human-focused.
 
 ## Related
 

@@ -12,7 +12,7 @@ MCP (Model Context Protocol) connects JoAi agents to Cursor, Claude, ChatGPT, an
 
 Discover OAuth: `GET https://cortex.joai.ai/.well-known/oauth-authorization-server`
 
-Full machine contract: [SKILL.md](https://joai.ai/SKILL.md).
+Agent entry index: [SKILL.md](https://joai.ai/SKILL.md).
 
 ## Two MCP ideas
 

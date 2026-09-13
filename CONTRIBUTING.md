@@ -6,7 +6,7 @@ This repo is the canonical **user-facing** JoAi documentation (VitePress → doc
 
 - When product behavior changes in `joai--api`, `joai--pwa`, `joai--cortex-service`, or `joai--warps`, update the matching page here in the **same task**.
 - If no page exists, add one and register it in `.vitepress/config.mts` (sidebar).
-- Prefer short, accurate product guides. Point to MCP `tools/list`, OpenAPI, and `https://joai.ai/SKILL.md` for machine contracts — do not duplicate full API schemas here.
+- Prefer short, accurate product guides. Point to MCP `tools/list`, OpenAPI, and `https://joai.ai/SKILL.md` (agent entry index) — do not duplicate full API schemas here. Keep procedures in docs; keep `SKILL.md` as an index of links, not a second copy of this content.
 - Cross-link related pages (e.g. [Teams](/teams) ↔ [Native apps](/apps/) ↔ [Campaigns](/campaigns)) when it helps discovery.
 - Match the tone and structure of existing pages (`agents.md`, `campaigns.md`, `apps/shop.md`, …).
 

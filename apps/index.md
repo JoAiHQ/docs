@@ -76,7 +76,7 @@ Customer-facing hosts (store, forms, sites, passes): **[Public surfaces](/apps/p
 
 - Install the app on the team **before** expecting MCP tools for it
 - Call `tools/list` on the agent MCP endpoint for live schemas
-- Prefer [SKILL.md](https://joai.ai/SKILL.md) and OpenAPI for machine contracts — these guides stay product-focused
+- Prefer OpenAPI / `tools/list` for schemas and [SKILL.md](https://joai.ai/SKILL.md) as the agent entry index — these guides stay product-focused
 - See [MCP](/protocols/mcp) for connection and credits
 
 ## Related

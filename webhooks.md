@@ -32,7 +32,7 @@ Supported `type` values include:
 - `session.start` — returns curated context (character + memories)
 - `permission.request` — waits for JoAi approval (UI or signed link)
 
-Also used for board auto-execution callbacks and Claude stop-hook adapters. Full contract: [SKILL.md](https://joai.ai/SKILL.md).
+Also used for board auto-execution callbacks and Claude stop-hook adapters. Agent index: [SKILL.md](https://joai.ai/SKILL.md).
 
 ## Related
 
