@@ -23,7 +23,7 @@ Integrations connect agents to external channels and services. Install from **Te
 | **Telegram** | Bot messaging |
 | **Slack** | Workspace channels / DMs |
 | **WhatsApp Business** | Business messaging |
-| **WhatsApp Personal** | Desktop-paired personal WhatsApp → hooks |
+| **WhatsApp Personal** | Desktop-paired personal WhatsApp → contact rooms + hooks |
 | **Discord** | Servers / DMs |
 | **Email** | Agent-owned inbox address |
 | **Twilio** | Voice + SMS |
@@ -58,6 +58,14 @@ Integrations connect agents to external channels and services. Install from **Te
 | **API Tokens** | Long-lived HTTP tokens — [API](/api) |
 | **Webhooks** | Outbound HTTP callbacks — [Webhooks](/webhooks) |
 | **Website Widget** | Embed chat on any site |
+
+## WhatsApp Personal
+
+Pair personal WhatsApp on the **desktop app** (QR / auth warp), then keep sync running so inbound messages land in per-contact rooms.
+
+- **Outbound:** typing in a Personal contact room uses the normal agent execute path; Cortex routes delivery as desktop `@whatsapp-send-text` (`WARP_EXECUTE` for the JoAi app to run).
+- **Inbound:** wacli webhooks create External messages in the matching Personal room (not Business WhatsApp rooms).
+- **Broadcast:** Personal rooms are not included in `joai-broadcast` — only Cortex social platforms are.
 
 ## ChatApps vs integrations
 
