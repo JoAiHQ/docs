@@ -1,18 +1,29 @@
 # Sites
 
-Sites turns Warp brands into live, branded web apps — booking pages, intake flows, CMS content, and more. Install **Sites** under **Team settings → Apps**, then open **Sites** in the sidebar (`/sites`).
+Sites are website instances belonging to a team. A team can have many sites.
+
+## With or without a brand
+
+A site can optionally link a Warp **brand** (`brandSlug`):
+
+- **With brand** — live app on sites.joai.ai at `/{teamSlug}/{brandSlug}`
+- **Without brand** — site record only (e.g. agency portfolio / external websites; metrics later)
+
+Create without a brand via `POST /v1/sites` with `team` + `slug` (omit brand). Provisioning a brand still creates/links a brand-backed site.
+
+Install **Sites** under **Team settings → Apps**, then open **Sites** in the sidebar (`/sites`).
 
 ## Overview
 
-- Enable a **site** per brand for your team
-- Public URL on **sites.joai.ai** (optional custom domain on premium)
-- Edit **CMS content** and **elements** (pages, sections, variations)
+- Many **sites** per team (`slug` is unique per team)
+- Brand-backed sites: live URL on **sites.joai.ai** (optional custom domain on premium)
+- Edit **CMS content** and **elements** on brand-backed sites
 - Same Warps power the browser UI and agent MCP calls — no duplicate logic
 - Pair with [Appointments](/apps/appointments) for booking brands, [Forms](/apps/forms) for intake, [Contracts](/apps/contracts) for on-chain apps
 
 ## URL structure
 
-Production:
+Brand-backed sites (production):
 
 ```
 https://sites.joai.ai/{teamSlug}/{brandSlug}
@@ -25,9 +36,7 @@ https://sites.joai.ai/{teamSlug}/{brandSlug}/configure
 | Testnet | `testnet-sites.joai.ai` |
 | Devnet | `devnet-sites.joai.ai` |
 
-Optional **custom domain** (premium): point a CNAME at the Sites host for your environment. See [Public surfaces](/apps/public-surfaces).
-
-> Older docs that mentioned `joai.ai/sites/{agent}` are outdated — Sites are team + brand path URLs on the Sites host.
+Optional **custom domain** (premium, brand-backed sites): point a CNAME at the Sites host for your environment. See [Public surfaces](/apps/public-surfaces).
 
 ## In the app
 
@@ -35,8 +44,8 @@ Optional **custom domain** (premium): point a CNAME at the Sites host for your e
 
 1. Install **Sites**
 2. Open **Sites**
-3. Create / list sites for brands available to the team
-4. Per site:
+3. Create / list sites for brands available to the team, or create a site without a brand via API (`POST /v1/sites` with `team` + `slug`)
+4. Per brand-backed site:
    - Copy or open the public URL
    - Toggle **enabled**
    - Set **custom domain** (premium) and follow CNAME instructions
@@ -52,12 +61,6 @@ From Sites → **Content**:
 4. Manage **elements** and **variations** (reusable blocks; generate variations when supported)
 
 These map 1:1 to the Sites MCP tools below.
-
-### Metrics
-
-Teams with Sites can read normalized metrics through the active team agent. The first provider is **Cloudflare zone analytics**. Store the Cloudflare API token as the agent secret `CLOUDFLARE_API_TOKEN`, then use a zone tag and an explicit date range to query it.
-
-The response distinguishes `web.requests` and `web.pageViews`; neither is labelled as visitors. Historical periods are cached for one day; a period that includes today is cached for 15 minutes. Metrics are read-only and are not sent to clients automatically.
 
 ### How routes work (brand config)
 
@@ -108,7 +111,6 @@ Requires the **Sites** app.
 | `list_content_versions` | Version history |
 | `list_elements` / `create_element` / `update_element` / `delete_element` | Elements |
 | `list_element_variations` / `generate_element_variation` / `update_element_variation` / `delete_element_variation` | Variations |
-| `query_metrics` | Read normalized metrics for a source, resource, and period |
 
 Live schemas: `tools/list`. See [MCP](/protocols/mcp) and [SKILL.md](https://joai.ai/SKILL.md).
 
