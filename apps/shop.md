@@ -64,10 +64,10 @@ Pending invoices include payment instructions in the notes:
 
 | Team setup | What appears |
 | --- | --- |
-| **Bank only** (IBAN/BIC set, `payments.online` off) | Bank transfer text + **SEPA transfer QR** (EUR) so customers can scan in their banking app |
-| **Online payments** (`payments.online` on) | Pay link + **link QR** (bank text still shown if configured) |
+| **Bank only** (IBAN/BIC set, `payments.online` off or unset) | Bank transfer text + **SEPA transfer QR** (EUR) so customers can scan in their banking app |
+| **Online payments** (`payments.online` on — requires payment setup) | Pay link + **link QR** (bank text still shown if configured) |
 
-SEPA transfer QRs are EUR-only. Paid invoices omit payment QR codes.
+`payments.online` is opt-in: missing/unset means offline. SEPA transfer QRs are EUR-only. Paid invoices omit payment QR codes.
 
 ### Fulfillment and returns
 
