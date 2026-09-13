@@ -146,6 +146,16 @@ When starting delivery, pass an optional **`scheduledAt`** ISO datetime (API, SD
 
 **Cancel schedule** (`POST …/cancel-schedule`) is only available while **scheduled**. It clears `scheduledAt` and returns the campaign to **draft**.
 
+### Test send (email)
+
+Before a real blast, use **Send test** in the UI or `POST /v1/campaigns/{id}/send-test` with `{ "contactId": "…" }`.
+
+- Email channel only; **existing contact with an email** required
+- Assembles the real subject/body (placeholders, AI slots, HTML, unsubscribe footer) and delivers synchronously through the campaign agent
+- Subject is prefixed with `[TEST]`
+- Does **not** start the campaign, attach audience contacts, or update sent/skipped/failed counts
+- Does **not** create new CRM contacts
+
 ### Cancel send
 
 Cancel is only available while **sending**. It closes open delivery approval cards and marks remaining contacts as failed so the campaign can leave the stuck state.
@@ -173,9 +183,10 @@ Only **completed** and **failed** campaigns can be archived. Archived campaigns 
 3. Map every `{{placeholder}}` (static/contact or AI) and pick an agent when using AI
 4. Check the audience preview (sendable vs skipped)
 5. For WhatsApp: language + category, then submit for approval
-6. Send when ready (confirm dialog shows sendable count and auto-mode notes)
+6. **Send test** (email only) to your inbox — real delivery with a `[TEST]` subject; does not start the campaign or attach the audience
+7. Send when ready (confirm dialog shows sendable count and auto-mode notes)
 
-Use the in-app message preview to sanity-check personalization before sending.
+Use the in-app message preview to sanity-check personalization before sending. Prefer **Send test** for a real email round-trip.
 
 ## MCP / agents
 
@@ -194,7 +205,7 @@ Related warp (often used from automations / form follow-ups):
 
 - `joai-campaign-send-contact` — send an existing campaign to one contact by email, optionally delayed (`2h`, `3d`, …)
 
-**Not exposed as dedicated MCP tools today:** update/edit, archive/unarchive, cancel send, WhatsApp submit/refresh. Use the JoAi UI (or HTTP API) for those.
+**Not exposed as dedicated MCP tools today:** update/edit, archive/unarchive, cancel send, test send, WhatsApp submit/refresh. Use the JoAi UI (or HTTP API) for those.
 
 When creating via MCP, pass placeholders explicitly — they are **not** inferred from `{{tokens}}` alone:
 
