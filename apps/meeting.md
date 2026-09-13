@@ -21,6 +21,8 @@ Meetings captures live conversations, transcripts, and AI summaries. Install **M
 5. Watch the live transcript; bookmark important moments
 6. Stop when finished — open **Summary** for the session
 
+When a **scheduled** meeting’s start time arrives, JoAi opens Meetings in the app if it’s already running, and also sends a **push notification** so you can join from the lock screen or when the app is in the background. Tapping the push opens `/meeting?action=start&meetingId=…`.
+
 ### Join with code
 
 Share or open a join URL with a meeting code (e.g. `/meetings/join?code=…`). The joiner shows features (summary, transcription) and can open the summary when the session ends.
