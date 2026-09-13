@@ -6,7 +6,7 @@ Install the **Artifacts** native app from team **Apps** to manage deliverables i
 
 ## Overview
 
-- Register a deliverable with title, type, optional URL / password, uploaded files, and extra link
+- Register a deliverable with title, type, optional URL / password, and extra link
 - Attach a **contact** (and optionally an **order** / quote)
 - Status flow: **draft → ready → sent** (or **archived**)
 - **Deliver** drafts a message from the artifact, lets you edit it, then sends on email / SMS / WhatsApp and marks the artifact **sent**
@@ -34,22 +34,16 @@ Install the **Artifacts** native app from team **Apps** to manage deliverables i
 
 ## Recommended flow
 
-1. Create each deliverable (deck, demo, agreement, …) with contact, files and/or URLs, status `ready`
-2. Deliver with **one or more** artifact IDs and **one or more** recipients — one message covering all links/passwords → edit → approve → send
-3. All included artifacts become **sent**; one delivery record is stored per recipient
-
-Artifacts can contain an ordered document made of generic blocks (`heading`, `richText`, `metrics`, `table`, `callout`, `actions`, `media`, and `divider`). The envelope remains the same for every artifact; blocks make long-form reports, agreements, and proposals possible without special artifact types.
-
-When an artifact with blocks is delivered, JoAi appends its document to the delivery message automatically. Email receives a safe, structured HTML version; SMS and WhatsApp receive the equivalent readable plaintext. The message you write remains the introduction, so do not repeat the artifact contents manually.
-
-For a client report, query the source metrics first, use the reporting skill to keep facts and recommendations separate, then create a normal **update** artifact with structured blocks. Artifacts remain generic; reporting does not introduce a separate artifact type.
+1. Create each deliverable (deck, demo, agreement, …) with contact and URLs, status `ready`
+2. Deliver with **one or more** artifact IDs — one message covering all links/passwords → edit → approve → send
+3. All included artifacts become **sent**; a delivery record stores what went out
 
 ## Ownership vs delivery
 
-- **Artifact `contactId`** — who the deliverable belongs to (optional until send; used as a default recipient).
+- **Artifact `contactId`** — who the deliverable belongs to (optional until send; used as the default recipient).
 - **Delivery `contactId`** — who that specific message was sent to (always set on the delivery record).
 
-One delivery can cover several artifacts. You can also send the same package to **multiple contacts** — each recipient gets the same message and a separate delivery record. When several recipients are chosen, artifact ownership contacts are left unchanged. Delivery history keeps the recipient even if an artifact’s contact is later changed.
+One delivery can cover several artifacts. Delivery history keeps the recipient even if an artifact’s contact is later changed.
 
 ## In the app
 
@@ -88,7 +82,7 @@ See [SKILL.md](https://joai.ai/SKILL.md) and [Warps](/warps/general).
 
 - `GET|POST /v1/artifacts`
 - `GET|PATCH|DELETE /v1/artifacts/{id}`
-- `POST /v1/artifacts/deliver` — body: `artifactIds[]`, `message`, `integration` (`email` | `sms` | `whatsapp`), optional `subject`, `contactIds[]` (one recipient = `[id]`)
+- `POST /v1/artifacts/deliver` — body: `artifactIds[]`, `message`, `integration` (`email` | `sms` | `whatsapp`), optional `subject`, `contactId`
 - `GET /v1/artifacts?ids=id1,id2` — load a specific set
 
 See also [Contacts](/apps/contacts) for messaging channels and [News](/apps/news) for public updates (different product).
