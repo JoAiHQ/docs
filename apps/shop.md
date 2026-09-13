@@ -58,6 +58,17 @@ Custom lines are for one-offs (repair, travel, materials). They appear on the or
 
 Orders tab also surfaces **earnings** and **commission agreements** where configured for the team.
 
+### Invoices and payment QR codes
+
+Pending invoices include payment instructions in the notes:
+
+| Team setup | What appears |
+| --- | --- |
+| **Bank only** (IBAN/BIC set, `payments.online` off) | Bank transfer text + **SEPA transfer QR** (EUR) so customers can scan in their banking app |
+| **Online payments** (`payments.online` on) | Pay link + **link QR** (bank text still shown if configured) |
+
+SEPA transfer QRs are EUR-only. Paid invoices omit payment QR codes.
+
 ### Fulfillment and returns
 
 For physical items after payment:
