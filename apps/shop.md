@@ -60,14 +60,16 @@ Orders tab also surfaces **earnings** and **commission agreements** where config
 
 ### Invoices and payment QR codes
 
+Invoices show **invoice date** and **service date** (Leistungsdatum). Service date defaults to the invoice date when unset; set it when supply/service happened on a different day.
+
 Pending invoices include payment instructions in the notes:
 
 | Team setup | What appears |
 | --- | --- |
 | **Bank only** (IBAN/BIC set, `payments.online` off or unset) | Bank transfer text + **SEPA transfer QR** (EUR) so customers can scan in their banking app |
-| **Online payments** (`payments.online` on — requires payment setup) | Pay link + **link QR** (bank text still shown if configured) |
+| **Online payments** (`payments.online` on — requires payment setup) | Pay link + **link QR** to the order page (bank text still shown if configured) |
 
-`payments.online` is opt-in: missing/unset means offline. SEPA transfer QRs are EUR-only. Paid invoices omit payment QR codes.
+`payments.online` is opt-in: missing/unset means offline. SEPA transfer QRs are EUR-only and skipped if the IBAN checksum is invalid. Paid invoices omit payment QR codes.
 
 ### Fulfillment and returns
 
