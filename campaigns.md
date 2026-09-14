@@ -83,12 +83,14 @@ Every placeholder must be mapped, or it stays **empty** on send.
 
 Map a placeholder to:
 
-- a **contact path**: `contact.name`, `contact.email`, `contact.phone`, `contact.company`, `contact.title`, `contact.location`
+- a **contact path**: `contact.name`, `contact.firstName`, `contact.lastName`, `contact.email`, `contact.phone`, `contact.company`, `contact.title`, `contact.location`
 - or a **literal string**, e.g. `Vienna`
+
+First/last name are derived from the contact’s full name (first word / remainder).
 
 ```json
 {
-  "name": "contact.name",
+  "name": "contact.firstName",
   "city": "Vienna"
 }
 ```
