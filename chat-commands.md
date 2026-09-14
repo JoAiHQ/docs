@@ -51,6 +51,8 @@ Session media workbench — see [Desk](/desk).
 | `/secret-set` | Set a secret via the secrets flow |
 | `/secret-approve` / `/secret-decline` | Approve or decline secret prompts |
 
+Over MCP (requires secret view/manage permissions): `secret_list`, `secret_status`, `secret_set`, `secret_clear`. Status and list never return secret values.
+
 ## Other
 
 | Command | Purpose |

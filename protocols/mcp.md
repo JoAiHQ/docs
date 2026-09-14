@@ -44,6 +44,7 @@ Always useful (confirm with `tools/list`):
 | Documents / media | `list_documents`, `create_document`, … · `media_list`, `media_upload`, `media_delete` |
 | Private warps / apps | `list_private_warps`, `create_private_warp`, … · `create_private_app` |
 | Rooms | `list_rooms`, `get_room_messages` |
+| Secrets | `secret_list`, `secret_status`, `secret_set`, `secret_clear` (keys/status only — never values) |
 | Misc | `execute`, `search`, `character_update`, `create_api_token`, `check_warp_executions` |
 
 Native-app tools (Board, Shop, Contacts, Forms, …) are documented on each [native app](/apps/) page.
