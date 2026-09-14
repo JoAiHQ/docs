@@ -162,7 +162,7 @@ Cancel is only available while **sending**. It closes open delivery approval car
 
 ### Email HTML mode
 
-For **email** campaigns, set **`contentHtml`** on create/update. The body is sent as HTML (fragment tags like `<p>` work — no full `<html>` document required). Plain-text campaigns keep the 5 000 character limit; HTML allows up to 50 000. The marketing **unsubscribe** footer is appended in HTML when applicable.
+For **email** campaigns, set **`contentHtml`** on create/update. In the UI, HTML mode uses a dedicated visual editor with a formatting toolbar (plus a source toggle for raw HTML). The body is sent as HTML (fragment tags like `<p>` work — no full `<html>` document required). Plain-text campaigns keep the 5 000 character limit; HTML allows up to 50 000. The marketing **unsubscribe** footer is appended in HTML when applicable.
 
 ### Opens and clicks (Resend only)
 
