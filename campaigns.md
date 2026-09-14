@@ -62,7 +62,10 @@ Pass one or more of:
 - `tags` — contacts with any of these tags (API-only audience path)
 - `contactIds` — explicit contact hashids
 
-At least one audience source is required. Tags and contact IDs can be combined; a segment resolves on its own.
+At least one audience source is required on create. Tags and contact IDs can be combined; a segment resolves on its own. Empty audiences (including empty segments) are rejected.
+
+On update, omit `segmentId` / `tags` / `contactIds` to leave the audience unchanged; send any of them to replace it (same non-empty rules as create).
+
 
 Before send, the UI shows how many contacts are **sendable** vs skipped:
 
@@ -140,7 +143,9 @@ Editing a **pending** or **approved** campaign resets it to **draft** and clears
 
 ### Edit
 
-Unsent campaigns (draft, pending, approved, rejected) can be edited. Sending / completed / failed cannot. Editing pending or approved content returns the campaign to draft.
+Unsent campaigns (draft, pending, approved, rejected) can be edited — including **audience** (segment, tags, or contact IDs). Sending / completed / failed cannot. Editing pending or approved content or audience returns the campaign to draft (re-submit WhatsApp approval before sending).
+
+On update, omit `segmentId` / `tags` / `contactIds` to leave the audience unchanged; send any of them to replace it (same rules as create: at least one non-empty source).
 
 ### Schedule send
 
