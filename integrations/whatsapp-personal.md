@@ -31,6 +31,8 @@ Live inbound messages then start a normal agent turn in that contact room. When 
 - **Auto mode on:** the warp runs and the desktop CLI sends
 - **Auto mode off:** an editable warp approval stays in the room until you approve or edit it
 
+Routine inbound WhatsApp payloads do not create separate push notifications; the conversation itself remains visible in its contact room.
+
 Historical backfill from the first sync is persisted only — it does not prompt the agent. JoAi allows a high per-agent hook rate for that burst; after it settles, live messages continue normally. Some noisy protocol payloads (group key distribution, albums, etc.) may appear in the desktop terminal without becoming chat messages.
 
 ### Outbound
