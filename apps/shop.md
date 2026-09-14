@@ -47,6 +47,8 @@ Use **Open store** in the header to jump to the public storefront.
 3. Choose **Order** or **Quote**
 4. Optionally price as **excl. VAT** (net)
 
+The customer contact remains the buyer shown on the invoice. Use **Invoice recipient** during creation or editing when another contact (for example, an accounting inbox) should receive invoice and confirmation emails; leaving it at the default uses the customer contact.
+
 **Line items:**
 
 | Type | How |
@@ -69,7 +71,7 @@ Pending invoices include payment instructions in the notes:
 | **Bank only** (IBAN/BIC set, `payments.online` off or unset) | Bank transfer text + **SEPA transfer QR** (EUR) so customers can scan in their banking app |
 | **Online payments** (`payments.online` on — requires payment setup) | Pay link + **link QR** to the order page (bank text still shown if configured) |
 
-`payments.online` is opt-in: missing/unset means offline. SEPA transfer QRs are EUR-only and skipped if the IBAN checksum is invalid. Paid invoices omit payment QR codes.
+`payments.online` is opt-in: missing/unset means offline. The order number is always used as the payment reference in both the printed bank details and the SEPA QR. SEPA transfer QRs are EUR-only and skipped if the IBAN checksum is invalid. Paid invoices omit payment QR codes.
 
 ### Fulfillment and returns
 
@@ -131,8 +133,9 @@ Requires **Shop** installed. **Team** tools are for merchants; **customer** tool
 | `create_product` / `update_product` / `delete_product` | Products (no team `list_products`) |
 | `create_product_variation` / `update_product_variation` | Variations |
 | `create_service` / `update_service` / `delete_service` / `list_services` | Services (also with Appointments) |
-| `create_order` | Order or quote — catalog and/or **custom** lines |
-| `list_orders` / `delete_order` | Orders (no team `get_order`) |
+| `create_order` | Order or quote — catalog and/or **custom** lines; optional `invoiceContactId` |
+| `update_order` | Status, dates, or invoice recipient; clear `invoiceContactId` to use the customer |
+| `list_orders` / `delete_order` | List or delete orders |
 | `create_coupon` / `update_coupon` / `delete_coupon` / `list_coupons` | Coupons |
 | `create_fulfillment` / `update_fulfillment` / `list_fulfillments` | Fulfillment |
 | `list_returns` / `update_return` | Returns (merchant updates) |
