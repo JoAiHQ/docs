@@ -64,6 +64,7 @@ export default defineConfig({
           { text: 'Sentry', link: '/integrations/sentry' },
           { text: 'Readwise Reader', link: '/integrations/readwise' },
           { text: 'Grok Voice', link: '/integrations/grok' },
+          { text: 'Cloudflare', link: '/integrations/cloudflare' },
           { text: 'MCP', link: '/integrations/mcp' },
           { text: 'API Tokens', link: '/integrations/api-tokens' },
           { text: 'Webhooks', link: '/integrations/webhooks' },

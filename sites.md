@@ -50,8 +50,8 @@ Brandless sites are **not** published on sites.joai.ai.
 3. **Create site** (slug only) for portfolio / external sites, or use **Add brand** for live Warp brands
 4. Per site:
    - Toggle **enabled**
-   - Link a **contact** and a **metrics source** + **resource** (same pair as `metrics-query`)
-   - Optionally enable **monthly report** (platform job on the 1st at 09:00; queues last month’s requests and page views for approval via the same contact-message warp as campaigns — not “visitors”)
+   - Link a **contact** and a **metrics source** + **resource** (same pair as `metrics-query`). For Cloudflare, connect the agent under [Cloudflare integration](/integrations/cloudflare) first, then use `cloudflare` as source and the zone tag as resource.
+   - Optionally enable **monthly report**. If the metrics source is Cloudflare and no agent has a token yet, JoAi opens the [Cloudflare](/integrations/cloudflare) setup dialog first — then turns the report on.
 5. Per brand-backed site:
    - **Add brand** → provision missing brands, then copy/open the public URL
    - Set **custom domain** (premium) and follow CNAME instructions
