@@ -24,7 +24,7 @@ JoAi generates the webhook URL and secret behind the scenes — you only use the
 
 ### Inbound
 
-While sync is running, the desktop CLI posts to JoAi hooks (`wacli`). Messages are persisted as **External** messages in **WhatsApp Personal** contact rooms — never into Business WhatsApp rooms.
+While sync is running, the desktop CLI posts to JoAi hooks (`?source=wacli`) and signs each body with `X-Wacli-Signature` (HMAC-SHA256). Messages are persisted as **External** messages in **WhatsApp Personal** contact rooms — never into Business WhatsApp rooms.
 
 ### Outbound
 
