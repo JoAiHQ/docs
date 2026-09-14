@@ -9,7 +9,7 @@ Install the **Artifacts** native app from team **Apps** to manage deliverables i
 - Register a deliverable with title, type, optional URL / password, and extra link
 - Attach a **contact** (and optionally an **order** / quote)
 - Status flow: **draft → ready → sent** (or **archived**)
-- **Deliver** drafts a message from the artifact, lets you edit it, then sends on email / SMS / WhatsApp and marks the artifact **sent**
+- **Deliver** from the dashboard with a message you write — pick the **sending agent** (same idea as campaigns; that agent’s email/SMS/WhatsApp integration is used) — or **Generate with AI** to run the existing `artifact-deliver` warp in chat (draft → edit → approve → send). Document blocks are appended automatically on send.
 
 ## Types
 
@@ -49,7 +49,7 @@ One delivery can cover several artifacts. Delivery history keeps the recipient e
 
 1. Install **Artifacts** under team **Apps**
 2. Open **Artifacts** in the sidebar
-3. Create / edit deliverables, then **Deliver** with a message on email, SMS, or WhatsApp
+3. Create / edit deliverables, then **Deliver** (manual) or **Generate with AI** (opens `artifact-deliver` in chat)
 
 ## For agents (warps)
 
@@ -82,7 +82,7 @@ See [SKILL.md](https://joai.ai/SKILL.md) and [Warps](/warps/general).
 
 - `GET|POST /v1/artifacts`
 - `GET|PATCH|DELETE /v1/artifacts/{id}`
-- `POST /v1/artifacts/deliver` — body: `artifactIds[]`, `message`, `integration` (`email` | `sms` | `whatsapp`), optional `subject`, `contactId`
+- `POST /v1/artifacts/deliver` — body: `artifactIds[]`, `message`, `integration` (`email` | `sms` | `whatsapp`), optional `subject`, `contactIds[]`, `agentId` (agent UUID; defaults to request agent or the team’s first agent)
 - `GET /v1/artifacts?ids=id1,id2` — load a specific set
 
 See also [Contacts](/apps/contacts) for messaging channels and [News](/apps/news) for public updates (different product).
