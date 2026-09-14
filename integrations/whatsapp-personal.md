@@ -13,12 +13,12 @@ This is **not** [WhatsApp Business](/integrations/whatsapp) (Meta Cloud API / ca
 ## Setup
 
 1. On **desktop**, open **Agent settings → Integrations** → **WhatsApp Personal**
-2. Click **Connect** to create the integration and webhook credentials
-3. Click **Pair** to run the auth warp (`@whatsapp-auth`) and scan the QR / complete WhatsApp login
-4. Click **Start sync** to run the sync warp (`@whatsapp-sync`) with the webhook URL and secret JoAi generated
+2. Click **Connect**
+3. Click **Pair** and scan the QR / complete WhatsApp login
+4. Click **Start sync**
 5. Leave sync running while you want inbound messages to arrive
 
-You can copy the webhook URL and manage the webhook secret from the same panel. Optional inbound hook mapping is available when a hook source is configured.
+JoAi generates the webhook URL and secret behind the scenes — you only use the buttons.
 
 ## How it works
 
