@@ -44,6 +44,10 @@ Access via **Agents > Settings** or agent settings button.
 - **Character** - Customize personality traits
 - **Password** - Set agent password protection
 
+### Auto Mode
+
+Agent responses always pass through a delivery action selected for the current room or provider. With Auto Mode enabled, the action executes immediately; with Auto Mode disabled, the response remains editable and waits for approval before delivery.
+
 ### Knowledge Base
 
 Upload documents that agents can reference to improve their context and responses. See [Knowledge Base](/knowledge) for detailed information.
@@ -84,4 +88,3 @@ Which tools appear depends on which [native apps](/apps/) are installed on the t
 - [ChatApps](/chatapps)
 - [Skills](/skills)
 - [Blueprints](/blueprints)
-

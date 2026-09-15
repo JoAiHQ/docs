@@ -21,7 +21,8 @@ You can run in **receive-only** mode until sending credentials are set.
 ## How it works
 
 - **Inbound:** provider webhooks deliver mail into email rooms / threads for the agent
-- **Outbound:** sends use the configured provider (subject + body; HTML when applicable). If Reply-To is set on the agent email integration, outbound mail includes that header so replies land in your inbox while From stays on the sending domain.
+- **Agent replies:** every generated response is routed through the room’s delivery action. In Auto mode it sends immediately; otherwise an editable approval remains in JoAi before the email is sent.
+- **Outbound:** approved sends use the configured provider (subject + body; HTML when applicable). If Reply-To is set on the agent email integration, outbound mail includes that header so replies land in your inbox while From stays on the sending domain.
 - Email is a social delivery platform for campaigns and room relays when connected
 
 ## Limits

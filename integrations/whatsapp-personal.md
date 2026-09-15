@@ -18,6 +18,8 @@ This is **not** [WhatsApp Business](/integrations/whatsapp) (Meta Cloud API / ca
 4. Click **Start sync**
 5. Leave sync running while you want inbound messages to arrive
 
+The desktop app manages its own wacli executable. Before pairing, syncing, or sending, it periodically checks the official OpenClaw release feed, verifies the downloaded archive checksum, and uses the managed version instead of an arbitrary `wacli` found on your shell `PATH`. Use **Update wacli** in the integration settings to force an immediate check; an active sync is stopped and restarted around an update.
+
 JoAi generates the webhook URL and secret behind the scenes — you only use the buttons.
 
 ## How it works
@@ -26,7 +28,7 @@ JoAi generates the webhook URL and secret behind the scenes — you only use the
 
 While sync is running, the desktop CLI posts to JoAi hooks (`?source=wacli`) and signs each body with `X-Wacli-Signature` (HMAC-SHA256). Messages are persisted as **External** messages in **WhatsApp Personal** contact rooms — never into Business WhatsApp rooms.
 
-Live inbound messages then start a normal agent turn in that contact room. When the agent replies, JoAi always routes that reply through `@whatsapp-send-text`:
+Live inbound messages then start a normal agent turn in that contact room. Every generated response is routed through the WhatsApp send action:
 
 - **Auto mode on:** the warp runs and the desktop CLI sends
 - **Auto mode off:** an editable warp approval stays in the room until you approve or edit it
