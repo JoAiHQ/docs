@@ -6,6 +6,7 @@ Contacts is the CRM native app: people and companies you work with, their proper
 
 - Store **name, email, phone**, tags, avatars, and custom properties
 - Log **activities**, view **timeline**, and browse **memories** / **orders** on a contact
+- Link contacts with **relations** — family, organization, business, and referrals
 - Message contacts (email / WhatsApp / SMS when integrations allow)
 - Build **segments** for [Campaigns](/campaigns) audiences (segment UI lives under Campaigns)
 - Optional **loyalty** program, scanner, and customer wallet passes
@@ -30,7 +31,28 @@ On **mobile**, you can import from the device address book when available (not a
 | **Memories** | Agent memories tied to the contact |
 | **Orders** | Shop orders for this contact (when [Shop](/apps/shop) is installed) |
 | **Loyalty** | Membership, points, enroll / add / redeem / adjust / history |
+| **Relations** | Links to other contacts — family, organization, business, referrals |
 | **Send message** | Reach out on an available channel |
+
+### Relationships between contacts
+
+Contacts can be linked to each other with a typed relation, which lets you model family trees, company structures, business networks, and referral chains. Add and remove them from a contact’s **Relations** tab; links are grouped by category, and clicking one opens the linked contact.
+
+| Group | Relation types |
+| --- | --- |
+| **Family** | `parent_of`, `child_of`, `spouse_of`, `sibling_of` |
+| **Organization** | `manages`, `reports_to`, `colleague_of` |
+| **Business** | `partner_of`, `client_of`, `supplier_of` |
+| **Referral** | `referred_by`, `referred` |
+
+Relations are **read from the first contact’s point of view** and stored once in a canonical direction:
+
+- `parent_of` means the first contact is the parent of the second
+- `referred_by` means the second contact referred the first
+- Adding the inverse (for example `child_of` where `parent_of` already exists) reuses the same link instead of creating a duplicate
+- Both contacts must belong to the same team
+
+Each relation appears on both contacts, with the type shown from that contact’s perspective. Each relation can also carry an optional short **note** — for example how the two people met or what a referral was about — which you can add or edit inline. Agents (MCP) can additionally change a relation’s type or clear its note.
 
 ### Segments
 
@@ -81,6 +103,7 @@ Requires the **Contacts** app.
 | `set_contact_property` | Custom properties |
 | `create_contact_activity` / `list_contact_activities` / `delete_contact_activity` | Activities |
 | `list_contact_timeline` | Timeline |
+| `create_contact_relation` / `list_contact_relations` / `update_contact_relation` / `delete_contact_relation` | Link contacts, change a relation’s type, add notes, or remove a relation |
 | `list_segments` / `create_segment` / `delete_segment` | Segments (no `update_segment` — edit in Campaigns UI) |
 
 Warps such as `joai-contact-find-or-create` are preferred for onboarding. Pass `team` when operating outside the agent’s default team.
