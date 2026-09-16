@@ -48,6 +48,10 @@ Access via **Agents > Settings** or agent settings button.
 
 Agent responses always pass through a delivery action selected for the current room or provider. With Auto Mode enabled, the action executes immediately; with Auto Mode disabled, the response remains editable and waits for approval before delivery.
 
+Proposed actions queue up in the **pending actions** banner. Open it to review them one at a time — each card carries a short description of what the action will do, and you can step through the queue with the arrow buttons (or the left/right arrow keys) before approving, always approving, or declining. Older proposals are shown first so you can work through them in the order they were made.
+
+Actions that only run in the desktop app (for example CLI commands like WhatsApp Personal) show a desktop-download hint instead of an approve button, with **Skip** to move on to the next one.
+
 ### Knowledge Base
 
 Upload documents that agents can reference to improve their context and responses. See [Knowledge Base](/knowledge) for detailed information.

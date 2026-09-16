@@ -14,7 +14,7 @@ Encrypted **local clipboard history** on desktop. Open **Settings → Clipboard*
 
 ## Hotkeys
 
-Global hotkeys (e.g. voice toggle, warp approve / decline). Open **Hotkeys** from the user menu (page may not appear in the Team settings sidebar).
+Global hotkeys (e.g. voice toggle, warp approve / decline, previous / next pending action with the arrow keys). Open **Hotkeys** from the user menu (page may not appear in the Team settings sidebar).
 
 ## Meetings capture
 
