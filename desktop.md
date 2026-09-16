@@ -24,6 +24,10 @@ Desktop auto-detect for Google Meet / Teams / Zoom — [Meetings](/apps/meeting)
 
 Connect a local project folder via the [Workspace](/apps/files) chat control (desktop).
 
+## Links
+
+External links (websites, contacts, explorers, …) open in an **in-app browser dialog** on desktop instead of leaving the app. Use **Open in browser** in the dialog to hand the link to your default browser. Sign-in links (Google/Apple) always open in the system browser.
+
 ## Related
 
 - [Voice dictation](/apps/voice-dictation)
