@@ -130,8 +130,8 @@ Requires **Shop** installed. **Team** tools are for merchants; **customer** tool
 
 | Tool | Purpose |
 | --- | --- |
-| `create_product` / `update_product` / `delete_product` | Products (no team `list_products`) |
-| `create_product_variation` / `update_product_variation` | Variations |
+| `create_product` / `update_product` / `delete_product` | Products; `create_product` accepts `stock` for the default variation |
+| `create_product_variation` / `update_product_variation` | Variations; both accept `stock` (units available) |
 | `create_service` / `update_service` / `delete_service` / `list_services` | Services (also with Appointments) |
 | `create_order` | Order or quote — catalog and/or **custom** lines; optional `invoiceContactId` |
 | `update_order` | Status, dates, or invoice recipient; clear `invoiceContactId` to use the customer |
@@ -141,6 +141,8 @@ Requires **Shop** installed. **Team** tools are for merchants; **customer** tool
 | `list_returns` / `update_return` | Returns (merchant updates) |
 
 Shipping zones / fulfillment locations are configured in the UI (no dedicated MCP tools today).
+
+Set `stock` on a variation (in cents-free units) to make it orderable — a variation with `stock` `0` or unset is treated as unavailable and the shop will not accept orders for it. `update_product` and `update_product_variation` only change the fields you pass, so a partial update never clears price, stock, visibility, or media.
 
 **Custom line** (`unitPrice` = cents):
 
