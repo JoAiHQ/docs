@@ -40,7 +40,7 @@ Contacts can be linked to each other with a typed relation, which lets you model
 
 | Group | Relation types |
 | --- | --- |
-| **Family** | `parent_of`, `child_of`, `spouse_of`, `sibling_of` |
+| **Family** | `parent_of`, `child_of`, `spouse_of`, `sibling_of`, `aunt_of`, `nibling_of` (niece/nephew) |
 | **Organization** | `manages`, `reports_to`, `colleague_of` |
 | **Business** | `partner_of`, `client_of`, `supplier_of` |
 | **Referral** | `referred_by`, `referred` |
