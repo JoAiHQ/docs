@@ -9,7 +9,7 @@ Install the **Campaigns** native app under **Team settings → Apps** (see [Nati
 - Target a **saved segment**, contacts with specific **tags**, or explicit **contact IDs**
 - Personalize with `{{placeholders}}` from contact fields, static text, or AI prompts
 - WhatsApp templates go through an **approval** flow before send
-- Finished campaigns can be **archived** so the active list stays clean
+- Finished campaigns can be **archived**, and recipients that failed or were skipped can be **retried**
 - Email messages get an **unsubscribe** footer automatically when marketing consent URLs are available
 
 ## Channels
@@ -138,8 +138,8 @@ Editing a **pending** or **approved** campaign resets it to **draft** and clears
 | **Rejected** | Approval failed; edit and resubmit. |
 | **Scheduled** | Send queued for a future time. **Cancel schedule** returns to draft. |
 | **Sending** | Delivery in progress. Can be **cancelled** if stuck. |
-| **Completed** | Finished. Can be archived. |
-| **Failed** | Finished with failures. Can be archived. |
+| **Completed** | Finished. Can be archived, or retried for recipients that failed or were skipped. |
+| **Failed** | Finished with failures. Can be archived, or retried. |
 
 ### Edit
 
@@ -174,6 +174,31 @@ For **email** campaigns, set **`contentHtml`** on create/update. In the UI, HTML
 ### Opens and clicks (Resend only)
 
 When outbound email is sent through **Resend**, the provider message id is stored on the outbound message and campaign contact. Resend **email.opened** / **email.clicked** webhooks update per-contact `opened_at` / `clicked_at` and campaign `openedCount` / `clickedCount`. Other email providers do not populate these metrics today.
+
+### Recipients and retries
+
+Every campaign contact carries a delivery status you can inspect per recipient:
+
+| Status | Meaning |
+| --- | --- |
+| **Sent** | Delivered to the channel |
+| **Failed** | Delivery attempt rejected; the provider error is stored |
+| **Skipped** | Not attempted, with a reason (consent, opt-out, missing channel, approval) |
+| **Pending** | Attached to the campaign but not attempted yet |
+
+In the Campaigns UI the counts on a campaign card (`failed`, `skipped`, and `sent / total`) are clickable and open the recipient list, which you can filter by status.
+
+**Retry** re-queues recipients that did not go out and can still be delivered:
+
+- **Failed** recipients are always retryable
+- **Skipped** recipients are retryable only when the reason can be resolved — **missing channel** (after adding an email/phone) or **approval skipped** (after approval)
+- **Opted out** and **pending consent** recipients are never retried
+- Retrying reopens a finished campaign to **sending**, clears the previous failure/skip, restores the remaining count, and dispatches the messages again
+
+HTTP API:
+
+- `GET /v1/campaigns/{id}/recipients` — paginated recipients; optional `status` (`sent`, `failed`, `skipped`, `pending`) and `perPage`. Each recipient includes `retryable` and, for skips, `skipReason`.
+- `POST /v1/campaigns/{id}/retry` — retry every retryable recipient, or pass `{ "contactIds": ["…"] }` for specific contacts. Only allowed for **completed** or **failed** campaigns. Returns `{ "retried": n }`.
 
 ### Delete
 
@@ -212,7 +237,7 @@ Related warp (often used from automations / form follow-ups):
 
 - `joai-campaign-send-contact` — send an existing campaign to one contact by email, optionally delayed (`2h`, `3d`, …)
 
-**Not exposed as dedicated MCP tools today:** update/edit, archive/unarchive, cancel send, test send, WhatsApp submit/refresh. Use the JoAi UI (or HTTP API) for those.
+**Not exposed as dedicated MCP tools today:** update/edit, archive/unarchive, cancel send, test send, list recipients, retry failed sends, WhatsApp submit/refresh. Use the JoAi UI (or HTTP API) for those.
 
 When creating via MCP, pass placeholders explicitly — they are **not** inferred from `{{tokens}}` alone:
 
