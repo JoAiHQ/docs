@@ -46,6 +46,12 @@ Update tools are gated by the **Board** app in MCP:
 
 `list_updates`, `create_update`, `update_update`, `delete_update`, `get_update_stats`
 
+`list_updates` mirrors `@joai/sdk` `client.updates.list`:
+
+- `tags` (e.g. `hollabrunn-digital`) — city-wide public feed across teams; `team` not required
+- `team` — scope to one team slug
+- Optional: `type` (`deal` | `event` | `news`), `status`, `active` (default true), `with` (e.g. `["team"]`)
+
 Install Board (usually already present) and call these tools, or manage updates in the News UI.
 
 Live schemas: `tools/list`. See [MCP](/protocols/mcp).
