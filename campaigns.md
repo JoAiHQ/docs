@@ -51,6 +51,10 @@ Segments are groups of conditions with match **all** or **any** per group. The e
 | `waiting_on` | Waiting / follow-up state |
 | `created_after` / `created_before` | Contact created window |
 | `email_contains` | Email substring |
+| `marketing_opt_out` | Marketing opt-out state |
+| `prop` | Custom contact property — `key:value`, e.g. `onboarding-stage:done` |
+
+`prop` matches a custom **contact property** exactly. Properties are set on the contact (in the Contacts app, or with the `set_contact_property` MCP tool) before they can be used in a segment — e.g. set `onboarding-stage` to `done`, then filter with `prop` = `onboarding-stage:done`.
 
 MCP: `list_segments`, `create_segment`, `delete_segment` (requires [Contacts](/apps/contacts)). There is **no `update_segment`** — edit in the Campaigns UI.
 
