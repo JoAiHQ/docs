@@ -51,7 +51,7 @@ Brandless sites are **not** published on sites.joai.ai.
 4. Per site:
    - Toggle **enabled**
    - Link a **contact** and a **metrics source** + **resource** (same pair as `metrics-query`). For Cloudflare, connect the agent under [Cloudflare integration](/integrations/cloudflare) first, then use `cloudflare` as source and the zone tag as resource.
-   - Optionally enable **monthly report**. If the metrics source is Cloudflare and no agent has a token yet, JoAi opens the [Cloudflare](/integrations/cloudflare) setup dialog first — then turns the report on.
+   - Optionally enable **monthly report**. If the metrics source is Cloudflare and no agent has a token yet, JoAi opens the [Cloudflare](/integrations/cloudflare) setup dialog first (agent picker + connect) — then turns the report on.
 5. Per brand-backed site:
    - **Add brand** → provision missing brands, then copy/open the public URL
    - Set **custom domain** (premium) and follow CNAME instructions

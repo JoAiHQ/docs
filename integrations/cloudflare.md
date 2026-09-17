@@ -17,7 +17,7 @@ Connect a **Cloudflare API token** to an agent so JoAi can read zone analytics (
 
 The token is stored encrypted as an agent secret (`CLOUDFLARE_API_TOKEN`). Monthly site reports pick any team agent that has this secret.
 
-From **Sites**, turning on **monthly report** with source `cloudflare` opens this setup if no agent on the team has a token yet.
+From **Sites**, turning on **monthly report** with source `cloudflare` opens the shared Cloudflare setup dialog if no agent on the team has a token yet — connect there, then the report turns on.
 
 ## How it works
 
