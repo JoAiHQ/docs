@@ -28,7 +28,7 @@ JoAi generates the webhook URL and secret behind the scenes — you only use the
 
 While sync is running, the desktop CLI posts to JoAi hooks (`?source=wacli`) and signs each body with `X-Wacli-Signature` (HMAC-SHA256). Messages are persisted as **External** messages in **WhatsApp Personal** contact rooms — never into Business WhatsApp rooms.
 
-Live inbound messages then start a normal agent turn in that contact room. When the agent replies, JoAi runs `@whatsapp-send-text`:
+Live inbound messages then start a normal agent turn in that contact room. When the agent replies, JoAi delivers through the channel send warp (`@whatsapp-send-text`):
 
 - **Auto mode on:** the warp sends via the desktop CLI
 - **Auto mode off:** an editable warp approval stays in the room until you approve
