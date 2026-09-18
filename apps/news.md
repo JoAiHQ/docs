@@ -1,13 +1,13 @@
 # News
 
-News publishes customer-facing **updates** (deals, events, news posts). Install **News** under **Team settings → Apps**, then open **News** in the sidebar (product route label: **Updates**).
+News publishes customer-facing **updates** (deals, events, news posts, and articles). Install **News** under **Team settings → Apps**, then open **News** in the sidebar (product route label: **Updates**).
 
 Installing News unlocks the Updates UI. MCP update tools are gated by **Board** (usually already installed) — News alone does not add a separate MCP gate.
 
 ## Overview
 
 - Create updates with title, body, images, optional link, and schedule window
-- Types: **deal**, **event**, **news**
+- Types: **deal**, **event**, **news**, **article**
 - Statuses: **draft**, **published**, **archived**
 - Published updates can surface on the **storefront** (including store **events** listings) and brand [Sites](/sites) where configured
 
@@ -27,6 +27,7 @@ Installing News unlocks the Updates UI. MCP update tools are gated by **Board** 
 | **deal** | Promotions and offers |
 | **event** | Time-bound happenings (use starts / ends) |
 | **news** | General announcements |
+| **article** | Longer marketing or blog posts |
 
 ### Statuses
 
@@ -50,7 +51,7 @@ Update tools are gated by the **Board** app in MCP:
 
 - `tags` (e.g. `hollabrunn-digital`) — city-wide public feed across teams; `team` not required
 - `team` — scope to one team slug
-- Optional: `type` (`deal` | `event` | `news`), `status`, `active` (default true), `with` (e.g. `["team"]`)
+- Optional: `type` (`deal` | `event` | `news` | `article`), `status`, `active` (default true), `with` (e.g. `["team"]`)
 
 Install Board (usually already present) and call these tools, or manage updates in the News UI.
 
