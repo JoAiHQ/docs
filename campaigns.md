@@ -269,15 +269,15 @@ For live schemas, call `tools/list` on the agent MCP endpoint. See also [MCP](/p
 
 **Campaigns** stay oneshot (newsletters, backfill). **Automations** are long-lived: trigger → `wait` → `send_email` → `halt`, with per-contact enrollment.
 
-In the app, open **Automations** (next to Campaigns in the sidebar, same Campaigns app access). From there you can create/edit drips, enable/disable, preview matching contacts, run for a single contact, inspect enrollments, and retry failed steps. The list shows summary stats (total automations, how many are enabled, and emails sent). Enrollment cards and the enrollments dialog update **live** over the team websocket as contacts enroll, wait, send, complete, skip, or error. Milestone events also appear on the **contact timeline** (enrolled / email queued / completed / skipped / failed — not every wait tick). Direct sends still surface as the usual agent **approval card in chat**; campaign-mode sends show a live toast instead of flooding the room.
+In the app, open **Automations** (next to Campaigns in the sidebar, same Campaigns app access). From there you can create/edit drips, enable/disable, preview matching contacts, run for a single contact, inspect enrollments, and retry failed steps. The list shows summary stats (total automations, how many are enabled, and emails sent). Enrollment cards and the enrollments dialog update **live** over the team websocket as contacts enroll, wait, send, complete, skip, or error. Milestone events also appear on the **contact timeline** (enrolled / email queued / completed / skipped / failed — not every wait tick). Sends surface as the usual agent **approval card in chat**.
 
 | Piece | Behavior |
 | --- | --- |
 | **Trigger** | Contact prop (canonical `onboarding-stage` = `done`) or segment match — **not** marketing tags |
 | **Enrollment** | Unique per automation + contact; skips opt-out / missing email (missing email / pending consent can re-enroll once fixed) |
-| **Send** | Two modes on `send_email`: **`direct`** queues an independent email warp (enrollment `sent_at` = queued); **`campaign`** + `campaignId` runs `SendCampaignToContact` so the contact is a normal campaign recipient (status, retry, opens/clicks). **Completed** campaigns reopen when the drip sends again; **Failed** campaigns do not. Agent auto-mode recommended. |
+| **Send** | `send_email` queues the subject and body on the step. Enrollment `sent_at` means the send was queued. A sending agent with email configured is required. One-shot blasts stay in Campaigns. |
 | **Scheduler** | Each wait queues a delayed advance on the default queue; a every-minute sweeper also picks up due enrollments. Dispatch failures set `error` and pause until cleared |
-| **Actions** | At most one `send_email` in v1; action graph can’t change while enrollments are active |
+| **Actions** | At most one `send_email` in v1; action graph can’t change while enrollments are active. In the app the steps are a numbered sequence and the run always stops after the last one (a final `halt` is stored for you). A wait is a number plus a unit (minutes, hours, days, months of 30 days, or years of 365 days). The API stores that as `delayMinutes`; `0` is immediate. |
 | **Delete** | Allowed when no enrollments are active; otherwise disable with `update_automation` |
 
 ### MCP tools
@@ -295,7 +295,7 @@ In the app, open **Automations** (next to Campaigns in the sidebar, same Campaig
 | `preview_automation_audience` | Count + sample contact IDs for the trigger |
 | `delete_automation` | Delete when no active enrollments |
 
-Example create payload (direct send):
+Example create payload:
 
 ```json
 {
@@ -307,7 +307,6 @@ Example create payload (direct send):
     {
       "type": "send_email",
       "config": {
-        "sendMode": "direct",
         "subject": "Kurz zu hollabrunn.digital",
         "body": "Hallo {{name}}",
         "sentPropKey": "b2b-welcome-sent-at"
@@ -315,19 +314,6 @@ Example create payload (direct send):
     },
     { "type": "halt", "config": {} }
   ]
-}
-```
-
-Example `send_email` via campaign (full recipient tracking):
-
-```json
-{
-  "type": "send_email",
-  "config": {
-    "sendMode": "campaign",
-    "campaignId": "cam_…",
-    "sentPropKey": "b2b-welcome-sent-at"
-  }
 }
 ```
 
