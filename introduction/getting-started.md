@@ -2,6 +2,18 @@
 
 AI agents that actually do things — chat, tools, native business apps, and Web3 — in one place.
 
+## Fastest start: copy a prompt
+
+You don’t need to create an account in the JoAi UI first.
+
+1. On [joai.ai](https://joai.ai) (or any feature page), click **Copy prompt**
+2. Paste it into ChatGPT, Claude, Cursor, or another MCP-capable agent app
+3. Your agent follows the prompt, connects to JoAi MCP, and opens OAuth
+4. Sign in. If you don’t have an agent yet, create and **name** one there
+5. Pick your team and agent — then you’re connected
+
+JoAi approvals still protect sensitive writes. The header **Log in** link is only for opening the JoAi app itself.
+
 ## What is JoAi?
 
 - **Ask & research** — web search, knowledge, memories
@@ -25,9 +37,9 @@ AI agents that actually do things — chat, tools, native business apps, and Web
 | **Blueprints** | Agent templates — [Blueprints](/blueprints) |
 | **Wallets** | Chain wallets — [Wallets](/wallets) |
 
-## Onboarding
+## Onboarding in the JoAi app
 
-Typical first-run flow:
+If you open JoAi directly (header **Log in**), typical first-run flow:
 
 1. **Welcome**
 2. **Interests** — shapes app suggestions
@@ -39,11 +51,14 @@ Typical first-run flow:
 
 After onboarding, open **Team settings → Apps** anytime to add Shop, Contacts, Forms, and more.
 
+Prefer starting from ChatGPT / Claude / Cursor? Use the [copy-prompt MCP flow](/integrations/mcp) above instead.
+
 ## Next steps
 
 - [Native apps](/apps/)
 - [Agents](/agents)
+- [MCP connect](/integrations/mcp)
 - [Studio](/studio)
-- [MCP](/protocols/mcp)
+- [MCP protocol](/protocols/mcp)
 - [Billing](/billing)
 - [Best Practices](/best-practices)

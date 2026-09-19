@@ -2,6 +2,8 @@
 
 MCP (Model Context Protocol) connects JoAi agents to Cursor, Claude, ChatGPT, and other MCP clients. Tools are gated by installed [native apps](/apps/) plus core agent tooling.
 
+New users can start without opening the JoAi UI first: copy the marketing setup prompt from [joai.ai](https://joai.ai), paste it into an MCP client, complete OAuth, and create/name an agent there if needed. See [MCP connect](/integrations/mcp) and [Getting started](/introduction/getting-started).
+
 ## Endpoints
 
 | Endpoint | Use |

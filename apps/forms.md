@@ -7,7 +7,8 @@ Forms collect structured information from customers — leads, intake, opt-ins, 
 - Build forms with fields, title, and description
 - **Publish** / lock, share URL, **QR**, smart link, or **embed**
 - Review **submissions** (with activity sparkline on overview)
-- Optional **marketing opt-in**, **submission notifications**, **public results**, **list in shop**
+- Optional **marketing opt-in**, **email submission notifications**, **public results**, **list in shop**
+- Push notifications to active team members on every submission (always on)
 - Chain a **next action** after submit (pick a warp + map inputs)
 - Agents manage forms end-to-end over **MCP** when Forms is installed
 
@@ -31,7 +32,7 @@ Forms collect structured information from customers — leads, intake, opt-ins, 
 | **Fields** | Questions / inputs |
 | **Next action** | Pick a warp and map form outputs → warp inputs after successful submit |
 | **Marketing opt-in** | Adds consent checkbox for campaigns |
-| **Submission notifications** | Notify the team on new responses |
+| **Submission notifications** | Optional email to the team on new responses (push is always sent) |
 | **Public results** | Optional `/results` page for respondents |
 | **In shop** | Show the form on the team storefront |
 
