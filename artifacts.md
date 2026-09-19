@@ -6,10 +6,10 @@ Install the **Artifacts** native app from team **Apps** to manage deliverables i
 
 ## Overview
 
-- Register a deliverable with title, type, optional URL / password, and extra link
+- Register a deliverable with title, type, optional URL / password, attached **media**, and extra link
 - Attach a **contact** (and optionally an **order** / quote)
 - Status flow: **draft → ready → sent** (or **archived**)
-- **Deliver** from the dashboard with a message you write — pick the **sending agent** (same idea as campaigns; that agent’s email/SMS/WhatsApp integration is used) — or **Generate with AI** to run the existing `artifact-deliver` warp in chat (draft → edit → approve → send). Document blocks are appended automatically on send.
+- **Deliver** from the dashboard with a message you write — pick the **sending agent** (same idea as campaigns; that agent’s email/SMS/WhatsApp integration is used) — or **Generate with AI** to run the `artifact-deliver` warp in chat (draft → edit → approve → send). Structured document blocks are still appended on send when present.
 
 ## Types
 
@@ -34,9 +34,11 @@ Install the **Artifacts** native app from team **Apps** to manage deliverables i
 
 ## Recommended flow
 
-1. Create each deliverable (deck, demo, agreement, …) with contact and URLs, status `ready`
+1. Create each deliverable (deck, demo, agreement, …) with contact and URLs and/or media, status `ready`
 2. Deliver with **one or more** artifact IDs — one message covering all links/passwords → edit → approve → send
 3. All included artifacts become **sent**; a delivery record stores what went out
+
+For a local PDF/image via MCP: `media_upload` → `create_artifact` with `media: ["…"]` (and optional `url`) → `deliver_artifacts`. `url` and `media` are both optional.
 
 ## Ownership vs delivery
 
@@ -60,21 +62,22 @@ One delivery can cover several artifacts. Delivery history keeps the recipient e
 | `artifact-get` | Load one artifact |
 | `artifact-update` | Edit fields or status |
 | `artifact-delete` | Permanently remove a record |
-| `artifact-deliver` | Interactive draft → approve → send (chat) |
-| `artifact-deliver-send` | Send a finalized message (MCP / non-interactive) |
+| `artifact-deliver` | Draft → single approve (editable message) → send. Auto mode runs through; manual mode waits for approve |
 
 ## MCP tools
 
 | Tool | Purpose |
 | --- | --- |
-| `create_artifact` | Create a deliverable |
+| `create_artifact` | Create a deliverable (`url` and/or `media` IDs optional) |
 | `list_artifacts` | List / filter |
 | `get_artifact` | Load one |
-| `update_artifact` | Edit |
+| `update_artifact` | Edit (including `media`) |
 | `delete_artifact` | Delete |
-| `deliver_artifacts` | Send a finalized message (`email` \| `sms` \| `whatsapp`) |
+| `deliver_artifacts` | Dispatch `artifact-deliver`: draft message, then one approve step (editable). Auto mode sends; manual mode waits for approve |
 
-`deliver_artifacts` expects the agent to draft the final `message` (include every URL/password), then send — it does not open an interactive approve step.
+`create_artifact` / `update_artifact`: pass `media` as team media IDs from `media_upload` (e.g. `["abc123"]`). `url` remains optional for external links.
+
+`deliver_artifacts` is the only delivery path — same draft → approve / auto-mode model as campaigns. File links come from the drafted message (`media[].url` in the artifact JSON), not a second server-side append.
 
 See [SKILL.md](https://joai.ai/SKILL.md) and [Warps](/warps/general).
 
