@@ -48,8 +48,8 @@ One delivery can cover several artifacts. Delivery history keeps the recipient e
 ## In the app
 
 1. Install **Artifacts** under team **Apps**
-2. Open **Artifacts** in the sidebar
-3. Create / edit deliverables, then **Deliver** (manual) or **Generate with AI** (opens `artifact-deliver` in chat)
+2. Open **Artifacts** in the sidebar, or open a **Contact → Deliveries** tab to see that client’s deliverables
+3. Create / edit deliverables (from the contact tab, the contact is prefilled), then **Deliver** (manual) or **Generate with AI** (opens `artifact-deliver` in chat)
 
 ## For agents (warps)
 
