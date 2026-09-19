@@ -265,6 +265,71 @@ After `send_campaign`, delivery may wait on warp approval when the sending agent
 
 For live schemas, call `tools/list` on the agent MCP endpoint. See also [MCP](/protocols/mcp) and the public [SKILL.md](https://joai.ai/SKILL.md).
 
+## Automations (lifecycle drips)
+
+**Campaigns** stay oneshot (newsletters, backfill). **Automations** are long-lived: trigger → `wait` → `send_email` → `halt`, with per-contact enrollment.
+
+In the app, open **Automations** (next to Campaigns in the sidebar, same Campaigns app access). From there you can create/edit drips, enable/disable, preview matching contacts, run for a single contact, inspect enrollments, and retry failed steps.
+
+| Piece | Behavior |
+| --- | --- |
+| **Trigger** | Contact prop (canonical `onboarding-stage` = `done`) or segment match — **not** marketing tags |
+| **Enrollment** | Unique per automation + contact; skips opt-out / missing email (missing email / pending consent can re-enroll once fixed) |
+| **Send** | Two modes on `send_email`: **`direct`** queues an independent email warp (enrollment `sent_at` = queued); **`campaign`** + `campaignId` runs `SendCampaignToContact` so the contact is a normal campaign recipient (status, retry, opens/clicks). **Completed** campaigns reopen when the drip sends again; **Failed** campaigns do not. Agent auto-mode recommended. |
+| **Scheduler** | Advances due enrollments every minute; dispatch failures set `error` and pause until cleared |
+| **Actions** | At most one `send_email` in v1; action graph can’t change while enrollments are active |
+| **Delete** | Allowed when no enrollments are active; otherwise disable with `update_automation` |
+
+### MCP tools
+
+| Tool | Purpose |
+| --- | --- |
+| `create_automation` | Create with `triggerType`, `triggerConfig`, `actions`, optional `agentId` / `enabled` |
+| `list_automations` | List team automations |
+| `update_automation` | Update name / enabled / trigger / `agentId` |
+| `set_automation_actions` | Replace ordered actions (`wait` → `send_email` → `halt`) |
+| `list_automation_enrollments` | Paginated enrollments (`page`, `perPage`) |
+| `retry_automation_enrollment` | Clear enrollment `error` and resume |
+| `run_automation` | Manually enroll one contact |
+| `preview_automation_audience` | Count + sample contact IDs for the trigger |
+| `delete_automation` | Delete when no active enrollments |
+
+Example create payload (direct send):
+
+```json
+{
+  "name": "Hollabrunn · B2B welcome",
+  "triggerType": "prop",
+  "triggerConfig": { "propKey": "onboarding-stage", "propValue": "done" },
+  "actions": [
+    { "type": "wait", "config": { "delayMinutes": 4320 } },
+    {
+      "type": "send_email",
+      "config": {
+        "sendMode": "direct",
+        "subject": "Kurz zu hollabrunn.digital",
+        "body": "Hallo {{name}}",
+        "sentPropKey": "b2b-welcome-sent-at"
+      }
+    },
+    { "type": "halt", "config": {} }
+  ]
+}
+```
+
+Example `send_email` via campaign (full recipient tracking):
+
+```json
+{
+  "type": "send_email",
+  "config": {
+    "sendMode": "campaign",
+    "campaignId": "cam_…",
+    "sentPropKey": "b2b-welcome-sent-at"
+  }
+}
+```
+
 ## Tips
 
 - Prefer segments over one-off contact lists when you will reuse the audience
