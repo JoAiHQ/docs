@@ -44,7 +44,23 @@ MCP: `create_api_token` (agent tooling).
 
 ## OpenAPI & agents
 
-Prefer OpenAPI + [SKILL.md](https://joai.ai/SKILL.md) for machine contracts. Product guides stay human-focused.
+Machine-readable JoAi OpenAPI (OAuth scopes included):
+
+**[joai.ai/openapi.json](https://joai.ai/openapi.json)**
+
+Also: [JoAi developer index](https://joai.ai/developers.md) · [SKILL.md](https://joai.ai/SKILL.md) · [llms.txt](https://joai.ai/llms.txt)
+
+Prefer OpenAPI + SKILL.md for machine contracts. Product guides stay human-focused.
+
+### OAuth scopes
+
+| Scope | Meaning |
+| --- | --- |
+| `mcp:read` | Read MCP tools and resources |
+| `mcp:write` | Mutating MCP tools |
+| `mcp:use` | Full MCP use (read + write) |
+
+Discovery: `https://joai.ai/.well-known/oauth-authorization-server` · `https://joai.ai/.well-known/oauth-protected-resource`
 
 ## Related
 
