@@ -60,7 +60,7 @@ Prefer OpenAPI + SKILL.md for machine contracts. Product guides stay human-focus
 | `mcp:write` | Mutating MCP tools |
 | `mcp:use` | Full MCP use (read + write) |
 
-Discovery: `https://joai.ai/.well-known/oauth-authorization-server` · `https://joai.ai/.well-known/oauth-protected-resource`
+Discovery: `https://joai.ai/.well-known/oauth-authorization-server` · `https://joai.ai/.well-known/oauth-protected-resource` · [API catalog](https://joai.ai/.well-known/api-catalog) · [auth.md](https://joai.ai/auth.md)
 
 ## Related
 
