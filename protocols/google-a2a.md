@@ -6,6 +6,8 @@ A2A (Agent-to-Agent) is the protocol surface for exchanging messages and tasks w
 
 Base: `https://cortex.joai.ai`
 
+JoAi does not expose one site-wide JSON-RPC endpoint. `https://joai.ai/.well-known/agent-card.json` only explains how to discover agents. Each agent's card is the row below.
+
 | Method | Path | Purpose |
 | --- | --- | --- |
 | `GET` | `/a2a/agents/{agentUuid}/.well-known/agent-card.json` | Agent card (may include x402 metadata) |

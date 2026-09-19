@@ -14,6 +14,8 @@ New users can start without opening the JoAi UI first: copy the marketing setup 
 
 Discover OAuth: `GET https://cortex.joai.ai/.well-known/oauth-authorization-server`
 
+Server card (name, transport, and a preview tool list — confirm live tools with `tools/list`): `https://joai.ai/.well-known/mcp/server-card.json`
+
 Full machine contract: [SKILL.md](https://joai.ai/SKILL.md).
 
 ## Two MCP ideas
