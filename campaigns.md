@@ -269,14 +269,14 @@ For live schemas, call `tools/list` on the agent MCP endpoint. See also [MCP](/p
 
 **Campaigns** stay oneshot (newsletters, backfill). **Automations** are long-lived: trigger → `wait` → `send_email` → `halt`, with per-contact enrollment.
 
-In the app, open **Automations** (next to Campaigns in the sidebar, same Campaigns app access). From there you can create/edit drips, enable/disable, preview matching contacts, run for a single contact, inspect enrollments, and retry failed steps.
+In the app, open **Automations** (next to Campaigns in the sidebar, same Campaigns app access). From there you can create/edit drips, enable/disable, preview matching contacts, run for a single contact, inspect enrollments, and retry failed steps. The list shows summary stats (total automations, how many are enabled, and emails sent). Enrollment cards and the enrollments dialog update **live** over the team websocket as contacts enroll, wait, send, complete, skip, or error. Milestone events also appear on the **contact timeline** (enrolled / email queued / completed / skipped / failed — not every wait tick). Direct sends still surface as the usual agent **approval card in chat**; campaign-mode sends show a live toast instead of flooding the room.
 
 | Piece | Behavior |
 | --- | --- |
 | **Trigger** | Contact prop (canonical `onboarding-stage` = `done`) or segment match — **not** marketing tags |
 | **Enrollment** | Unique per automation + contact; skips opt-out / missing email (missing email / pending consent can re-enroll once fixed) |
 | **Send** | Two modes on `send_email`: **`direct`** queues an independent email warp (enrollment `sent_at` = queued); **`campaign`** + `campaignId` runs `SendCampaignToContact` so the contact is a normal campaign recipient (status, retry, opens/clicks). **Completed** campaigns reopen when the drip sends again; **Failed** campaigns do not. Agent auto-mode recommended. |
-| **Scheduler** | Advances due enrollments every minute; dispatch failures set `error` and pause until cleared |
+| **Scheduler** | Each wait queues a delayed advance on the default queue; a every-minute sweeper also picks up due enrollments. Dispatch failures set `error` and pause until cleared |
 | **Actions** | At most one `send_email` in v1; action graph can’t change while enrollments are active |
 | **Delete** | Allowed when no enrollments are active; otherwise disable with `update_automation` |
 
@@ -286,6 +286,7 @@ In the app, open **Automations** (next to Campaigns in the sidebar, same Campaig
 | --- | --- |
 | `create_automation` | Create with `triggerType`, `triggerConfig`, `actions`, optional `agentId` / `enabled` |
 | `list_automations` | List team automations |
+| `automation_stats` | Team automation stats (`joai-automation-stats`) — total, enabled, emails sent, enrollments |
 | `update_automation` | Update name / enabled / trigger / `agentId` |
 | `set_automation_actions` | Replace ordered actions (`wait` → `send_email` → `halt`) |
 | `list_automation_enrollments` | Paginated enrollments (`page`, `perPage`) |
