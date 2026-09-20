@@ -1,6 +1,6 @@
 # Shortcuts, flows & automations
 
-Quick actions and automation builders live under **Agent settings → Automations**:
+Quick actions and builders live under **Agent settings → Automations**. This is **not** the [Automations](/automations) native app (contact journeys with waits and enrollments).
 
 | Tab | Purpose |
 | --- | --- |
@@ -11,7 +11,7 @@ Quick actions and automation builders live under **Agent settings → Automation
 
 ## Shortcuts
 
-1. Open **Automations → Shortcuts**
+1. Open **Agent settings → Automations → Shortcuts**
 2. **Create shortcut** — pick a warp (optional chat/presentation mode)
 3. Shortcut appears for quick launch in the agent UI
 
@@ -19,7 +19,7 @@ Shortcuts are warp-backed quick actions — not a separate “Flow shortcut type
 
 ## Flows
 
-1. Open **Automations → Flows**
+1. Open **Agent settings → Automations → Flows**
 2. Use **Flow builder** to create or edit flows
 3. Publish / manage from the flows overview
 
@@ -30,11 +30,12 @@ Public flow pages can appear on the store host — see [Public surfaces](/apps/p
 - **Internal** — e.g. `contact.created` → run a warp (MCP `create_hook` with `source=internal`)
 - **Web** — agent output events → POST to your URL (`source=web`)
 
-Manage under **Automations → Hooks**. Distinct from the **Webhooks** integration install under Integrations.
+Manage under **Agent settings → Automations → Hooks**. Distinct from the **Webhooks** integration install under Integrations, and from [Automations](/automations) journeys.
 
 ## Related
 
 - [Agents](/agents)
+- [Automations](/automations) — contact journeys (separate native app)
 - [Alerts](/alerts)
 - [Tasks](/tasks)
 - [Webhooks](/webhooks)

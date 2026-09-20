@@ -24,7 +24,7 @@ Tasks schedule a **warp** to run on a **cron** expression in a chosen **room**. 
 
 ## What tasks are not
 
-There is no separate product UI for “conditions”, “on-success / on-failure chains”, or generic interval-only schedulers beyond cron. Use warp logic, [Automations → Hooks](/webhooks), or [Flows](/shortcuts) for branching workflows.
+There is no separate product UI for “conditions”, “on-success / on-failure chains”, or generic interval-only schedulers beyond cron. Use warp logic, [Agent settings → Automations → Hooks](/webhooks), [Flows](/shortcuts), or [Automations](/automations) journeys for branching workflows.
 
 ## For agents (MCP)
 

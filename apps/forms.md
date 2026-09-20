@@ -98,7 +98,8 @@ Live schemas: `tools/list`. See [MCP](/protocols/mcp) and [SKILL.md](https://joa
 - [Native apps](/apps/)
 - [Public surfaces](/apps/public-surfaces)
 - [Contacts](/apps/contacts)
-- [Campaigns](/campaigns)
+- [Campaigns](/campaigns) — oneshot follow-ups
+- [Automations](/automations) — multi-step contact journeys after submit
 - [Smart Links](/apps/smart-links)
 - [Sites](/sites)
 - [Shortcuts](/shortcuts)

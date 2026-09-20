@@ -19,8 +19,8 @@ JoAi approvals still protect sensitive writes. The header **Log in** link is onl
 - **Ask & research** — web search, knowledge, memories
 - **Documents & media** — PDFs, images, [Desk](/desk), [Studio](/studio)
 - **Voice** — chat voice + desktop [dictation](/apps/voice-dictation)
-- **Automate** — warps, tasks, shortcuts, hooks
-- **Run the business** — install [native apps](/apps/) (Shop, Contacts, Forms, …)
+- **Automate** — warps, tasks, shortcuts, hooks (Agent settings → Automations)
+- **Run the business** — install [native apps](/apps/) (Shop, Contacts, Campaigns, Automations, Forms, …)
 - **Chains** — wallets on Sui, Solana, Ethereum, Base, MultiversX, and more
 - **Connect** — Slack, Telegram, email, WhatsApp, GitHub, … — [Integrations](/integrations/)
 

@@ -265,57 +265,6 @@ After `send_campaign`, delivery may wait on warp approval when the sending agent
 
 For live schemas, call `tools/list` on the agent MCP endpoint. See also [MCP](/protocols/mcp) and the public [SKILL.md](https://joai.ai/SKILL.md).
 
-## Automations (lifecycle drips)
-
-**Campaigns** stay oneshot (newsletters, backfill). **Automations** are long-lived: trigger → `wait` → `send_email` → `halt`, with per-contact enrollment.
-
-In the app, open **Automations** (next to Campaigns in the sidebar, same Campaigns app access). From there you can create/edit drips, enable/disable, preview matching contacts, run for a single contact, inspect enrollments, and retry failed steps. The list shows summary stats (total automations, how many are enabled, and how many enrollments are in progress). Enrollment cards and the enrollments dialog update **live** over the team websocket as contacts enroll, wait, send, complete, skip, or error. Milestone events also appear on the **contact timeline** (enrolled / email queued / completed / skipped / failed — not every wait tick). Sends surface as the usual agent **approval card in chat**.
-
-| Piece | Behavior |
-| --- | --- |
-| **Trigger** | Contact prop (canonical `onboarding-stage` = `done`) or segment match — **not** marketing tags |
-| **Enrollment** | Unique per automation + contact; skips opt-out and a missing address for the send channel (missing email or phone, and pending email consent, can re-enroll once fixed) |
-| **Send** | `send_email` queues the body on the step, with the same contact placeholders as a campaign (`{{name}}`, `{{firstName}}`, and the other contact fields). `channel` is `email` by default (subject required, optional HTML) or `whatsapp-personal` (plain text to the contact phone). Both go out through the same contact-message warp, so the room handles delivery. Enrollment `sent_at` means the send was queued. The sending agent must have that channel connected. One-shot blasts stay in Campaigns. |
-| **Scheduler** | Each wait queues a delayed advance on the default queue; an every-minute sweeper also picks up due enrollments. Dispatch failures set `error` and pause until cleared |
-| **Actions** | At most one `send_email` in v1; action graph can’t change while enrollments are active. In the app the steps are a numbered sequence and the run always stops after the last one (a final `halt` is stored for you). A wait is a number plus a unit (minutes, hours, days, months of 30 days, or years of 365 days). The API stores that as `delayMinutes`; `0` is immediate. |
-| **Delete** | Allowed when no enrollments are active; otherwise disable with `update_automation` |
-
-### MCP tools
-
-| Tool | Purpose |
-| --- | --- |
-| `create_automation` | Create with `triggerType`, `triggerConfig`, `actions`, optional `agentId` / `enabled` |
-| `list_automations` | List team automations |
-| `automation_stats` | Team automation stats (`joai-automation-stats`) — total, enabled, in progress, completed, errored, and emails queued |
-| `update_automation` | Update name / enabled / trigger / `agentId` |
-| `set_automation_actions` | Replace ordered actions (`wait` → `send_email` → `halt`) |
-| `list_automation_enrollments` | Paginated enrollments (`page`, `perPage`) |
-| `retry_automation_enrollment` | Clear enrollment `error` and resume |
-| `run_automation` | Manually enroll one contact |
-| `preview_automation_audience` | Count + sample contact IDs for the trigger |
-| `delete_automation` | Delete when no active enrollments |
-
-Example create payload:
-
-```json
-{
-  "name": "Hollabrunn · B2B welcome",
-  "triggerType": "prop",
-  "triggerConfig": { "propKey": "onboarding-stage", "propValue": "done" },
-  "actions": [
-    { "type": "wait", "config": { "delayMinutes": 4320 } },
-    {
-      "type": "send_email",
-      "config": {
-        "subject": "Kurz zu hollabrunn.digital",
-        "body": "Hallo {{name}}"
-      }
-    },
-    { "type": "halt", "config": {} }
-  ]
-}
-```
-
 ## Tips
 
 - Prefer segments over one-off contact lists when you will reuse the audience
@@ -328,6 +277,7 @@ Example create payload:
 ## Related
 
 - [Native apps](/apps/) — install Campaigns on the team
+- [Automations](/automations) — long-lived contact journeys (separate native app)
 - [WhatsApp Business](/integrations/whatsapp) — Meta Cloud API channel (not Personal)
 - [Email](/integrations/email) — agent email for campaigns
 - [Twilio](/integrations/twilio) — SMS / voice channel

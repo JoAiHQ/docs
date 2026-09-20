@@ -43,7 +43,7 @@ Board MCP covers more than the kanban. Product UIs:
 | **Items** | Board columns |
 | **Tasks** | [Tasks](/tasks) / chat |
 | **Goals / reminders** | Agent settings → **Knowledge** |
-| **Hooks (automations)** | Agent settings → **Automations** |
+| **Hooks** | Agent settings → **Automations → Hooks** (not the [Automations](/automations) native app) |
 | **Blueprints** | Agent settings → **Identity** (+ public Blueprints store) |
 | **Projects** | **Studio** (`/studio`, project views) — not on the kanban |
 | **Updates (News)** | [News](/apps/news) UI — MCP update tools are gated by **Board** |

@@ -31,6 +31,7 @@ export default defineConfig({
           { text: 'Kiosk', link: '/kiosk' },
           { text: 'Contacts', link: '/apps/contacts' },
           { text: 'Campaigns', link: '/campaigns' },
+          { text: 'Automations', link: '/automations' },
           { text: 'Forms', link: '/apps/forms' },
           { text: 'Appointments', link: '/apps/appointments' },
           { text: 'Smart Links', link: '/apps/smart-links' },

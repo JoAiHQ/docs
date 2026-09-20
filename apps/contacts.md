@@ -114,8 +114,8 @@ Live schemas: `tools/list`. See [MCP](/protocols/mcp) and [SKILL.md](https://joa
 
 ## Tips
 
-- Tag consistently — tags power filters, segments, and automations
-- Use segments for recurring [campaign](/campaigns) audiences
+- Tag consistently — tags power filters and segments (Automations enroll from props/segments/webhooks, not tags alone)
+- Use segments for recurring [campaign](/campaigns) audiences and [automation](/automations) segment triggers
 - Attach contacts to [Shop](/apps/shop) orders and [Forms](/apps/forms) submissions
 - CLI also supports contacts — see [CLI](/cli)
 
@@ -123,6 +123,7 @@ Live schemas: `tools/list`. See [MCP](/protocols/mcp) and [SKILL.md](https://joa
 
 - [Native apps](/apps/)
 - [Campaigns](/campaigns)
+- [Automations](/automations)
 - [Forms](/apps/forms)
 - [Shop](/apps/shop)
 - [Public surfaces](/apps/public-surfaces)

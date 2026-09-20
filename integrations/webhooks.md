@@ -14,7 +14,7 @@ Configure **outbound** HTTP callbacks when your agent performs actions or sends 
 3. Use the **inbound hook mapper** when you need to map external sources to warps / handlers
 4. Add outbound webhook destinations (URL, secret, retries, headers) in the webhooks manager
 
-For the full picture of outbound webhooks vs Automations hooks vs runtime lifecycle hooks, see [Webhooks & hooks](/webhooks).
+For the full picture of outbound webhooks vs Agent settings → Automations → Hooks vs the [Automations](/automations) native app vs runtime lifecycle hooks, see [Webhooks & hooks](/webhooks).
 
 ## How it works
 
@@ -30,6 +30,7 @@ For the full picture of outbound webhooks vs Automations hooks vs runtime lifecy
 ## Related
 
 - [Webhooks & hooks](/webhooks)
+- [Automations](/automations) — webhook enroll into contact journeys
 - [Shortcuts & Flows](/shortcuts)
 - [Integrations overview](/integrations/)
 - [SKILL.md](https://joai.ai/SKILL.md)

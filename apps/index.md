@@ -20,7 +20,7 @@ During onboarding, JoAi may suggest apps from your interests:
 | business | Contacts, Appointments, Shop |
 | ecommerce | Shop, Contacts, Smart Links |
 | shopping | Shop, Smart Links |
-| content | Campaigns, Sites, Smart Links |
+| content | Campaigns, Automations, Sites, Smart Links |
 | developer | Workspace, Sites, Contracts |
 | web3 | Wallets, Contracts |
 | payments | Shop, Wallets |
@@ -35,7 +35,7 @@ You can change installs anytime under Apps.
 | Concept | Meaning |
 | --- | --- |
 | **Installed** | Listed under `Team settings → Apps` for this team |
-| **Sidebar** | Board, Shop, Contacts, Campaigns, Forms, Appointments, Smart Links, News, Artifacts, Sites, Meetings, Contracts |
+| **Sidebar** | Board, Shop, Contacts, Campaigns, Automations, Forms, Appointments, Smart Links, News, Artifacts, Sites, Meetings, Contracts |
 | **Chat / settings only** | Workspace (chat control + `/files`), Wallets, Heartbeats, Voice dictation |
 | **Plan lock** | Some apps need a higher plan — they show locked until you upgrade |
 | **MCP gating** | Agent tools for that app appear only when the app is installed on the team |
@@ -55,6 +55,7 @@ Native apps are **not** the same as:
 | **Shop** | Products, services, orders, coupons, payments, storefront | [Shop](/apps/shop) |
 | **Contacts** | CRM, tags, timeline, loyalty; segments via Campaigns | [Contacts](/apps/contacts) |
 | **Campaigns** | Email, WhatsApp, SMS, push + segment audiences | [Campaigns](/campaigns) |
+| **Automations** | Contact journeys: waits, actions, branches, webhook enroll | [Automations](/automations) |
 | **Forms** | Build, publish, share, submissions | [Forms](/apps/forms) |
 | **Appointments** | Policy, requests, public book page | [Appointments](/apps/appointments) |
 | **Smart Links** | Short links, variations, kiosk table QR | [Smart Links](/apps/smart-links) |
