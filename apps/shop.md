@@ -49,6 +49,8 @@ Use **Open store** in the header to jump to the public storefront.
 
 The customer contact remains the buyer shown on the invoice. Use **Invoice recipient** during creation or editing when another contact (for example, an accounting inbox) should receive invoice and confirmation emails; leaving it at the default uses the customer contact.
 
+**Customer emails:** Online checkout (card, Mollie, Stripe, …) sends the team-branded order confirmation only after payment. Offline / bank-transfer orders can confirm when placed, then send a payment-received note (with invoice) once paid.
+
 **Line items:**
 
 | Type | How |
