@@ -51,7 +51,7 @@ Brandless sites are **not** published on sites.joai.ai.
 4. Per site:
    - Toggle **enabled**
    - Link a **contact** and a **metrics source** + **resource** (same pair as `metrics-query`). For Cloudflare, connect the agent under [Cloudflare integration](/integrations/cloudflare) first, then use `cloudflare` as source and the zone tag as resource.
-   - Optionally enable **monthly report**. If the metrics source is Cloudflare and no agent has a token yet, JoAi opens the [Cloudflare](/integrations/cloudflare) setup dialog first (agent picker + connect) — then turns the report on.
+   - Optionally enable **monthly report**. If the metrics source is Cloudflare and no agent has a token yet, enabling returns `channel_not_configured` (422) so the Sites UI opens the [Cloudflare](/integrations/cloudflare) setup dialog, and chat/MCP can call `settings-integration-open` with `integration=cloudflare` then retry. On the 1st of each month the platform job creates an **update** artifact with metric blocks for the previous month and runs `artifact-deliver` (draft → approve / auto-mode). The report shows under Artifacts and Contact → Deliveries.
 5. Per brand-backed site:
    - **Add brand** → provision missing brands, then copy/open the public URL
    - Set **custom domain** (premium) and follow CNAME instructions
@@ -112,13 +112,15 @@ Requires the **Sites** app.
 
 | Tool | Purpose |
 | --- | --- |
+| `list_sites` / `create_site` / `update_site` | Portfolio sites; set contact + metrics; `monthlyReport` opts into the 1st-of-month job (does not send now) |
+| `query_metrics` | Read Cloudflare (etc.) metrics for a period |
 | `list_contents` / `get_content` / `create_content` / `update_content` | CMS pages |
 | `preview_content` / `publish_content` / `rollback_content` | Lifecycle |
 | `list_content_versions` | Version history |
 | `list_elements` / `create_element` / `update_element` / `delete_element` | Elements |
 | `list_element_variations` / `generate_element_variation` / `update_element_variation` / `delete_element_variation` | Variations |
 
-Related Warps: `joai/site-create`, `joai/site-update`, `joai/site-provision`, `joai/metrics-query`, `joai/contact-message-send` (monthly reports queue this warp for approval, same path as campaigns).
+Related Warps: `joai/site-list`, `joai/site-create`, `joai/site-update`, `joai/site-provision`, `joai/metrics-query`. When `monthlyReport` is on, the platform job creates an `update` artifact and runs `artifact-deliver` on the 1st.
 
 Live schemas: `tools/list`. See [MCP](/protocols/mcp) and [SKILL.md](https://joai.ai/SKILL.md).
 
