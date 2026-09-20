@@ -2,22 +2,22 @@
 
 Sites are website instances belonging to a team. A team can have many sites.
 
-## With or without a brand
+## Websites and live JoAi apps
 
 A site can optionally link a Warp **brand** (`brandSlug`):
 
-- **With brand** — live app on sites.joai.ai at `/{teamSlug}/{brandSlug}`
-- **Without brand** — site record only (e.g. agency portfolio / external websites), with optional client contact, metrics source/resource, and monthly reports
+- **Brand site** — live app on sites.joai.ai at `/{teamSlug}/{brandSlug}`
+- **Website** — a record you manage (name + optional URL), with contact, metrics, and monthly reports
 
-Create without a brand from **Sites → Create site**, or via `POST /v1/sites` / warp `joai/site-create` with `team` + `slug`. Provisioning a brand still creates/links a brand-backed site (`joai/site-provision`).
+Add a website from **Sites → Add → Website**, or via `POST /v1/sites` / warp `joai/site-create` with `team` + `name` (URL optional; slug is generated automatically). Live JoAi apps still use `joai/site-provision`.
 
 Install **Sites** under **Team settings → Apps**, then open **Sites** in the sidebar (`/sites`).
 
 ## Overview
 
-- Many **sites** per team (`slug` is unique per team)
-- Brand-backed sites: live URL on **sites.joai.ai** (optional custom domain on premium)
-- Brandless sites: portfolio records, contact linkage, metrics source + resource, optional monthly report
+- Many **sites** per team (`slug` is unique per team; usually derived from the name)
+- Brand sites: live URL on **sites.joai.ai** (optional custom domain on premium)
+- Websites: name, optional URL, contact, metrics source + resource, optional monthly report
 - Edit **CMS content** and **elements** on brand-backed sites
 - Same Warps power the browser UI and agent MCP calls — no duplicate logic
 - Pair with [Appointments](/apps/appointments) for booking brands, [Forms](/apps/forms) for intake, [Contracts](/apps/contracts) for on-chain apps
@@ -39,7 +39,7 @@ https://sites.joai.ai/{teamSlug}/{brandSlug}/configure
 
 Optional **custom domain** (premium, brand-backed sites): point a CNAME at the Sites host for your environment. See [Public surfaces](/apps/public-surfaces).
 
-Brandless sites are **not** published on sites.joai.ai.
+These websites are **not** published on sites.joai.ai.
 
 ## In the app
 
@@ -47,13 +47,13 @@ Brandless sites are **not** published on sites.joai.ai.
 
 1. Install **Sites**
 2. Open **Sites**
-3. **Create site** (slug only) for portfolio / external sites, or use **Add brand** for live Warp brands
+3. **Add** → choose **Website** (name + optional address) or **Live JoAi app**
 4. Per site:
    - Toggle **enabled**
-   - Link a **contact** and a **metrics source** + **resource** (same pair as `metrics-query`). For Cloudflare, connect the agent under [Cloudflare integration](/integrations/cloudflare) first, then use `cloudflare` as source and the zone tag as resource.
+   - Edit **name** / **website address**, link a **contact** and a **metrics source** + **resource** (same pair as `metrics-query`). For Cloudflare, connect the agent under [Cloudflare integration](/integrations/cloudflare) first, then use `cloudflare` as source and the zone tag as resource.
    - Optionally enable **monthly report**. If the metrics source is Cloudflare and no agent has a token yet, enabling returns `channel_not_configured` (422) so the Sites UI opens the [Cloudflare](/integrations/cloudflare) setup dialog, and chat/MCP can call `settings-integration-open` with `integration=cloudflare` then retry. On the 1st of each month the platform job creates an **update** artifact with metric blocks for the previous month and runs `artifact-deliver` (draft → approve / auto-mode). The report shows under Artifacts and Contact → Deliveries.
-5. Per brand-backed site:
-   - **Add brand** → provision missing brands, then copy/open the public URL
+5. Per live JoAi app:
+   - Go live from **Add → Live JoAi app**, then copy/open the public URL
    - Set **custom domain** (premium) and follow CNAME instructions
 6. Open **Content** (`/sites/content`) for CMS pages and elements
 
@@ -112,7 +112,7 @@ Requires the **Sites** app.
 
 | Tool | Purpose |
 | --- | --- |
-| `list_sites` / `create_site` / `update_site` | Portfolio sites; set contact + metrics; `monthlyReport` opts into the 1st-of-month job (does not send now) |
+| `list_sites` / `create_site` / `update_site` | Websites; create with `name` (+ optional `url`); set contact + metrics; `monthlyReport` opts into the 1st-of-month job |
 | `query_metrics` | Read Cloudflare (etc.) metrics for a period |
 | `list_contents` / `get_content` / `create_content` / `update_content` | CMS pages |
 | `preview_content` / `publish_content` / `rollback_content` | Lifecycle |
