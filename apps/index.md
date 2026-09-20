@@ -55,7 +55,7 @@ Native apps are **not** the same as:
 | **Shop** | Products, services, orders, coupons, payments, storefront | [Shop](/apps/shop) |
 | **Contacts** | CRM, tags, timeline, loyalty; segments via Campaigns | [Contacts](/apps/contacts) |
 | **Campaigns** | Email, WhatsApp, SMS, push + segment audiences | [Campaigns](/campaigns) |
-| **Automations** | Contact journeys: waits, actions, branches, webhook enroll | [Automations](/automations) |
+| **Automations** | Welcome series, nurture drips, webhook enroll | [Automations](/automations) |
 | **Forms** | Build, publish, share, submissions | [Forms](/apps/forms) |
 | **Appointments** | Policy, requests, public book page | [Appointments](/apps/appointments) |
 | **Smart Links** | Short links, variations, kiosk table QR | [Smart Links](/apps/smart-links) |

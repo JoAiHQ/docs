@@ -1,6 +1,6 @@
 # Automations
 
-Automations are long-lived **contact journeys**: a trigger enrolls a contact, then ordered steps run over time (wait, action, branch, halt). Install the **Automations** native app under **Team settings → Apps** to use the dashboard and MCP tools.
+Automations are long-lived **contact journeys** — welcome series, nurture drips, and webhook-triggered follow-ups. A trigger enrolls a contact, then ordered steps run over time (wait, action, branch, halt). Install the **Automations** native app under **Team settings → Apps** to use the dashboard and MCP tools.
 
 They are **not**:
 
