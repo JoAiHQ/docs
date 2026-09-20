@@ -274,8 +274,8 @@ In the app, open **Automations** (next to Campaigns in the sidebar, same Campaig
 | Piece | Behavior |
 | --- | --- |
 | **Trigger** | Contact prop (canonical `onboarding-stage` = `done`) or segment match — **not** marketing tags |
-| **Enrollment** | Unique per automation + contact; skips opt-out / missing email (missing email / pending consent can re-enroll once fixed) |
-| **Send** | `send_email` queues the subject and body on the step, with the same contact placeholders as a campaign (`{{name}}`, `{{firstName}}`, and the other contact fields). Enrollment `sent_at` means the send was queued. A sending agent with email configured is required. One-shot blasts stay in Campaigns. |
+| **Enrollment** | Unique per automation + contact; skips opt-out and a missing address for the send channel (missing email or phone, and pending email consent, can re-enroll once fixed) |
+| **Send** | `send_email` queues the body on the step, with the same contact placeholders as a campaign (`{{name}}`, `{{firstName}}`, and the other contact fields). `channel` is `email` by default (subject required, optional HTML) or `whatsapp-personal` (plain text to the contact phone). Both go out through the same contact-message warp, so the room handles delivery. Enrollment `sent_at` means the send was queued. The sending agent must have that channel connected. One-shot blasts stay in Campaigns. |
 | **Scheduler** | Each wait queues a delayed advance on the default queue; an every-minute sweeper also picks up due enrollments. Dispatch failures set `error` and pause until cleared |
 | **Actions** | At most one `send_email` in v1; action graph can’t change while enrollments are active. In the app the steps are a numbered sequence and the run always stops after the last one (a final `halt` is stored for you). A wait is a number plus a unit (minutes, hours, days, months of 30 days, or years of 365 days). The API stores that as `delayMinutes`; `0` is immediate. |
 | **Delete** | Allowed when no enrollments are active; otherwise disable with `update_automation` |
