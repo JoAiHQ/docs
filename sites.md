@@ -9,7 +9,12 @@ A site can optionally link a Warp **brand** (`brandSlug`):
 - **With brand** — live app on sites.joai.ai at `/{teamSlug}/{brandSlug}`
 - **Without brand** — site record only (e.g. agency portfolio / external websites), with optional client contact, metrics source/resource, and monthly reports
 
-Create without a brand from **Sites → Create site**, or via `POST /v1/sites` / warp `joai/site-create` with `team` + `slug`. Provisioning a brand still creates/links a brand-backed site (`joai/site-provision`).
+Optional **`type`**:
+
+- `undefined` (default) — generic website record
+- `shop` — storefront URL used as the post-checkout return address (requires `url`; one shop site per team, including disabled; set `type` to `undefined` before assigning shop to another site; brand-backed sites cannot be shops). Guest order payloads expose this as `site` (`SiteResource`) when loaded.
+
+Create without a brand from **Sites → Add → Website**, or via `POST /v1/sites` / warp `joai/site-create` with `team` + `name` (optional `url`, `type`). Provisioning a brand still creates/links a brand-backed site (`joai/site-provision`).
 
 Install **Sites** under **Team settings → Apps**, then open **Sites** in the sidebar (`/sites`).
 
@@ -47,9 +52,10 @@ Brandless sites are **not** published on sites.joai.ai.
 
 1. Install **Sites**
 2. Open **Sites**
-3. **Create site** (slug only) for portfolio / external sites, or use **Add brand** for live Warp brands
+3. **Add → Website** (name, optional URL + type) for portfolio / external / shop sites, or **Add → Live app** for Warp brands
 4. Per site:
    - Toggle **enabled**
+   - Set **type** to **Shop** when this URL is the storefront customers should return to after checkout
    - Link a **contact** and a **metrics source** + **resource** (same pair as `metrics-query`). For Cloudflare, connect the agent under [Cloudflare integration](/integrations/cloudflare) first, then use `cloudflare` as source and the zone tag as resource.
    - Optionally enable **monthly report**. If the metrics source is Cloudflare and no agent has a token yet, enabling returns `channel_not_configured` (422) so the Sites UI opens the [Cloudflare](/integrations/cloudflare) setup dialog, and chat/MCP can call `settings-integration-open` with `integration=cloudflare` then retry. On the 1st of each month the platform job creates an **update** artifact with metric blocks for the previous month and runs `artifact-deliver` (draft → approve / auto-mode). The report shows under Artifacts and Contact → Deliveries.
 5. Per brand-backed site:
@@ -112,7 +118,7 @@ Requires the **Sites** app.
 
 | Tool | Purpose |
 | --- | --- |
-| `list_sites` / `create_site` / `update_site` | Portfolio sites; set contact + metrics; `monthlyReport` opts into the 1st-of-month job (does not send now) |
+| `list_sites` / `create_site` / `update_site` | Portfolio sites; optional `type=shop` + `url` for checkout return; set contact + metrics; `monthlyReport` opts into the 1st-of-month job (does not send now) |
 | `query_metrics` | Read Cloudflare (etc.) metrics for a period |
 | `list_contents` / `get_content` / `create_content` / `update_content` | CMS pages |
 | `preview_content` / `publish_content` / `rollback_content` | Lifecycle |

@@ -36,9 +36,10 @@ Integrations are **per agent** (or per team for some utilities). They are not th
 | **Discord** | Servers / DMs | [Discord](/integrations/discord) |
 | **Email** | Agent-owned inbox address | [Email](/integrations/email) |
 | **Twilio** | Voice + SMS | [Twilio](/integrations/twilio) |
-| **X (Twitter)** | Mention ingest → knowledge | [X](/integrations/x) |
-| **XChat** | Encrypted XChat bot | [XChat](/integrations/xchat) |
-| **Instagram** | Professional DMs | [Instagram](/integrations/instagram) |
+| **Instagram** | Professional DMs + Social Media publishing | [Instagram](/integrations/instagram) |
+| **Facebook** | Page publishing via Social Media | [Facebook](/integrations/facebook) |
+| **LinkedIn** | Profile publishing via Social Media | [LinkedIn](/integrations/linkedin) |
+| **X (Twitter)** | Mention ingest + Social Media publishing | [X](/integrations/x) |
 
 ### Development
 
