@@ -12,7 +12,7 @@ A site can optionally link a Warp **brand** (`brandSlug`):
 Optional **`type`**:
 
 - `undefined` (default) — generic website record
-- `shop` — storefront URL used as the post-checkout return address (requires `url`; one shop site per team, including disabled; set `type` to `undefined` before assigning shop to another site; brand-backed sites cannot be shops). Guest order payloads expose this as `site` (`SiteResource`) when loaded.
+- `shop` — storefront URL used as the post-checkout return address (requires `url`; one shop site per team, including disabled; set `type` to `undefined` before assigning shop to another site; brand-backed sites cannot be shops). Guest thank-you / order payloads include this site when configured — see [Shop](/apps/shop).
 
 Create without a brand from **Sites → Add → Website**, or via `POST /v1/sites` / warp `joai/site-create` with `team` + `name` (optional `url`, `type`). Provisioning a brand still creates/links a brand-backed site (`joai/site-provision`).
 

@@ -10,7 +10,7 @@ Contacts is the CRM native app: people and companies you work with, their proper
 - Message contacts (email / WhatsApp / SMS when integrations allow)
 - Build **segments** for [Campaigns](/campaigns) audiences (segment UI lives under Campaigns)
 - Optional **loyalty** program, scanner, and customer wallet passes
-- Agents manage contacts over **MCP** — always prefer find-or-create over blind create
+- Agents manage contacts over **MCP** — always prefer find-or-create over blind create; leave **company** empty unless verified
 
 ## In the app
 
@@ -92,6 +92,14 @@ Creating a second contact for the same person is a data-integrity failure.
 - Pass **email and/or phone** whenever known
 - Prefer find-or-create (warps / MCP flows) over blind create
 - If a contact exists, **update** missing fields — do not invent a second row
+
+## Research before creating from thin context
+
+When an inbound message or a name-only lead is all you have:
+
+1. Research may fill **verified** employer, title, website, and socials — never invent them
+2. Put networking groups, events, communities, and interests in **tags** or **notes** — never in **company**
+3. Leave fields empty when unsure — a sparse accurate contact beats a wrong one
 
 ## For agents (MCP)
 
