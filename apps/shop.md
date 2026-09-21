@@ -51,6 +51,8 @@ The customer contact remains the buyer shown on the invoice. Use **Invoice recip
 
 **Customer emails:** Online checkout (card, Mollie, Stripe, …) sends the team-branded order confirmation only after payment. Offline / bank-transfer orders can confirm when placed, then send a payment-received note (with invoice) once paid.
 
+Guest pickup checkout asks for a phone number so the shop can coordinate collection. After online payment, pickup and shipping orders are **confirmed**; they become **delivered** only when fulfillment or handover is completed.
+
 **Line items:**
 
 | Type | How |
