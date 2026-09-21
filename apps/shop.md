@@ -17,7 +17,7 @@ Shop is the commerce native app: catalog, orders, coupons, subscriptions, paymen
 
 | Tab | What you do |
 | --- | --- |
-| **Orders** | List/filter orders; earnings summary; commission agreements |
+| **Orders** | List/filter orders; click a status badge to change it; earnings summary; commission agreements |
 | **Products** | Product catalog (variations, media, tags, store listing) |
 | **Services** | Bookable/sellable services (shared with [Appointments](/apps/appointments)) |
 | **Coupons** | Discount codes (enable coupons under Settings → Storefront first) |
@@ -49,7 +49,7 @@ Use **Open store** in the header to jump to the public storefront.
 
 The customer contact remains the buyer shown on the invoice. Use **Invoice recipient** during creation or editing when another contact (for example, an accounting inbox) should receive invoice and confirmation emails; leaving it at the default uses the customer contact.
 
-**Customer emails:** Online checkout (card, Mollie, Stripe, …) sends the team-branded order confirmation only after payment. Offline / bank-transfer orders can confirm when placed, then send a payment-received note (with invoice) once paid.
+**Customer emails:** Online checkout (card, Mollie, Stripe, …) sends the team-branded order confirmation only after payment. Offline / bank-transfer orders can confirm when placed, then send a payment-received note (with invoice) once paid. On a pending order, **Notify contact** sends that confirmation to the customer; choose which agent it is sent as. The same order can be notified about once per hour.
 
 Guest pickup checkout asks for a phone number so the shop can coordinate collection. After online payment, pickup and shipping orders are **confirmed**; they become **delivered** only when fulfillment or handover is completed.
 
@@ -131,6 +131,14 @@ Full host map: [Public surfaces](/apps/public-surfaces).
 Requires **Shop** installed. **Team** tools are for merchants; **customer** tools are for buyer flows (different MCP audience).
 
 ### Team (admin)
+
+Shop admin UI (`/shop` products, coupons, orders) on DevNet requires:
+
+1. Sign in at `https://devnet.joai.ai` (not production `joai.ai`)
+2. Active team = the shop team (e.g. `glutenfreier-genuss`) with **Owner** or another role that has **TeamManage**
+3. **Shop** native app installed on that team (Apps → Shop)
+
+If those are missing, the UI shows a permission lock (or APIs return 403). Invite the user as Owner/Admin and install Shop — this is not an env guard bug.
 
 | Tool | Purpose |
 | --- | --- |
