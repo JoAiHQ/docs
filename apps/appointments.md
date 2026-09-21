@@ -110,6 +110,7 @@ Live schemas: `tools/list`. See [MCP](/protocols/mcp) and [SKILL.md](https://joa
 - Set policy before sharing or embedding the book URL
 - Use services with clear durations when you also bill via [Shop](/apps/shop)
 - Keep notification email on for team awareness
+- Service booking details can include a **phone** field. The number the customer submits is saved on their [contact](/apps/contacts)
 - Prefer `/book/embed` for iframes; use [Sites](/sites) when you need a full branded web app
 
 ## Related

@@ -36,6 +36,7 @@ Use **Open store** in the header to jump to the public storefront.
    - **Volume pricing**
    - **Related products** (kiosk upsells)
    - **Product configurator** (warp-backed options when configured)
+   - **Booking details** on services — extra questions at booking. A **phone** field is saved on the customer [contact](/apps/contacts)
    - **Stock** per product/variation when inventory is on
 
 [Kiosk](/kiosk) uses English lowercase product tags as categories — see the kiosk tag list.
