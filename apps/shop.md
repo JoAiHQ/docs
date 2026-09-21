@@ -138,7 +138,7 @@ Requires **Shop** installed. **Team** tools are for merchants; **customer** tool
 | `create_product_variation` / `update_product_variation` | Variations; both accept `stock` (units available) |
 | `create_service` / `update_service` / `delete_service` / `list_services` | Services (also with Appointments) |
 | `create_order` | Order or quote — catalog and/or **custom** lines; optional `invoiceContactId` |
-| `update_order` | Status, dates, or invoice recipient; clear `invoiceContactId` to use the customer |
+| `update_order` | Status, dates, invoice recipient, or `priceMode` (`net`/`gross`); clear `invoiceContactId` to use the customer |
 | `list_orders` / `delete_order` | List or delete orders |
 | `create_coupon` / `update_coupon` / `delete_coupon` / `list_coupons` | Coupons |
 | `create_fulfillment` / `update_fulfillment` / `list_fulfillments` | Fulfillment |
