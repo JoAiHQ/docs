@@ -98,10 +98,10 @@ Requires **Appointments** (service tools also work when **Shop** is installed).
 
 Typical agent flow:
 
-1. Resolve the attendee via CRM (`joai-contact-find-or-create` / list) and pass `contactId` — prefer that over free-text `attendeeName`
+1. Resolve attendees via CRM (`joai-contact-find-or-create` / list) and pass `contactIds` — prefer that over free-text `attendeeName`
 2. Check availability with a **tight** window when a time is already agreed (`windowStart` = that time, `windowEnd` = start + duration). Only use a broad day/range when the user is still flexible
 3. Confirm a slot with the user
-4. Book with the same `contactId`
+4. Book with the same `contactIds`
 5. If booking cannot complete, create an appointment request
 
 Live schemas: `tools/list`. See [MCP](/protocols/mcp) and [SKILL.md](https://joai.ai/SKILL.md).
