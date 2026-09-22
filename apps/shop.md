@@ -49,7 +49,7 @@ Use **Open store** in the header to jump to the public storefront.
 
 The customer contact remains the buyer shown on the invoice. Use **Invoice recipient** during creation or editing when another contact (for example, an accounting inbox) should receive invoice and confirmation emails; leaving it at the default uses the customer contact.
 
-**Customer emails:** Online checkout (card, Mollie, Stripe, …) sends the team-branded order confirmation only after payment. Offline / bank-transfer orders can confirm when placed, then send a payment-received note (with invoice) once paid. On a pending order, **Notify contact** sends that confirmation to the customer; choose which agent it is sent as. The same order can be notified about once per hour.
+**Customer emails:** Online checkout (card, Mollie, Stripe, …) sends the team-branded order confirmation only after payment. Offline / bank-transfer orders can confirm when placed, then send a payment-received note (with invoice) once paid. On a pending order, **Notify contact** runs `joai-order-notify` through the chosen agent (auto-approved sync execution) so the branded confirmation is sent as that agent. Agents can trigger the same warp from MCP. The same order can be notified about once per hour.
 
 Guest pickup checkout asks for a phone number so the shop can coordinate collection. After online payment, pickup and shipping orders are **confirmed**; they become **delivered** only when fulfillment or handover is completed.
 
@@ -149,6 +149,7 @@ If those are missing, the UI shows a permission lock and APIs return 403.
 | `create_service` / `update_service` / `delete_service` / `list_services` | Services (also with Appointments) |
 | `create_order` | Order or quote — catalog and/or **custom** lines; optional `invoiceContactId` |
 | `update_order` | Status, dates, or invoice recipient; clear `invoiceContactId` to use the customer |
+| `notify_order` (`joai-order-notify`) | Send branded order confirmation to the customer contact as the executing agent (same path as Shop **Notify contact**) |
 | `list_orders` / `delete_order` | List or delete orders |
 | `create_coupon` / `update_coupon` / `delete_coupon` / `list_coupons` | Coupons |
 | `create_fulfillment` / `update_fulfillment` / `list_fulfillments` | Fulfillment |
