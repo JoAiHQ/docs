@@ -37,6 +37,7 @@ export default defineConfig({
           { text: 'Smart Links', link: '/apps/smart-links' },
           { text: 'News', link: '/apps/news' },
           { text: 'Social Media', link: '/apps/social' },
+          { text: 'Studio', link: '/apps/studio' },
           { text: 'Sites', link: '/sites' },
           { text: 'Meetings', link: '/apps/meeting' },
           { text: 'Workspace', link: '/apps/files' },
@@ -79,7 +80,6 @@ export default defineConfig({
         text: 'Core',
         items: [
           { text: 'Agents', link: '/agents' },
-          { text: 'Studio', link: '/studio' },
           { text: 'Artifacts', link: '/artifacts' },
           { text: 'Chat & Commands', link: '/chat-commands' },
           { text: 'Desk', link: '/desk' },
