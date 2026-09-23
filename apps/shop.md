@@ -17,10 +17,10 @@ Shop is the commerce native app: catalog, orders, coupons, subscriptions, paymen
 
 | Tab | What you do |
 | --- | --- |
-| **Orders** | List/filter orders; click a status badge to change it; earnings summary; commission agreements |
+| **Orders** | List/filter orders; click a status badge to change it; paid / outstanding / canceled revenue summary; commission agreements |
 | **Products** | Product catalog (variations, media, tags, store listing) |
 | **Services** | Bookable/sellable services (shared with [Appointments](/apps/appointments)) |
-| **Coupons** | Discount codes (enable coupons under Settings → Storefront first) |
+| **Coupons** | Discount codes (enable under Settings → Storefront first); list shows redemption count; open a coupon to see orders that used it |
 | **Subscriptions** | Merchant view of customer subscriptions (cancel/resume) |
 | **Tables** | Food & drink teams only — open orders by table |
 
@@ -64,7 +64,7 @@ Guest pickup checkout asks for a phone number so the shop can coordinate collect
 
 Custom lines are for one-offs (repair, travel, materials). They appear on the order and invoice. Allowed only for authenticated team/agent create — **not** public checkout or [kiosk](/kiosk).
 
-Orders tab also surfaces **earnings** and **commission agreements** where configured for the team.
+Orders tab also surfaces **order revenue stats** (paid, outstanding, canceled/returned) and **commission agreements** where configured for the team.
 
 ### Invoices and payment QR codes
 
@@ -150,8 +150,8 @@ If those are missing, the UI shows a permission lock and APIs return 403.
 | `create_order` | Order or quote — catalog and/or **custom** lines; optional `invoiceContactId` |
 | `update_order` | Status, dates, or invoice recipient; clear `invoiceContactId` to use the customer |
 | `notify_order` (`joai-order-notify`) | Send branded order confirmation to the customer contact as the executing agent (same path as Shop **Notify contact**) |
-| `list_orders` / `delete_order` | List or delete orders |
-| `create_coupon` / `update_coupon` / `delete_coupon` / `list_coupons` | Coupons |
+| `list_orders` / `delete_order` | List or delete orders; `list_orders` accepts `couponId` to show redemptions for a coupon |
+| `create_coupon` / `update_coupon` / `delete_coupon` / `list_coupons` | Coupons (`list_coupons` includes `redemptionCount` for team members) |
 | `create_fulfillment` / `update_fulfillment` / `list_fulfillments` | Fulfillment |
 | `list_returns` / `update_return` | Returns (merchant updates) |
 
