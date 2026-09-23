@@ -29,6 +29,7 @@ Install **Studio** under **Team settings → Apps**. It then appears in the side
 - **Image** — one social-ready still (produce stops after image generation; no MP4)
 - **Slideshow** — multiple stills from the storyboard (stills-primary export for Social; no MP4 required)
 - Both export JPEG stills you can schedule with **Schedule to Social**
+- Opening Social from Studio **generates a caption** in the agent’s voice from the project brief/summary (you can regenerate in the composer)
 
 ### Clip projects
 
