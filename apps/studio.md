@@ -1,12 +1,12 @@
 # Studio
 
-Studio is JoAi’s generative media workbench: create video, slideshow, and clip projects, manage reusable **elements**, and export for social formats.
+Studio is JoAi’s generative media workbench: create video, image, slideshow, and clip projects, manage reusable **elements**, and export for social formats.
 
 Install **Studio** under **Team settings → Apps**. It then appears in the sidebar at `/studio`. Only team members with manage access can open Studio or change projects and elements.
 
 ## Overview
 
-- **Projects** — prompt-driven generative video/slideshow, or **clip** projects from source video / YouTube
+- **Projects** — prompt-driven generative video/slideshow/**image**, or **clip** projects from source video / YouTube
 - **Elements** — reusable visual/brand assets attached to projects (`/studio/elements`)
 - Output presets: **9:16 social** (TikTok / Reels / Shorts), **16:9 launch**, **1:1 square teaser**
 - Optional **NSFW** flag on new projects
@@ -19,10 +19,16 @@ Install **Studio** under **Team settings → Apps**. It then appears in the side
 1. Open **Studio** (after installing the app)
 2. Choose **Projects** or **Elements**
 3. Start a project with a prompt (or clip brief)
-4. Pick **output type**: `video` · `slideshow` · `clips`
+4. Pick **output type**: `video` · `slideshow` · `image` · `clips`
 5. Pick a platform shortcut (TikTok / Reels) or an explicit preset
 6. Continue in the project flow: direction → storyboard → generate → review → produce / export
 7. When an export is ready, use **Schedule to Social** (requires Social Media installed) to open `/social` with that export preselected — JoAi copies stills onto the post
+
+### Image and slideshow projects
+
+- **Image** — one social-ready still (produce stops after image generation; no MP4)
+- **Slideshow** — multiple stills from the storyboard (stills-primary export for Social; no MP4 required)
+- Both export JPEG stills you can schedule with **Schedule to Social**
 
 ### Clip projects
 
