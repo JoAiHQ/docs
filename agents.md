@@ -50,6 +50,8 @@ Agent responses always pass through a delivery action selected for the current r
 
 Proposed actions queue up in the **pending actions** banner. Open it to review them one at a time — each card carries a short description of what the action will do, and you can step through the queue with the arrow buttons (or the left/right arrow keys) before approving, always approving, or declining. Older proposals are shown first so you can work through them in the order they were made.
 
+**Always Approve** opens a short trust sheet so you can scope the rule: the entire action, only when a specific field matches (for example a contact property key), or a custom set of pinned fields. Future runs that match the rule skip the approval card. Choosing entire trust replaces any scoped rules for that action; choosing a scoped rule while entire trust exists can replace it. Manage or revoke these rules under **Agent Settings → Identity → Trusted actions**. Social chat cards only offer Approve / Reject — use the app for scoped Always Approve.
+
 Actions that only run in the desktop app (for example CLI commands like WhatsApp Personal) show a desktop-download hint instead of an approve button, with **Skip** to move on to the next one.
 
 ### Knowledge Base

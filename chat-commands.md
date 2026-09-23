@@ -17,7 +17,7 @@ Chat with your agent in natural language, use voice, or type slash commands for 
 | `/warp-create <chain> <name>` | Create a new warp on a chain |
 | `/warp-input <id> [inputs…]` | Supply inputs for a waiting warp |
 | `/warp-select` / `/warp-select-none` | Selection helpers in warp UI flows |
-| `/warp-approve` / `/warp-always-approve` / `/warp-decline` | Respond to approval prompts |
+| `/warp-approve` / `/warp-always-approve` / `/warp-decline` | Respond to approval prompts (`always-approve` may include a `match:{…}` scope arg and optional `replace:entire`) |
 | `/warp-test` | **Local** — open warp test UI |
 | `/warp-batch` / `/warp-bulk` | Batch / bulk warp runs (`warp-bulk` is the local bulk UI) |
 
