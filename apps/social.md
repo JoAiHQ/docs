@@ -6,7 +6,7 @@ Install **Social Media** under **Team settings → Apps**. It then appears in th
 
 ## Settings vs chat
 
-Use **Social Media** in the app when you want to browse the queue, connect a network, or edit a draft yourself.
+Use **Social Media** in the app when you want to browse the queue, connect a network, or edit a draft yourself. From Studio, **Schedule to Social** opens the composer with an export or element variation already selected.
 
 Use chat warps / MCP when the agent should draft or schedule for you. Approving a warp only **schedules** into JoAi’s queue — it never talks to Instagram, X, Facebook, or LinkedIn directly. The publish job posts when the time arrives.
 

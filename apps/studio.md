@@ -22,6 +22,7 @@ Install **Studio** under **Team settings → Apps**. It then appears in the side
 4. Pick **output type**: `video` · `slideshow` · `clips`
 5. Pick a platform shortcut (TikTok / Reels) or an explicit preset
 6. Continue in the project flow: direction → storyboard → generate → review → produce / export
+7. When an export is ready, use **Schedule to Social** (requires Social Media installed) to open `/social` with that export preselected — JoAi copies stills onto the post
 
 ### Clip projects
 
@@ -36,7 +37,7 @@ Install **Studio** under **Team settings → Apps**. It then appears in the side
 
 ### Elements
 
-Manage the team element library under Studio → **Elements**. Create, update, generate variations. The same element tools are also available when **Sites** is installed (CMS).
+Manage the team element library under Studio → **Elements**. Create, update, generate variations. From a variation with images, **Schedule to Social** opens the Social composer with that variation. The same element tools are also available when **Sites** is installed (CMS).
 
 ## For agents (MCP)
 
