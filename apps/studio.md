@@ -55,7 +55,7 @@ Live schemas: `tools/list`. See [MCP](/protocols/mcp) and [SKILL.md](https://joa
 
 ## Related
 
-- [Social Media](/apps/social) — schedule posts (stills today; Studio exports for social formats)
+- [Social Media](/apps/social) — schedule posts from Studio exports or element variations (`exportId` / `elementVariationId`)
 - [Agents](/agents)
 - [Board](/apps/board)
 - [Sites](/sites)

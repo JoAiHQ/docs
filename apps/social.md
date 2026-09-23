@@ -25,6 +25,7 @@ Use chat warps / MCP when the agent should draft or schedule for you. Approving 
 
 - Choose Instagram, X, Facebook, or LinkedIn
 - Save a draft with a caption and optional images (Instagram drafts can be incomplete until you schedule)
+- Create a draft from a **Studio export** (`exportId`) or **element variation** (`elementVariationId`) — JoAi **copies** those stills onto the post and leaves the originals alone
 - Edit a draft, failed, or cancelled post (scheduled, publishing, and published posts stay locked)
 - Schedule a time in your team timezone, or queue the post to go out on the next job run
 - Publish a ready draft immediately from the queue
@@ -32,6 +33,8 @@ Use chat warps / MCP when the agent should draft or schedule for you. Approving 
 - Filter the queue by status or network: draft, scheduled, publishing, published, failed, cancelled
 
 Creating or scheduling a post asks for approval in chat, unless the agent is in auto mode. That approval only queues the post.
+
+Pass either `media` (team media IDs), `exportId`, or `elementVariationId` — not a mix. Video-only Studio exports do not attach stills for feed posts yet.
 
 ## Instagram
 
@@ -69,11 +72,11 @@ Posts belong to the team. You cannot change another team’s posts. Only drafts,
 
 ## For agents
 
-Upload images with `media_upload`, then:
+Upload images with `media_upload`, **or** pass a Studio `exportId` / `elementVariationId`, then:
 
 | Warp | What it does |
 | --- | --- |
-| `social-post-create` | Draft, or schedule into the queue when `scheduledAt` is set |
+| `social-post-create` | Draft, or schedule into the queue when `scheduledAt` is set. Optional `exportId` or `elementVariationId` copies stills onto the post. |
 | `social-post-update` | Change a draft, failed, or cancelled post |
 | `social-post-schedule` | Queue a draft (with a time, or for the next job run) |
 | `social-post-cancel` | Stop a scheduled post |
