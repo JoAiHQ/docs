@@ -17,7 +17,7 @@ Shop is the commerce native app: catalog, orders, coupons, subscriptions, paymen
 
 | Tab | What you do |
 | --- | --- |
-| **Orders** | List/filter orders; click a status badge to change it; paid / outstanding / canceled revenue summary; commission agreements |
+| **Orders** | List/filter orders; status badge + **Fulfill** for pickup/shipping (stepper dialog); status dropdown for invoices; paid / outstanding / canceled revenue summary; commission agreements |
 | **Products** | Product catalog (variations, media, tags, store listing) |
 | **Services** | Bookable/sellable services (shared with [Appointments](/apps/appointments)) |
 | **Coupons** | Discount codes (enable under Settings → Storefront first); list shows redemption count; open a coupon to see orders that used it |
@@ -56,7 +56,7 @@ Guest pickup checkout asks for a phone number so the shop can coordinate collect
 
 Invoice and service orders without pickup/shipping stay **pending** until payment is recorded. Changing status to the closed state runs the paid path and shows as **paid** (not “delivered”). Pickup and shipping keep their fulfillment labels (“ready for pickup”, “picked up”, “delivered”).
 
-For **pickup**, marking a fulfillment ready for pickup sets the order to **shipped** (shown as “ready for pickup”) and emails the buyer a ready-for-pickup notice with a link back to the order (guest access token when one was stored). Marking the fulfillment delivered sets the order to **delivered** (“picked up”).
+For **pickup** (Abholung) and **shipping**, Shop → Orders stays calm: status badge plus a **Fulfill** action. The fulfill dialog walks payment → prepare → ready/shipped → collected/delivered with a packing checklist (required for pickup), optional shipping tracking, and one primary button per step. Search orders by phone, order number, or name. Pickup-only shops use Neu / In Vorbereitung / Zur Abholung bereit / Abgeholt filters; mixed pickup+shipping lists use neutral Ready / Completed labels. The list shows time, phone, item quantities, and the concrete payment method (PayPal, card, bank transfer) when Mollie reports it. Mark **ready for pickup** on a paid order emails the customer (DE) with the order number, pickup place, and guest order link; the guest thank-you page shows the same pickup status through prepare → ready → picked up. Marking the fulfillment delivered sets the order to **delivered** (“picked up”). Manual status jumps that skip steps are blocked; cancel remains available from the order menu.
 
 **Post-checkout return:** Mark a brandless [Sites](/sites) record as type `shop` (with a public URL) so guest thank-you pages can send buyers back to that storefront. One shop site per team.
 
@@ -86,10 +86,13 @@ Pending invoices include payment instructions in the notes:
 
 ### Fulfillment and returns
 
-For physical items after payment:
+For physical pickup or shipping orders after payment:
 
-1. Create a fulfillment and mark **ready for pickup** or **shipped**
-2. For returns: approve → receive → refund in the order actions
+1. Open **Fulfill** on the order (list or order page)
+2. Check off items in the dialog, then use the primary action (**ready for pickup** / **shipped**, then **collected** / **delivered**)
+3. For returns: approve → receive → refund from the order row actions
+
+Invoice-only orders still use the status control (including **paid** when closed).
 
 ### Settings
 
