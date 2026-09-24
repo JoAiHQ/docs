@@ -30,6 +30,7 @@ Use chat warps / MCP when the agent should draft or schedule for you. Approving 
 - Edit a draft, failed, or cancelled post (scheduled, publishing, and published posts stay locked)
 - Schedule a time in your team timezone, or queue the post to go out on the next job run
 - Publish a ready draft immediately from the queue
+- **Share a link** on a draft, scheduled, or published post — anyone with the link sees a public preview (caption, stills, network, and time), without signing in
 - Cancel a scheduled post, or retry one that failed
 - Filter the queue by status or network: draft, scheduled, publishing, published, failed, cancelled
 
@@ -67,9 +68,15 @@ Connecting Instagram, Facebook, LinkedIn, or X once makes that account available
 
 ## Permissions
 
-Social Media requires **team manage** access. Members without that permission cannot list, create, edit, schedule, cancel, retry, or delete posts, and they cannot see connection status.
+Social Media requires **team manage** access. Members without that permission cannot list, create, edit, schedule, cancel, retry, delete, or share posts, and they cannot see connection status.
 
-Posts belong to the team. You cannot change another team’s posts. Only drafts, failed, and cancelled posts can be edited. Scheduled posts can be cancelled. Failed posts can be retried. Publishing posts cannot be deleted.
+Posts belong to the team. You cannot change another team’s posts. Only drafts, failed, and cancelled posts can be edited. Scheduled posts can be cancelled. Failed posts can be retried. Publishing posts cannot be deleted or shared.
+
+## Share links
+
+Use **Share link** on any post that is not currently publishing. JoAi keeps a public preview URL (`/social/share?id=…`) with the caption, stills, network, and scheduled or published time — no sign-in required. Deleting the post or revoking the share invalidates the link; sharing again creates a new one.
+
+From chat / MCP, `create_social_post`, `schedule_social_post`, `update_social_post`, and `list_social_posts` return that same `shareUrl` so the agent can paste the preview for review.
 
 ## For agents
 
@@ -77,12 +84,12 @@ Upload images with `media_upload`, **or** pass a Studio `exportId` / `elementVar
 
 | Warp | What it does |
 | --- | --- |
-| `social-post-create` | Draft, or schedule into the queue when `scheduledAt` is set. Optional `exportId` or `elementVariationId` copies stills onto the post. |
-| `social-post-update` | Change a draft, failed, or cancelled post |
-| `social-post-schedule` | Queue a draft (with a time, or for the next job run) |
+| `social-post-create` | Draft, or schedule into the queue when `scheduledAt` is set. Optional `exportId` or `elementVariationId` copies stills onto the post. Returns `shareUrl` (public preview). |
+| `social-post-update` | Change a draft, failed, or cancelled post. Returns `shareUrl`. |
+| `social-post-schedule` | Queue a draft (with a time, or for the next job run). Returns `shareUrl`. |
 | `social-post-cancel` | Stop a scheduled post |
 | `social-post-retry` | Re-queue a failed post |
-| `social-post-list` | List posts, optionally by status or network |
+| `social-post-list` | List posts, optionally by status or network — each item includes `shareUrl` when sharable |
 | `social-post-delete` | Delete a post that is not currently publishing |
 
 Warps never post to the networks themselves. Scheduling and retry only enqueue JoAi's publish job.
