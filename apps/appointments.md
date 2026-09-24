@@ -9,6 +9,7 @@ Appointments is the booking native app: availability, capacity, requests, and a 
 - Offer a **public book** page for customers
 - Share **services** with [Shop](/apps/shop) when both are installed
 - Agents check availability and book over **MCP**
+- A booking-details field named or labeled like phone/mobile/Telefon is saved onto the CRM contact (matched by email or existing phone; never overwrites a phone already on file)
 
 ## In the app
 
@@ -114,6 +115,7 @@ Live schemas: `tools/list`. See [MCP](/protocols/mcp) and [SKILL.md](https://joa
 - Prefer `/book/embed` for iframes; use [Sites](/sites) when you need a full branded web app
 - When chatting about a specific time (“Wed 7.10 at 11”), do not expand the availability window to midnight→next day
 - Book with the exact `startAt` from availability (includes a numeric offset). Do not invent a trailing `Z` for a local wall-clock time
+- Add a string field named or labeled like phone/mobile/Telefon to a service’s booking details when you want the customer’s number on the contact after they book
 
 ## Related
 
