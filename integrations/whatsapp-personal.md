@@ -15,8 +15,10 @@ This is **not** [WhatsApp Business](/integrations/whatsapp) (Meta Cloud API / ca
 1. On **desktop**, open **Agent settings → Integrations** → **WhatsApp Personal**
 2. Click **Connect**
 3. Click **Pair** and scan the QR / complete WhatsApp login
-4. Click **Start sync**
+4. Click **Start sync** — or add it as a shortcut when prompted so you can restart sync later from the shortcut bar
 5. Leave sync running while you want inbound messages to arrive
+
+After connect, JoAi can propose saving **Start sync** as an agent shortcut (with the webhook URL and secret already filled in). One tap from the shortcut bar restarts sync on this desktop.
 
 The desktop app manages its own wacli executable. Before pairing, syncing, or sending, it periodically checks the official OpenClaw release feed, verifies the downloaded archive checksum, and uses the managed version instead of an arbitrary `wacli` found on your shell `PATH`. Use **Update wacli** in the integration settings to force an immediate check; an active sync is stopped and restarted around an update.
 
