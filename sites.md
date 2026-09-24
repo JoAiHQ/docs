@@ -74,6 +74,10 @@ From Sites → **Content**:
 
 These map 1:1 to the Sites MCP tools below.
 
+When an agent proposes content create/update/publish/restore, pending actions show a structured approval card: field-level before/after for edits (with expandable diffs for long text and media thumbs for image/media fields), and name/slug/version context for publish and restore — not raw JSON patches.
+
+Site create/update/provision and element create/update/delete (plus variation generate/update/delete) use the same style of approval cards: site name/URL/type/contact/metrics diffs, and element description/prompt/media/variation previews with `MediaPreview` thumbs when media IDs are present.
+
 ### How routes work (brand config)
 
 Brand configs in `joai--warps` map URL paths to Warps:
