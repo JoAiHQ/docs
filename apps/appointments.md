@@ -113,6 +113,7 @@ Live schemas: `tools/list`. See [MCP](/protocols/mcp) and [SKILL.md](https://joa
 - Keep notification email on for team awareness
 - Prefer `/book/embed` for iframes; use [Sites](/sites) when you need a full branded web app
 - When chatting about a specific time (“Wed 7.10 at 11”), do not expand the availability window to midnight→next day
+- Book with the exact `startAt` from availability (includes a numeric offset). Do not invent a trailing `Z` for a local wall-clock time
 
 ## Related
 
