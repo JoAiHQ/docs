@@ -54,6 +54,8 @@ The customer contact remains the buyer shown on the invoice. Use **Invoice recip
 
 Guest pickup checkout asks for a phone number so the shop can coordinate collection. After online payment, pickup and shipping orders are **confirmed**; they become **delivered** only when fulfillment or handover is completed.
 
+For **pickup**, marking a fulfillment ready for pickup sets the order to **shipped** (shown as “ready for pickup”) and emails the buyer a ready-for-pickup notice with a link back to the order (guest access token when one was stored). Marking the fulfillment delivered sets the order to **delivered** (“picked up”).
+
 **Post-checkout return:** Mark a brandless [Sites](/sites) record as type `shop` (with a public URL) so guest thank-you pages can send buyers back to that storefront. One shop site per team.
 
 **Line items:**
