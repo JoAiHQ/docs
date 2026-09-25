@@ -39,6 +39,8 @@ Use **Open store** in the header to jump to the public storefront.
    - **Booking details** on services (same configurator; phone-named/labeled fields are saved on the CRM contact when customers book)
    - **Stock** per product/variation when inventory is on
 
+**Tags:** first tag is the **category** (Shop → Products filter + storefront category chips); further tags are labels (e.g. Vegan). Team product lists return `meta.categories` / `meta.hasUntagged` from those first tags.
+
 [Kiosk](/kiosk) uses English lowercase product tags as categories — see the kiosk tag list.
 
 ### Orders and quotes
@@ -56,7 +58,7 @@ Guest pickup checkout asks for a phone number so the shop can coordinate collect
 
 Invoice and service orders without pickup/shipping stay **pending** until payment is recorded. Changing status to the closed state runs the paid path and shows as **paid** (not “delivered”). Pickup and shipping keep their fulfillment labels (“ready for pickup”, “picked up”, “delivered”).
 
-For **pickup** (Abholung) and **shipping**, Shop → Orders stays calm: status badge plus a **Fulfill** action. The fulfill dialog walks payment → prepare → ready/shipped → collected/delivered with a packing checklist (required for pickup), optional shipping tracking, and one primary button per step. Search orders by phone, order number, or name. Pickup-only shops use Neu / In Vorbereitung / Zur Abholung bereit / Abgeholt filters; mixed pickup+shipping lists use neutral Ready / Completed labels. The list shows time, phone, item quantities, and the concrete payment method (PayPal, card, bank transfer) when Mollie reports it. Mark **ready for pickup** on a paid order emails the customer (DE) with the order number, pickup place, and guest order link; the guest thank-you page shows the same pickup status through prepare → ready → picked up. Marking the fulfillment delivered sets the order to **delivered** (“picked up”). Manual status jumps that skip steps are blocked; cancel remains available from the order menu.
+For **pickup** (Abholung) and **shipping**, Shop → Orders stays calm: status badge plus a **Fulfill** action. The fulfill dialog walks payment → prepare → ready/shipped → collected/delivered with a packing checklist when marking ready or shipped, optional shipping tracking, and one primary button per step. Handoff (collected/delivered) only confirms — no re-checking items. Search orders by phone, order number, or name. Pickup-only shops use Neu / In Vorbereitung / Zur Abholung bereit / Abgeholt filters; mixed pickup+shipping lists use neutral Ready / Completed labels. The list shows time, phone, item quantities, and the concrete payment method (PayPal, card, bank transfer) when Mollie reports it. Mark **ready for pickup** on a paid order emails the customer (DE) with the order number, pickup place, and guest order link; the guest thank-you page shows the same pickup status through prepare → ready → picked up. Marking the fulfillment delivered sets the order to **delivered** (“picked up”). Manual status jumps that skip steps are blocked; cancel remains available from the order menu.
 
 **Post-checkout return:** Mark a brandless [Sites](/sites) record as type `shop` (with a public URL) so guest thank-you pages can send buyers back to that storefront. One shop site per team.
 
@@ -100,12 +102,13 @@ Invoice-only orders still use the status control (including **paid** when closed
 
 | Tab | Use for |
 | --- | --- |
-| **General** | Currency, billing address, bank details for invoices |
+| **General** | Currency, billing address, bank details for invoices, order notification emails |
 | **Payments** | Online payments on/off; Stripe Connect / Mollie Connect; bank details |
 | **Delivery** | Shipping zones & rates; fulfillment / pickup locations |
 | **Inventory** | Team-level stock tracking on/off (then set stock on products/variations) |
 | **Storefront** | [Kiosk](/kiosk) on/off; enable coupons |
 
+**Order notification emails** (General): optional list of addresses (e.g. `bestellung@shop.example`) that receive a merchant alert when a shop order is placed — paid online orders after payment, bank/offline orders when created. Separate from customer confirmations and team seats.
 #### Delivery details
 
 **Shipping zones**
