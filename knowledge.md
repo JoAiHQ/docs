@@ -30,6 +30,8 @@ Short durable facts. Prefer memories for stable preferences and CRM-adjacent tru
 
 Upload PDFs and text. Agents search and cite them in chat / MCP.
 
+To share a document outside JoAi (e.g. WhatsApp), open it in Knowledge → Documents, choose **Make public**, then copy the link or share via WhatsApp. Recipients open a public page at `/share/document?id=…` without signing in. Use the lock control to revoke access.
+
 ### Ingestions
 
 Queued structured ingestion (meeting transcripts, Readwise, X mentions, notes). Monitor status here; agents can use `ingest_knowledge`, `ingest_meeting_transcript`, `get_ingestion_ops`, `reprocess_ingestion` where available.
@@ -43,7 +45,7 @@ Create goals and reminders in Knowledge. Board MCP also exposes `list_goals`, `c
 | Tool | Purpose |
 | --- | --- |
 | `create_memory` / `update_memory` / `search_memories` | Memories |
-| `list_documents` / `create_document` / `update_document` / `delete_document` | Documents |
+| `list_documents` / `create_document` / `update_document` / `delete_document` | Documents (`update_document` with `public: true` publishes a share URL; `public: false` revokes it) |
 | `ingest_knowledge` | Queue structured ingestion |
 | `list_skills` / `create_skill` / `update_skill` / `delete_skill` | Skills |
 | `list_goals` / `create_goal` / `update_goal_progress` | Goals (Board) |
