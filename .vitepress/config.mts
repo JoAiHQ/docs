@@ -30,6 +30,7 @@ export default defineConfig({
           { text: 'Shop', link: '/apps/shop' },
           { text: 'Kiosk', link: '/kiosk' },
           { text: 'Contacts', link: '/apps/contacts' },
+          { text: 'Loyalty', link: '/apps/loyalty' },
           { text: 'Campaigns', link: '/campaigns' },
           { text: 'Automations', link: '/automations' },
           { text: 'Forms', link: '/apps/forms' },

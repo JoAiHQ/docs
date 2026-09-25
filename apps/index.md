@@ -17,14 +17,14 @@ During onboarding, JoAi may suggest apps from your interests:
 
 | Interest | Suggested apps |
 | --- | --- |
-| business | Contacts, Appointments, Shop |
-| ecommerce | Shop, Contacts, Smart Links |
+| business | Contacts, Loyalty, Appointments, Shop |
+| ecommerce | Shop, Contacts, Loyalty, Smart Links |
 | shopping | Shop, Smart Links |
 | content | Campaigns, Automations, Sites, Smart Links, Social Media, Studio |
 | developer | Workspace, Sites, Contracts |
 | web3 | Wallets, Contracts |
 | payments | Shop, Wallets |
-| health / fitness | Appointments, Contacts |
+| health / fitness | Appointments, Contacts, Loyalty |
 | finance | Wallets, Board |
 | research | Board |
 
@@ -53,7 +53,8 @@ Native apps are **not** the same as:
 | --- | --- | --- |
 | **Board** | Kanban items, auto-execution; MCP for tasks/goals/hooks/blueprints/projects | [Board](/apps/board) |
 | **Shop** | Products, services, orders, coupons, payments, storefront | [Shop](/apps/shop) |
-| **Contacts** | CRM, tags, timeline, loyalty; segments via Campaigns | [Contacts](/apps/contacts) |
+| **Contacts** | CRM, tags, timeline; segments via Campaigns | [Contacts](/apps/contacts) |
+| **Loyalty** | Points, tiers, rewards, scanner, wallet passes | [Loyalty](/apps/loyalty) |
 | **Campaigns** | Email, WhatsApp, SMS, push + segment audiences | [Campaigns](/campaigns) |
 | **Automations** | Welcome series, nurture drips, webhook enroll | [Automations](/automations) |
 | **Forms** | Build, publish, share, submissions | [Forms](/apps/forms) |

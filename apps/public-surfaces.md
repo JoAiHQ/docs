@@ -40,7 +40,7 @@ https://sites.joai.ai/my-shop/appointment
 
 ### Loyalty pass behavior
 
-Pass pages show points, tier, next reward, member QR, and **Add to Apple Wallet / Google Wallet** when generation succeeds — [Contacts](/apps/contacts).
+Pass pages show points, tier, next reward, member QR, and **Add to Apple Wallet / Google Wallet** when generation succeeds — [Loyalty](/apps/loyalty).
 
 ### Customer portal
 
@@ -56,7 +56,7 @@ Portal links (`create_portal_session`) let buyers **pay**, manage **addresses**,
 | Brand sites | [Sites](/sites) |
 | News / updates on store | [News](/apps/news) |
 | Smart link short URLs | [Smart Links](/apps/smart-links) |
-| Loyalty / passes | [Contacts](/apps/contacts) loyalty |
+| Loyalty / passes | [Loyalty](/apps/loyalty) |
 | Blueprints / public agent pages | [Blueprints](/blueprints) / agent monetization |
 
 ## Related
@@ -68,5 +68,5 @@ Portal links (`create_portal_session`) let buyers **pay**, manage **addresses**,
 - [Sites](/sites)
 - [News](/apps/news)
 - [Smart Links](/apps/smart-links)
-- [Contacts](/apps/contacts)
+- [Loyalty](/apps/loyalty)
 - [Native apps](/apps/)

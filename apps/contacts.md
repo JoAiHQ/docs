@@ -1,6 +1,6 @@
 # Contacts
 
-Contacts is the CRM native app: people and companies you work with, their properties, activities, segments, and optional loyalty. Install **Contacts** under **Team settings → Apps**, then open **Contacts** in the sidebar.
+Contacts is the CRM native app: people and companies you work with, their properties, activities, and segments. Install **Contacts** under **Team settings → Apps**, then open **Contacts** in the sidebar. Points and wallet passes live in the separate [Loyalty](/apps/loyalty) app.
 
 ## Overview
 
@@ -9,7 +9,7 @@ Contacts is the CRM native app: people and companies you work with, their proper
 - Link contacts with **relations** — family, organization, business, and referrals
 - Message contacts (email / WhatsApp / SMS when integrations allow)
 - Build **segments** for [Campaigns](/campaigns) audiences (segment UI lives under Campaigns)
-- Optional **loyalty** program, scanner, and customer wallet passes
+- Per-contact **Loyalty** membership when [Loyalty](/apps/loyalty) is installed
 - Agents manage contacts over **MCP** — always prefer find-or-create over blind create; leave **company** empty unless verified
 
 ## In the app
@@ -60,30 +60,7 @@ Reusable audiences for campaigns. **Create and manage segments in [Campaigns](/c
 
 ### Loyalty
 
-Open **Contacts** in the sidebar → **Loyalty** tab (scanner button is in the Contacts header):
-
-| Area | What you configure |
-| --- | --- |
-| **Members** | Enrolled contacts, points, tier, last activity |
-| **Rewards** | Redeemable rewards (`discount_amount`, `discount_percent`, `free_item`, …) |
-| **Tiers** | Min points, multiplier, color, benefits |
-| **Promotions** | Time-bound bonus accrual rules |
-| **Settings** | Point name; accrual `per_visit` / `per_spend` / `per_item` / `per_category`; min spend; point expiry months |
-| **Scanner** | Native **Loyalty scanner** (QR stamp) on supported devices |
-
-On a contact’s **Loyalty** tab you can enroll, add/redeem points, adjust balances, and view history.
-
-#### Customer pass
-
-Members get a public pass page:
-
-```
-https://store.joai.ai/{locale}/pass/{contactId}
-```
-
-The pass shows points, tier, next reward, a QR code, and **Add to Apple Wallet / Google Wallet** when generation succeeds. See [Public surfaces](/apps/public-surfaces).
-
-There are **no loyalty MCP tools** today — manage loyalty in the UI or via HTTP/SDK.
+Program settings, scanner, and members live in **[Loyalty](/apps/loyalty)**. On a contact’s **Loyalty** tab you can still enroll, add/redeem points, adjust balances, and view history when Loyalty is installed.
 
 ## Never create duplicates
 
@@ -133,6 +110,7 @@ Live schemas: `tools/list`. See [MCP](/protocols/mcp) and [SKILL.md](https://joa
 - [Campaigns](/campaigns)
 - [Automations](/automations)
 - [Forms](/apps/forms)
+- [Loyalty](/apps/loyalty)
 - [Shop](/apps/shop)
 - [Public surfaces](/apps/public-surfaces)
 - [Teams](/teams)
