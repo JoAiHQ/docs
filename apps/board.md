@@ -5,7 +5,8 @@ Board is the team workbench: a kanban of **items** the agent can execute, plus r
 ## Overview
 
 - Kanban columns: **Backlog → Active → Review → Done** (archived separately)
-- Create items, drag between columns, search, highlight from deep links (`?highlight=`)
+- Create items, drag between columns, reorder within a column, or **move to top**
+- Rich description editor on create/edit; search and highlight from deep links (`?highlight=`)
 - **Auto-execution** on assignment (toggle in Board settings)
 - Archive finished work; reopen from **Archived items**
 - Done column hints auto-archive — clear finished work regularly
@@ -17,9 +18,9 @@ Board is the team workbench: a kanban of **items** the agent can execute, plus r
 
 1. Open **Board**
 2. Add cards in a column (except archived)
-3. Drag items across columns or reorder within a column
+3. Drag items across columns or reorder within a column (or use **Move to top** on a card)
 4. Use **search** to filter cards
-5. Open an item for details, assignment, and execution status
+5. Open an item for rich description editing, assignment, and execution status
 6. Header links:
    - **Settings** — auto-execution
    - **Archived items** — `/board/archive`
@@ -58,6 +59,8 @@ Requires **Board** (default on most teams).
 - **Write** tools use team **manage** access
 
 **Read:** `list_items`, `list_tasks`, `list_goals`, `list_projects`, `list_hooks`, `list_blueprints`, `list_reminders`, `list_updates`, `get_project`, `get_blueprint`, `get_update_stats`
+
+`list_items` defaults to items **assigned to the calling agent**. Pass `scope=all` to see the full team board.
 
 **Write:** `create_item`, `update_item`, `delete_item`, `create_task`, `toggle_task`, `delete_task`, `create_goal`, `update_goal_progress`, `create_project`, `delete_project`, `create_hook`, `toggle_hook`, `delete_hook`, `create_blueprint`, `update_blueprint`, `create_reminder`, `delete_reminder`, `create_update`, `update_update`, `delete_update`
 
