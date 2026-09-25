@@ -32,7 +32,7 @@ Upload PDFs and text. Agents search and cite them in chat / MCP.
 
 To share a document outside JoAi (e.g. WhatsApp), open it in Knowledge → Documents, choose **Make public**, then copy the link or share via WhatsApp. Recipients open a public page at `/share/document?id=…` without signing in. Use the lock control to revoke access.
 
-Prefer **Archive** over delete when a document should leave active knowledge but stay recoverable. Toggle **Archived** in the documents list to restore.
+Prefer **Archive** over delete when a document should leave active knowledge but stay recoverable. Archiving also revokes any public share link. Toggle **Archived** in the documents list to restore.
 
 ### Ingestions
 
