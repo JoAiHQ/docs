@@ -1,6 +1,6 @@
 # WhatsApp Personal
 
-Pair your **personal** WhatsApp on the JoAi **desktop app**. While that computer is online and sync is running, inbound chats land in per-contact rooms and outbound replies run through the desktop CLI.
+Pair your **personal** WhatsApp on the JoAi **desktop app**. While that computer is online and sync is running, inbound **1:1 chats and groups** land in Personal rooms and outbound replies run through the desktop CLI.
 
 This is **not** [WhatsApp Business](/integrations/whatsapp) (Meta Cloud API / campaigns).
 
@@ -28,20 +28,23 @@ JoAi generates the webhook URL and secret behind the scenes — you only use the
 
 ### Inbound
 
-While sync is running, the desktop CLI posts to JoAi hooks (`?source=wacli`) and signs each body with `X-Wacli-Signature` (HMAC-SHA256). Messages are persisted as **External** messages in **WhatsApp Personal** contact rooms — never into Business WhatsApp rooms.
+While sync is running, the desktop CLI posts to JoAi hooks (`?source=wacli`) and signs each body with `X-Wacli-Signature` (HMAC-SHA256). Messages are persisted as **External** messages in **WhatsApp Personal** rooms — never into Business WhatsApp rooms.
 
-Live inbound messages then start a normal agent turn in that contact room. When the agent replies, JoAi delivers through the channel send warp (`@whatsapp-send-text`):
+- **1:1 chats** use a contact room keyed by phone (same CRM contact when the number matches).
+- **Groups** use one room per group (`…@g.us`). The group is **not** a contact. Speakers are find-or-created as people contacts when their phone is present. Agent turns use the same social-style identity model: person as sender, group as channel/thread, display name as platform username — message text stays unmodified. You can later link the room’s people to a customer contact via [Relations](/apps/contacts).
+
+Live inbound messages then start a normal agent turn in that room (including groups — same peer-style behavior as your personal WhatsApp). When the agent replies, JoAi delivers through the channel send warp (`@whatsapp-send-text`) to the phone or group JID:
 
 - **Auto mode on:** the warp sends via the desktop CLI
 - **Auto mode off:** an editable warp approval stays in the room until you approve
 
-Routine inbound WhatsApp payloads do not create separate push notifications; the conversation itself remains visible in its contact room.
+Routine inbound WhatsApp payloads do not create separate push notifications; the conversation itself remains visible in its room.
 
 Historical backfill from the first sync is persisted only — it does not prompt the agent. JoAi allows a high per-agent hook rate for that burst; after it settles, live messages continue normally. Some noisy protocol payloads (group key distribution, albums, etc.) may appear in the desktop terminal without becoming chat messages.
 
 ### Outbound
 
-Typing or sending in a Personal contact room uses the normal agent execute / delivery path. JoAi asks Cortex to deliver with platform `whatsapp-personal`; Cortex emits a desktop **`WARP_EXECUTE`** for `@whatsapp-send-text`, which the JoAi app runs via CLI.
+Typing or sending in a Personal room uses the normal agent execute / delivery path. JoAi asks Cortex to deliver with platform `whatsapp-personal`; Cortex emits a desktop **`WARP_EXECUTE`** for `@whatsapp-send-text`, which the JoAi app runs via CLI (`--to` accepts a phone or group JID).
 
 The desktop app must be online to execute that warp.
 
@@ -55,6 +58,7 @@ Personal rooms are **not** included in `joai-broadcast`. Only Cortex social plat
 - If sync stops, inbound pauses until you start it again
 - Offline desktop = no CLI outbound until the app is back
 - Do not confuse with Business WhatsApp campaigns or Cloud API numbers
+- Group rooms are multi-party; linking them to a company/customer contact is optional CRM work, not automatic
 
 ## Related
 
