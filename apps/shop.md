@@ -171,7 +171,7 @@ If those are missing, the UI shows a permission lock and APIs return 403.
 | `create_order` | Order or quote — catalog and/or **custom** lines; optional `invoiceContactId`; custom lines may pass `taxClassId` |
 | `update_order` | Status, dates, or invoice recipient; clear `invoiceContactId` to use the customer |
 | `notify_order` (`joai-order-notify`) | Send branded order confirmation to the customer contact as the executing agent (same path as Shop **Notify contact**) |
-| `list_orders` / `delete_order` | List or delete orders; `list_orders` accepts `couponId` to show redemptions for a coupon |
+| `list_orders` / `delete_order` | List or delete orders (`list_orders` is paginated — use `page` / `perPage`, max 50, and read `meta.lastPage` for more); `list_orders` accepts `couponId` to show redemptions for a coupon |
 | `create_coupon` / `update_coupon` / `delete_coupon` / `list_coupons` | Coupons (`list_coupons` includes `redemptionCount` for team members) |
 | `create_fulfillment` / `update_fulfillment` / `list_fulfillments` | Fulfillment |
 | `list_returns` / `update_return` | Returns (merchant updates) |
