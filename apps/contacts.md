@@ -6,7 +6,7 @@ Contacts is the CRM native app: people and companies you work with, their proper
 
 - Store **name, email, phone**, tags, avatars, and custom properties
 - Log **activities**, view **timeline**, and browse **memories** / **orders** on a contact
-- Link contacts with **relations** — family, organization, business, and referrals
+- Link contacts with **relations** — family, social, organization, business, and referrals
 - Message contacts (email / WhatsApp / SMS when integrations allow)
 - Build **segments** for [Campaigns](/campaigns) audiences (segment UI lives under Campaigns)
 - Per-contact **Loyalty** membership when [Loyalty](/apps/loyalty) is installed
@@ -31,16 +31,17 @@ On **mobile**, you can import from the device address book when available (not a
 | **Memories** | Agent memories tied to the contact |
 | **Orders** | Shop orders for this contact (when [Shop](/apps/shop) is installed) |
 | **Loyalty** | Membership, points, enroll / add / redeem / adjust / history |
-| **Relations** | Links to other contacts — family, organization, business, referrals |
+| **Relations** | Links to other contacts — family, social, organization, business, referrals |
 | **Send message** | Reach out on an available channel |
 
 ### Relationships between contacts
 
-Contacts can be linked to each other with a typed relation, which lets you model family trees, company structures, business networks, and referral chains. Add and remove them from a contact’s **Relations** tab; links are grouped by category, and clicking one opens the linked contact.
+Contacts can be linked to each other with a typed relation, which lets you model family trees, friendships, company structures, business networks, and referral chains. Add and remove them from a contact’s **Relations** tab; links are grouped by category, and clicking one opens the linked contact.
 
 | Group | Relation types |
 | --- | --- |
 | **Family** | `parent_of`, `child_of`, `spouse_of`, `sibling_of`, `aunt_of`, `nibling_of` (niece/nephew) |
+| **Social** | `friend_of` |
 | **Organization** | `manages`, `reports_to`, `colleague_of` |
 | **Business** | `partner_of`, `client_of`, `supplier_of` |
 | **Referral** | `referred_by`, `referred` |

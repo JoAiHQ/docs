@@ -1,6 +1,6 @@
 # News
 
-News publishes customer-facing **updates** (deals, events, news posts, and articles). Install **News** under **Team settings → Apps**, then open **News** in the sidebar (product route label: **Updates**).
+News publishes customer-facing **updates** (deals, events, news posts, and articles). Install **News** under **Team settings → Apps**, then open **News** in the sidebar (product route label: **Updates**). Solo pricing highlights shop updates and deals.
 
 Installing News unlocks the Updates UI. MCP update tools are gated by **Board** (usually already installed) — News alone does not add a separate MCP gate.
 
