@@ -30,7 +30,7 @@ Short durable facts. Prefer memories for stable preferences and CRM-adjacent tru
 
 Upload PDFs and text. Agents search and cite them in chat / MCP.
 
-To share a document outside JoAi (e.g. WhatsApp), open it in Knowledge → Documents, choose **Make public**, then copy the link or share via WhatsApp. Recipients open a public page at `/share/document?id=…` without signing in. Use the lock control to revoke access.
+To share a document outside JoAi (e.g. WhatsApp), open it in Knowledge → Documents, choose **Make public**, then copy the link or share via WhatsApp. Recipients open a public page on the documents mini-app at `documents.joai.ai/{locale}/{slug}` (locale follows the team language) without signing in. Use the lock control to revoke access.
 
 For sensitive handoffs (credentials, contracts), choose **Add password**. The share URL then includes `?password=…` (same pattern as vleap docs). Without the query param, recipients see an unlock form. **Remove password** clears protection; the lock control still revokes the whole share.
 
