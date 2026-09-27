@@ -29,7 +29,7 @@ Use **Open store** in the header to jump to the public storefront.
 ### Catalog
 
 1. Open **Shop → Products** (or **Services**)
-2. Create items with prices, SKUs/variations, media, and tags
+2. Create items with prices, SKUs/variations, media, tags, and a **tax rate** (defaults to the team default from Settings → Tax)
 3. Toggle **list on store** / active vs hidden as needed
 4. Optional editor surfaces:
    - **Variations** (e.g. color / size types)
@@ -49,16 +49,19 @@ Use **Open store** in the header to jump to the public storefront.
 2. **New order** → pick a [contact](/apps/contacts), add lines, optionally send confirmation
 3. Choose **Order** or **Quote**
 4. Optionally price as **excl. VAT** (net)
+5. For physical **Orders**, optionally set **Fulfillment**:
+   - **Pickup** — choose an active location from Delivery settings
+   - **Shipping** — pick a contact address and a rate from your shipping zones (quoted for that country/ZIP and line items). The contact needs an address first; configure zones under Shop → Settings → Delivery
 
 The customer contact remains the buyer shown on the invoice. Use **Invoice recipient** during creation or editing when another contact (for example, an accounting inbox) should receive invoice and confirmation emails; leaving it at the default uses the customer contact.
 
 **Customer emails:** Online checkout (card, Mollie, Stripe, …) sends the team-branded order confirmation only after payment. Offline / bank-transfer orders can confirm when placed, then send a payment-received note (with invoice) once paid. On a pending order, **Notify contact** runs `joai-order-notify` through the chosen agent (auto-approved sync execution) so the branded confirmation is sent as that agent. Agents can trigger the same warp from MCP. The same order can be notified about once per hour.
 
-Guest pickup checkout asks for a phone number so the shop can coordinate collection. After online payment, pickup and shipping orders are **confirmed**; they become **delivered** only when fulfillment or handover is completed.
+Guest pickup checkout asks for a phone number so the shop can coordinate collection. On order review, pickup checkouts let the customer pick an available **Abholzeit** from the team’s appointment calendar (same availability as `/book`). Placing the order books a real pickup appointment and embeds it on the order as `meeting` (with `scheduledAt`, timezone, status, …). That time appears on the customer confirmation email, the merchant order alert, and the delivery note. When Board (Planner) is installed, the order also creates a backlog item with notes, configurations, and the pickup deadline; fulfillment then moves that item forward only — Ready/Shipped → Review, Delivered → Done (never back from Done). After online payment, pickup and shipping orders are **confirmed**; they become **delivered** only when fulfillment or handover is completed.
 
 Invoice and service orders without pickup/shipping stay **pending** until payment is recorded. Changing status to the closed state runs the paid path and shows as **paid** (not “delivered”). Pickup and shipping keep their fulfillment labels (“ready for pickup”, “picked up”, “delivered”).
 
-For **pickup** (Abholung) and **shipping**, Shop → Orders stays calm: status badge plus a **Fulfill** action. The fulfill dialog walks payment → prepare → ready/shipped → collected/delivered with a packing checklist when marking ready or shipped, optional shipping tracking, and one primary button per step. From the same dialog you can open a **delivery note** PDF (Lieferschein) via a signed URL — same pattern as invoices: order number, date, customer contact, pickup place or shipping address, physical line items with quantities, and order notes — no prices, no customer number. Handoff (collected/delivered) only confirms — no re-checking items. Search orders by phone, order number, or name. Pickup-only shops use Neu / In Vorbereitung / Zur Abholung bereit / Abgeholt filters; mixed pickup+shipping lists use neutral Ready / Completed labels. The list shows time, phone, item quantities, and the concrete payment method (PayPal, card, bank transfer) when Mollie reports it. Mark **ready for pickup** on a paid order emails the customer (DE) with the order number, pickup place, and guest order link; the guest thank-you page shows the same pickup status through prepare → ready → picked up. Marking the fulfillment delivered sets the order to **delivered** (“picked up”). Manual status jumps that skip steps are blocked; cancel remains available from the order menu.
+For **pickup** (Abholung) and **shipping**, Shop → Orders stays calm: status badge plus a **Fulfill** action. The fulfill dialog walks payment → prepare → ready/shipped → collected/delivered with a packing checklist when marking ready or shipped, optional shipping tracking (carrier dropdown loaded from the API + tracking number; the API builds the carrier tracking link; after ship you can correct tracking in the same dialog; MCP `create_fulfillment` / `update_fulfillment` do the same from `carrierCode` + `trackingNumber`), and one primary button per step. Marking a shipping order shipped emails the customer with carrier, tracking number, and link when available. From the same dialog you can open a **delivery note** PDF (Lieferschein) via a signed URL — same visual language as invoices (logo, seller/customer blocks, footer), with order number, date, booked pickup appointment, customer contact, pickup place or shipping address, location instructions, physical line items with quantities, order notes, and handover signature lines — no prices, no customer number. Handoff (collected/delivered) only confirms — no re-checking items. Search orders by phone, order number, or name. Pickup-only shops use Neu / In Vorbereitung / Zur Abholung bereit / Abgeholt filters; mixed pickup+shipping lists use neutral Ready / Completed labels. The list shows time, phone, item quantities, and the concrete payment method (PayPal, card, bank transfer) when Mollie reports it. Mark **ready for pickup** on a paid order emails the customer (DE) with the order number, pickup place, and guest order link; the guest thank-you page shows the same pickup status through prepare → ready → picked up. Marking the fulfillment delivered sets the order to **delivered** (“picked up”). Manual status jumps that skip steps are blocked; cancel remains available from the order menu.
 
 **Post-checkout return:** Mark a brandless [Sites](/sites) record as type `shop` (with a public URL) so guest thank-you pages can send buyers back to that storefront. One shop site per team.
 
@@ -66,10 +69,10 @@ For **pickup** (Abholung) and **shipping**, Shop → Orders stays calm: status b
 
 | Type | How |
 | --- | --- |
-| **Product / service** | From catalog |
-| **Custom** | Description + quantity + unit price (no catalog row) |
+| **Product / service** | From catalog (inherits the catalog item’s tax rate) |
+| **Custom** | Description + quantity + unit price + optional tax rate (no catalog row) |
 
-Custom lines are for one-offs (repair, travel, materials). They appear on the order and invoice. Allowed only for authenticated team/agent create — **not** public checkout or [kiosk](/kiosk).
+Custom lines are for one-offs (repair, travel, materials). They appear on the order and invoice. Allowed only for authenticated team/agent create — **not** public checkout or [kiosk](/kiosk). Mixed VAT (e.g. food vs drink) is handled per line via tax rates — not order-level tags.
 
 Orders tab also surfaces **order revenue stats** (paid, outstanding, canceled/returned) and **commission agreements** where configured for the team.
 
@@ -105,10 +108,16 @@ Invoice-only orders still use the status control (including **paid** when closed
 | **General** | Currency, billing address, bank details for invoices, order notification emails |
 | **Payments** | Online payments on/off; Stripe Connect / Mollie Connect; bank details |
 | **Delivery** | Shipping zones & rates; fulfillment / pickup locations |
+| **Tax** | VAT / tax rates for the catalog (default + reduced/special rates) |
 | **Inventory** | Team-level stock tracking on/off (then set stock on products/variations) |
 | **Storefront** | [Kiosk](/kiosk) on/off; enable coupons |
 
 **Order notification emails** (General): optional list of addresses (e.g. `bestellung@shop.example`) that receive a merchant alert when a shop order is placed — paid online orders after payment, bank/offline orders when created. Separate from customer confirmations and team seats.
+
+#### Tax rates
+
+Teams start with a default VAT rate. Add more rates (e.g. reduced food VAT) under **Shop → Settings → Tax**, then assign them on products, services, or custom order lines. Invoices and order accounting break tax down by rate. Agents manage the same rates via `tax-class-list` / `tax-class-create` / `tax-class-update` / `tax-class-delete`, and pass `taxClassId` on product/service create/update or custom order lines.
+
 #### Delivery details
 
 **Shipping zones**
@@ -155,10 +164,11 @@ If those are missing, the UI shows a permission lock and APIs return 403.
 
 | Tool | Purpose |
 | --- | --- |
-| `create_product` / `update_product` / `delete_product` | Products; `create_product` accepts `stock` for the default variation |
+| `create_product` / `update_product` / `delete_product` | Products; `create_product` accepts `stock` and optional `taxClassId` |
 | `create_product_variation` / `update_product_variation` | Variations; both accept `stock` (units available) |
-| `create_service` / `update_service` / `delete_service` / `list_services` | Services (also with Appointments) |
-| `create_order` | Order or quote — catalog and/or **custom** lines; optional `invoiceContactId` |
+| `create_service` / `update_service` / `delete_service` / `list_services` | Services (also with Appointments); create/update accept optional `taxClassId` |
+| `tax-class-list` / `tax-class-create` / `tax-class-update` / `tax-class-delete` | Team VAT rates (list first to resolve `taxClassId`) |
+| `create_order` | Order or quote — catalog and/or **custom** lines; optional `invoiceContactId`; custom lines may pass `taxClassId` |
 | `update_order` | Status, dates, or invoice recipient; clear `invoiceContactId` to use the customer |
 | `notify_order` (`joai-order-notify`) | Send branded order confirmation to the customer contact as the executing agent (same path as Shop **Notify contact**) |
 | `list_orders` / `delete_order` | List or delete orders; `list_orders` accepts `couponId` to show redemptions for a coupon |
@@ -170,7 +180,7 @@ Shipping zones / fulfillment locations are configured in the UI (no dedicated MC
 
 Set `stock` on a variation (in cents-free units) to make it orderable — a variation with `stock` `0` or unset is treated as unavailable and the shop will not accept orders for it. `update_product` and `update_product_variation` only change the fields you pass, so a partial update never clears price, stock, visibility, or media.
 
-**Custom line** (`unitPrice` = cents):
+**Custom line** (`unitPrice` = cents; optional `taxClassId` from `tax-class-list`):
 
 ```json
 {
@@ -179,7 +189,8 @@ Set `stock` on a variation (in cents-free units) to make it orderable — a vari
       "type": "custom",
       "name": "On-site repair",
       "quantity": 1,
-      "unitPrice": 8500
+      "unitPrice": 8500,
+      "taxClassId": "TAXCLASSHASH"
     }
   ]
 }
