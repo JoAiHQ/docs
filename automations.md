@@ -26,10 +26,11 @@ They are **not**:
 
 1. Open **Automations** → **New automation**
 2. Choose a **trigger** (prop, segment, manual, or webhook)
-3. Add steps in order — waits, warps, branches, halt
-4. For contact messages, pick the contact-message action and map inputs (`message`, `integration`, …)
-5. Enable when ready; use **Run** for a one-contact manual enroll
-6. Watch enrollments on the automation card (live updates)
+3. Build the **timeline** — insert waits, messages, custom actions, and branches between steps (reorder with the arrows)
+4. For branches, pick **Then** / **Else** targets from the step list (or **End**) — no raw step numbers
+5. For contact messages, choose the channel and write the body (the contact-message action is used under the hood)
+6. Enable when ready; use **Run** for a one-contact manual enroll
+7. Watch enrollments on the automation card (live updates)
 
 Webhook triggers need an **agent** (inbound delivery is `/agents/{uuid}/hooks`). JoAi creates a **system-owned Hook** tied to the automation — manage it from the automation, not the editable Hooks list.
 
@@ -40,7 +41,7 @@ Webhook triggers need an **agent** (inbound delivery is `/agents/{uuid}/hooks`).
 | **Trigger** | Contact prop (e.g. `onboarding-stage` = `done`), segment match, manual, or **webhook** — **not** marketing tags. Several webhook automations can share one `source`; each gets its own Hook and all matching Hooks run. |
 | **Enrollment** | Unique per automation + contact; skips marketing opt-out at enroll. Missing address / pending consent are checked when a warp step resolves `integration` (and can re-enroll once fixed). |
 | **Action** | Step type `warp`: pick any action and map inputs from `contact.*` / `enrollment.*` (Hook-style mapper). Contact messages use `warpId` `joai-contact-message-send` with inputs `message`, `integration`, `recipientId`, `contactId` (and `subject` / `html` when needed). Prior-step warp *outputs* are not wired yet — steps fire asynchronously. |
-| **Branch** | `branch` with `when[]` conditions (same operators as Hooks) and jumps to `thenPosition` / `elsePosition` |
+| **Branch** | `branch` with `when[]` conditions (same operators as Hooks). In the UI, Then/Else jump to another step or **End**; the API stores 0-based `thenPosition` / `elsePosition` (including the terminal halt). |
 | **Scheduler** | Each wait queues a delayed advance; an every-minute sweeper also picks up due enrollments |
 | **Steps** | Wait stores `delayMinutes` (`0` = immediate) and stays first-class (not a warp) |
 | **Audience preview** | Opt-out sendable vs skipped (channel readiness is evaluated when steps run) |
