@@ -110,9 +110,23 @@ Invoice-only orders still use the status control (including **paid** when closed
 | **Delivery** | Shipping zones & rates; fulfillment / pickup locations |
 | **Tax** | VAT / tax rates for the catalog (default + reduced/special rates) |
 | **Inventory** | Team-level stock tracking on/off (then set stock on products/variations) |
-| **Storefront** | [Kiosk](/kiosk) on/off; enable coupons; one-click **reorder** from order history (signed-in customers; unavailable lines are skipped) |
+| **Storefront** | [Kiosk](/kiosk) on/off; enable coupons; one-click **reorder** from order history (signed-in customers; unavailable lines are skipped); optional **custom legal page URLs** |
 
 **Order notification emails** (General): optional list of addresses (e.g. `bestellung@shop.example`) that receive a merchant alert when a shop order is placed — paid online orders after payment, bank/offline orders when created. Separate from customer confirmations and team seats.
+
+#### Legal pages and checkout disclosure
+
+Every public storefront gets built-in legal pages at `/{locale}/{team}/legal/{terms|privacy|withdrawal|imprint}`.
+
+**Automatic profile** (no extra settings):
+
+1. Detect merchant country from invoice country → IBAN → timezone  
+2. If EU/EEA/UK (or a generic `Europe/*` timezone) → built-in **14-day withdrawal** notice  
+3. Otherwise → built-in **returns** notice (no statutory withdrawal claim)
+
+Country-specific statutes (FAGG, BGB, …) belong in **custom legal URLs** under Shop → Settings → Storefront when needed. Genuss and similar shops can host their own texts there.
+
+Checkout shows the matching notice and requires acceptance of terms, withdrawal/returns, and privacy before a paid order.
 
 #### Tax rates
 
