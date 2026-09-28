@@ -110,7 +110,7 @@ Invoice-only orders still use the status control (including **paid** when closed
 | **Delivery** | Shipping zones & rates; fulfillment / pickup locations |
 | **Tax** | VAT / tax rates for the catalog (default + reduced/special rates) |
 | **Inventory** | Team-level stock tracking on/off (then set stock on products/variations) |
-| **Storefront** | [Kiosk](/kiosk) on/off; enable coupons |
+| **Storefront** | [Kiosk](/kiosk) on/off; enable coupons; one-click **reorder** from order history (signed-in customers; unavailable lines are skipped) |
 
 **Order notification emails** (General): optional list of addresses (e.g. `bestellung@shop.example`) that receive a merchant alert when a shop order is placed — paid online orders after payment, bank/offline orders when created. Separate from customer confirmations and team seats.
 
