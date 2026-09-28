@@ -68,7 +68,7 @@ Brandless sites are **not** published on sites.joai.ai.
 From Sites → **Content**:
 
 1. **Create content** with a field schema (structured page data)
-2. Edit drafts; **preview** before going live
+2. Edit drafts; **preview** before going live. An explicitly approved content update can also save and publish in one action.
 3. **Publish** or **rollback** to a previous version
 4. Manage **elements** and **variations** (reusable blocks; generate variations when supported)
 
@@ -124,7 +124,7 @@ Requires the **Sites** app.
 | --- | --- |
 | `list_sites` / `create_site` / `update_site` | Portfolio sites; optional `type=shop` + `url` for checkout return; set contact + metrics; `monthlyReport` opts into the 1st-of-month job (does not send now) |
 | `query_metrics` | Read Cloudflare (etc.) metrics for a period |
-| `list_contents` / `get_content` / `create_content` / `update_content` | CMS pages |
+| `list_contents` / `get_content` / `create_content` / `update_content` | CMS pages; `update_content` saves a draft unless its approved `publish` option is set |
 | `preview_content` / `publish_content` / `rollback_content` | Lifecycle |
 | `list_content_versions` | Version history |
 | `list_elements` / `create_element` / `update_element` / `delete_element` | Elements |
