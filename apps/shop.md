@@ -18,7 +18,7 @@ Shop is the commerce native app: catalog, orders, coupons, subscriptions, paymen
 | Tab | What you do |
 | --- | --- |
 | **Orders** | List/filter orders; status badge + **Fulfill** for pickup/shipping (stepper dialog); status dropdown for invoices; paid / outstanding / canceled revenue summary; commission agreements |
-| **Products** | Product catalog (variations, media, tags, store listing) |
+| **Products** | Product catalog (variations, media, tags, structured details, store listing) |
 | **Services** | Bookable/sellable services (shared with [Appointments](/apps/appointments)) |
 | **Coupons** | Discount codes (enable under Settings → Storefront first); list shows redemption count; open a coupon to see orders that used it |
 | **Subscriptions** | Merchant view of customer subscriptions (cancel/resume) |
@@ -35,10 +35,33 @@ Use **Open store** in the header to jump to the public storefront.
    - **Variations** (e.g. color / size types)
    - **Volume pricing**
    - **Related products** (kiosk upsells)
+   - **Product details** — reusable sections shown on the storefront (nutrition tables, ingredients, specs, care instructions, etc.). Each section has a key, title, and either label/value rows (`kv`) or a text block (`text`). Titles and values can be translated.
    - **Product configurator** (warp-backed options when configured)
    - **Booking details** on services (same configurator; phone-named/labeled fields are saved on the CRM contact when customers book)
    - **Stock** per product/variation when inventory is on
 
+**Product details** live in `meta.details` on the product (API / MCP / warps). Example:
+
+```json
+[
+  {
+    "key": "nutrition",
+    "title": { "de": "Nährwerte", "en": "Nutrition" },
+    "kind": "kv",
+    "rows": [
+      { "label": { "de": "Energie" }, "value": { "de": "350 kcal" } }
+    ]
+  },
+  {
+    "key": "ingredients",
+    "title": { "de": "Zutaten" },
+    "kind": "text",
+    "text": { "de": "Maismehl, Wasser, Salz" }
+  }
+]
+```
+
+Pass `details: []` (MCP) or nested `meta.details: []` (API) to clear all sections. Warps send details via `payload:meta.details`.
 **Tags:** first tag is the **category** (Shop → Products filter + storefront category chips); further tags are labels (e.g. Vegan). Team product lists return `meta.categories` / `meta.hasUntagged` from those first tags.
 
 [Kiosk](/kiosk) uses English lowercase product tags as categories — see the kiosk tag list.
@@ -178,7 +201,7 @@ If those are missing, the UI shows a permission lock and APIs return 403.
 
 | Tool | Purpose |
 | --- | --- |
-| `create_product` / `update_product` / `delete_product` | Products; `create_product` accepts `stock` and optional `taxClassId` |
+| `create_product` / `update_product` / `delete_product` | Products; `create_product` accepts `stock`, optional `taxClassId`, and optional `details` sections; `update_product` accepts optional `details` (pass `[]` to clear) |
 | `create_product_variation` / `update_product_variation` | Variations; both accept `stock` (units available) |
 | `create_service` / `update_service` / `delete_service` / `list_services` | Services (also with Appointments); create/update accept optional `taxClassId` |
 | `tax-class-list` / `tax-class-create` / `tax-class-update` / `tax-class-delete` | Team VAT rates (list first to resolve `taxClassId`) |
