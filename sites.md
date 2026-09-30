@@ -56,8 +56,10 @@ Brandless sites are **not** published on sites.joai.ai.
 4. Per site:
    - Toggle **enabled**
    - Set **type** to **Shop** when this URL is the storefront customers should return to after checkout
-   - Link a **contact** and a **metrics source** + **resource** (same pair as `metrics-query`). For Cloudflare, connect the agent under [Cloudflare integration](/integrations/cloudflare) first, then use `cloudflare` as source and the zone tag as resource.
-   - Optionally enable **monthly report**. If the metrics source is Cloudflare and no agent has a token yet, enabling returns `channel_not_configured` (422) so the Sites UI opens the [Cloudflare](/integrations/cloudflare) setup dialog, and chat/MCP can call `settings-integration-open` with `integration=cloudflare` then retry. On the 1st of each month the platform job creates an **update** artifact with metric blocks for the previous month and runs `artifact-deliver` (draft → approve / auto-mode). The report shows under Artifacts and Contact → Deliveries.
+   - Link a **contact** and a **metrics source** + **resource** (same pair as `metrics-query`):
+     - **Cloudflare** — connect under [Cloudflare](/integrations/cloudflare), use source `cloudflare` and the zone tag as resource
+     - **Google Search Console** — connect under [Google Search Console](/integrations/google-search-console), use source `google_search_console` and a property URL (`sc-domain:example.com` or `https://example.com/`) as resource. Reports search clicks/impressions, not site analytics visitors.
+   - Optionally enable **monthly report**. If the metrics integration is missing on the team, enabling returns `channel_not_configured` (422) so the Sites UI opens the matching setup dialog (`cloudflare` or `google-search-console`), and chat/MCP can call `settings-integration-open` then retry. On the 1st of each month the platform job creates an **update** artifact with metric blocks for the previous month and runs `artifact-deliver` (draft → approve / auto-mode). The report shows under Artifacts and Contact → Deliveries.
 5. Per brand-backed site:
    - **Add brand** → provision missing brands, then copy/open the public URL
    - Set **custom domain** (premium) and follow CNAME instructions

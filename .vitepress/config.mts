@@ -72,6 +72,7 @@ export default defineConfig({
           { text: 'Readwise Reader', link: '/integrations/readwise' },
           { text: 'Grok Voice', link: '/integrations/grok' },
           { text: 'Cloudflare', link: '/integrations/cloudflare' },
+          { text: 'Google Search Console', link: '/integrations/google-search-console' },
           { text: 'MCP', link: '/integrations/mcp' },
           { text: 'API Tokens', link: '/integrations/api-tokens' },
           { text: 'Webhooks', link: '/integrations/webhooks' },
