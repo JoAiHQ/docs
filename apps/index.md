@@ -35,7 +35,7 @@ You can change installs anytime under Apps.
 | Concept | Meaning |
 | --- | --- |
 | **Installed** | Listed under `Team settings → Apps` for this team |
-| **Sidebar** | Board, Shop, Contacts, Campaigns, Automations, Forms, Appointments, Smart Links, News, Social Media, Studio, Artifacts, Sites, Meetings, Contracts |
+| **Sidebar** | Board, Shop, Contacts, Campaigns, Automations, Forms, Appointments, Smart Links, News, Social Media, Studio, Artifacts, Documents, Sites, Meetings, Contracts |
 | **Chat / settings only** | Workspace (chat control + `/files`), Wallets, Heartbeats, Voice dictation |
 | **Plan lock** | Some apps need a higher plan — they show locked until you upgrade |
 | **MCP gating** | Agent tools for that app appear only when the app is installed on the team |
@@ -64,6 +64,7 @@ Native apps are **not** the same as:
 | **Social Media** | Draft and schedule Instagram, X, Facebook, and LinkedIn posts | [Social Media](/apps/social) |
 | **Studio** | Generate on-brand video, slideshows, clips, and brand elements | [Studio](/apps/studio) |
 | **Artifacts** | Client deliverables — track and send to contacts | [Artifacts](/artifacts) |
+| **Documents** | Agent training docs — sidebar + MCP when installed | [Documents](/apps/documents) |
 | **Sites** | Brand sites + CMS on sites.joai.ai | [Sites](/sites) |
 | **Meetings** | Capture, transcript, summary | [Meetings](/apps/meeting) |
 | **Workspace** | Folder sync + media library (`workspace`) | [Workspace](/apps/files) |

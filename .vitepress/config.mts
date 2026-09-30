@@ -39,6 +39,7 @@ export default defineConfig({
           { text: 'News', link: '/apps/news' },
           { text: 'Social Media', link: '/apps/social' },
           { text: 'Studio', link: '/apps/studio' },
+          { text: 'Documents', link: '/apps/documents' },
           { text: 'Sites', link: '/sites' },
           { text: 'Meetings', link: '/apps/meeting' },
           { text: 'Workspace', link: '/apps/files' },
