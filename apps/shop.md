@@ -18,6 +18,7 @@ Shop is the commerce native app: catalog, orders, coupons, subscriptions, paymen
 | Tab | What you do |
 | --- | --- |
 | **Orders** | List/filter orders; status badge + **Fulfill** for pickup/shipping (stepper dialog); status dropdown for invoices; paid / outstanding / canceled revenue summary; commission agreements |
+| **Returns** | Team Retouren list (order, customer, status, date); approve / reject / receive / refund; create from the order menu |
 | **Products** | Product catalog (variations, media, tags, structured details, store listing) |
 | **Services** | Bookable/sellable services (shared with [Appointments](/apps/appointments)) |
 | **Coupons** | Discount codes (enable under Settings → Storefront first); list shows redemption count; open a coupon to see orders that used it |
@@ -121,7 +122,10 @@ For physical pickup or shipping orders after payment:
 
 1. Open **Fulfill** on the order (list or order page)
 2. Check off items in the dialog, then use the primary action (**ready for pickup** / **shipped**, then **collected** / **delivered**)
-3. For returns: approve → receive → refund from the order row actions
+
+**Returns (Retoure):** A customer can request a return once the order is **paid** and at least one physical item is on a **shipped** or **delivered** fulfillment (pickup counts after **picked up**). Eligibility is per item: only the shipped quantity not already in an open or completed return is offered. The customer picks items and quantity and gives a reason — on the store order page, from **Your orders** (shown as *Retoure beantragen*), or on the order confirmation page (guests use the link from their email). A merchant can also open **Create return** from the order menu to log a return on the customer's behalf (reason, items, optional condition note); MCP `create_return` does the same and persists the return.
+
+Shop → **Returns** lists all returns of the team with order, customer, status, and date. Each return moves **requested → approved → received → refunded**, or can be **rejected** with an optional note for the customer. The same actions are available on the order row.
 
 Invoice-only orders still use the status control (including **paid** when closed).
 
@@ -184,7 +188,7 @@ Connect a payment account under **Payments** before online pay works. You can di
 | Store | `https://store.joai.ai/{locale}/{team}` |
 | Kiosk | `https://store.joai.ai/{locale}/{team}/kiosk` |
 | Booking (if Appointments) | store book URL / [Sites](/sites) |
-| Order / subscription portal | Pay; request returns (qty/reason); subscription **skip / pause / resume delivery** via portal (`create_portal_session`) |
+| Order / subscription portal | Pay; request returns (*Retoure beantragen*: items, qty, reason) once items are shipped or picked up; subscription **skip / pause / resume delivery** via portal (`create_portal_session`) |
 
 Full host map: [Public surfaces](/apps/public-surfaces).
 
@@ -214,7 +218,7 @@ If those are missing, the UI shows a permission lock and APIs return 403.
 | `list_orders` / `delete_order` | List or delete orders (`list_orders` is paginated — use `page` / `perPage`, max 50, and read `meta.lastPage` for more); `list_orders` accepts `couponId` to show redemptions for a coupon |
 | `create_coupon` / `update_coupon` / `delete_coupon` / `list_coupons` | Coupons (`list_coupons` includes `redemptionCount` for team members) |
 | `create_fulfillment` / `update_fulfillment` / `list_fulfillments` | Fulfillment |
-| `list_returns` / `update_return` | Returns (merchant updates) |
+| `list_returns` / `update_return` | Returns (merchant list and updates; also shown in Shop → Returns) |
 
 Shipping zones / fulfillment locations are configured in the UI (no dedicated MCP tools today).
 
@@ -244,7 +248,7 @@ Set `stock` on a variation (in cents-free units) to make it orderable — a vari
 | `place_checkout_order` / `create_checkout_snapshot` / `quote_checkout_shipping_rates` | Checkout |
 | `list_checkout_fulfillment_locations` | Pickup / location options |
 | `pay_order` / `get_order` | Pay and inspect |
-| `create_return` | Start a return |
+| `create_return` | Start a return (paid order, shipped/delivered items) |
 | `list_subscriptions` / `show_subscription` / `cancel_subscription` / `resume_subscription` | Subscriptions |
 | `list_addresses` / `store_address` | Addresses |
 | `create_portal_session` | Customer portal (including subscription delivery management) |
