@@ -31,7 +31,8 @@ Use **Open store** in the header to jump to the public storefront.
 1. Open **Shop → Products** (or **Services**)
 2. Create items with prices, SKUs/variations, media, tags, and a **tax rate** (defaults to the team default from Settings → Tax)
 3. Toggle **list on store** / active vs hidden as needed
-4. Optional editor surfaces:
+4. On **Services**, drag rows to set the order shown in your storefront and booking page (or set `order` via API / agents)
+5. Optional editor surfaces:
    - **Variations** (e.g. color / size types)
    - **Volume pricing**
    - **Related products** (kiosk upsells)
@@ -203,7 +204,7 @@ If those are missing, the UI shows a permission lock and APIs return 403.
 | --- | --- |
 | `create_product` / `update_product` / `delete_product` | Products; `create_product` accepts `stock`, optional `taxClassId`, and optional `details` sections; `update_product` accepts optional `details` (pass `[]` to clear) |
 | `create_product_variation` / `update_product_variation` | Variations; both accept `stock` (units available) |
-| `create_service` / `update_service` / `delete_service` / `list_services` | Services (also with Appointments); create/update accept optional `taxClassId` |
+| `create_service` / `update_service` / `delete_service` / `list_services` | Services (also with Appointments); create/update accept optional `taxClassId` and `order` (display sort, lower = earlier) |
 | `tax-class-list` / `tax-class-create` / `tax-class-update` / `tax-class-delete` | Team VAT rates (list first to resolve `taxClassId`) |
 | `create_order` | Order or quote — catalog and/or **custom** lines; optional `invoiceContactId`; custom lines may pass `taxClassId` |
 | `update_order` | Status, dates, or invoice recipient; clear `invoiceContactId` to use the customer |
