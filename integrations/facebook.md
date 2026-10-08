@@ -8,7 +8,7 @@ This covers **Social Media publishing** for a Page you manage. It is not a Messe
 
 - A Facebook account that manages at least one Page
 - An active JoAi agent
-- A Meta app configured for Facebook Login with Page publishing permissions
+- A Meta app configured for Facebook Login with Page publishing permissions (`pages_show_list`, `pages_read_engagement`, `pages_manage_posts`, and `business_management` for Pages in Meta Business Suite)
 
 ## Setup
 
