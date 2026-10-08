@@ -1,13 +1,15 @@
 # Automations
 
-Automations are long-lived **contact journeys**: a trigger enrolls a contact, then ordered steps run over time (wait, action, branch, halt). Install the **Automations** native app under **Team settings → Apps** to use the dashboard and MCP tools.
+The **Automations** native app is the team home for automation: **Journeys** (contact drips) and **Hooks** (event → one action). Install it under **Team settings → Apps**.
 
 They are **not**:
 
 - [Campaigns](/campaigns) — oneshot blasts to an audience
-- **Agent settings → Automations** — shortcuts, alerts, flows, and [Hooks](/webhooks) that fire a single immediate action (no enrollment)
+- **Agent settings → Automations** — shortcuts, alerts, and flows (Hooks are also available there for the active agent)
 
 ## Overview
+
+### Journeys
 
 - Enroll contacts from a **prop**, **segment**, **manual run**, or **webhook** (inbound Hook)
 - Steps: **wait**, **warp** (any action, including contact messages), **branch**, **halt**
@@ -15,6 +17,12 @@ They are **not**:
 - Graph cannot change while enrollments are active — disable or wait until idle to edit steps
 - Live enrollment cards over the team websocket; milestones on the **contact timeline**
 - Message steps surface as the usual agent **approval card** in chat
+
+### Hooks
+
+- Stateless: one JoAi or inbound event → map fields → one warp now (no enrollment wait)
+- Manage under **Automations → Hooks** (pick an agent) — same models as Agent settings → Automations → Hooks
+- See [Webhooks & hooks](/webhooks)
 
 ## Install
 
@@ -24,7 +32,9 @@ They are **not**:
 
 ## Creating in the UI
 
-1. Open **Automations** → **New automation**
+### Journeys
+
+1. Open **Automations** → **Journeys** → **New automation**
 2. Choose a **trigger** (prop, segment, manual, or webhook)
 3. Build the **timeline** — insert waits, messages, custom actions, and branches between steps (reorder with the arrows)
 4. For branches, pick **Then** / **Else** targets from the step list (or **End**) — no raw step numbers
@@ -33,6 +43,12 @@ They are **not**:
 7. Watch enrollments on the automation card (live updates)
 
 Webhook triggers need an **agent** (inbound delivery is `/agents/{uuid}/hooks`). JoAi creates a **system-owned Hook** tied to the automation — manage it from the automation, not the editable Hooks list.
+
+### Hooks
+
+1. Open **Automations** → **Hooks**
+2. Choose the **agent** that owns the hook
+3. Create an internal hook (e.g. `contact.created` / `update.created` → warp) or manage existing ones
 
 ## How they work
 
@@ -47,7 +63,7 @@ Webhook triggers need an **agent** (inbound delivery is `/agents/{uuid}/hooks`).
 | **Audience preview** | Opt-out sendable vs skipped (channel readiness is evaluated when steps run) |
 | **Delete** | Allowed when no enrollments are active; otherwise disable with `update_automation` |
 
-**Hooks stay separate.** Agent settings → Automations → Hooks map inbound/internal events to one immediate action. A **webhook automation** trigger links the two: the system Hook enrolls the mapped contact into this journey.
+**Journeys and Hooks stay separate under the hood.** Hooks map events to one immediate action; journeys enroll contacts over time. A **webhook journey** trigger links them: the system Hook enrolls the mapped contact into that journey.
 
 ## MCP / agents
 
@@ -100,13 +116,13 @@ Example create payload:
 - Prefer prop or segment triggers for recurring journeys; use webhook when an external system should enroll
 - Disable (`enabled: false`) instead of delete when enrollments are still active
 - Webhook automations need an agent with inbound Hooks; oneshot blasts belong in [Campaigns](/campaigns)
-- Agent settings → Automations (shortcuts / hooks) is a different surface — see [Shortcuts](/shortcuts) and [Webhooks](/webhooks)
+- Prefer **Automations → Hooks** for team-wide hook management; Agent settings → Automations still has Shortcuts / Alerts / Flows (and a Hooks tab for the active agent) — see [Shortcuts](/shortcuts) and [Webhooks](/webhooks)
 
 ## Related
 
 - [Native apps](/apps/) — install Automations on the team
 - [Campaigns](/campaigns) — oneshot blasts (separate install)
 - [Contacts](/apps/contacts) — CRM; segments are managed in Campaigns
-- [Webhooks](/webhooks) — Hooks vs webhook enrollment triggers
-- [Shortcuts](/shortcuts) — Agent settings → Automations (not this app)
+- [Webhooks](/webhooks) — Hooks vs journey webhook enroll
+- [Shortcuts](/shortcuts) — Agent settings → Automations (shortcuts / alerts / flows)
 - [MCP](/protocols/mcp)

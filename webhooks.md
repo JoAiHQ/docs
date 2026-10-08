@@ -10,9 +10,9 @@ Typical triggers: `agent.action`, `agent.message`, `user.message`.
 
 Configure URL, secret, retries, headers in the Webhooks integration UI. Installer guide: [Webhooks integration](/integrations/webhooks).
 
-## 2) Agent settings → Automations → Hooks
+## 2) Automations → Hooks
 
-Under **Agent settings → Automations → Hooks**:
+Manage Hooks in the **Automations** native app (**Automations → Hooks**, pick an agent), or under **Agent settings → Automations → Hooks** for the active agent.
 
 | Source | Behavior |
 | --- | --- |
@@ -20,9 +20,9 @@ Under **Agent settings → Automations → Hooks**:
 | **web** | Agent output event → POST to an external URL |
 | **inbound** | `POST /agents/{uuid}/hooks?source=` → map payload → run a warp |
 
-Hooks are **stateless**: one event → map fields → one warp now. They are **not** the [Automations](/automations) native app (no enrollment, wait, or drip journey).
+Hooks are **stateless**: one event → map fields → one warp now. They share the Automations UI with [Journeys](/automations) but are not contact enrollments (no wait / drip).
 
-The **Automations** native app can use a **webhook trigger**: JoAi upserts a system-owned Hook whose `next` enrolls the mapped contact into that automation (`joai-automation-enroll`). Multiple automations may share the same inbound `source` — each keeps its own Hook, and every matching Hook runs on a POST. Disabling an automation deactivates its Hook. Use Hooks for fire-and-forget warps; use [Automations](/automations) when the contact journey needs time, branches, or multiple steps.
+A **webhook journey** trigger upserts a system-owned Hook whose `next` enrolls the mapped contact (`joai-automation-enroll`). Multiple journeys may share the same inbound `source` — each keeps its own Hook, and every matching Hook runs on a POST. Disabling a journey deactivates its Hook. Use Hooks for fire-and-forget warps; use Journeys when the contact path needs time, branches, or multiple steps.
 
 MCP: `list_hooks`, `create_hook`, `toggle_hook`, `delete_hook` (Board-gated). Journey tools (`create_automation`, …) require the Automations app — see [Automations](/automations).
 
