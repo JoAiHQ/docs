@@ -24,6 +24,7 @@ Use chat warps / MCP when the agent should draft or schedule for you. Approving 
 ## What you can do
 
 - Choose Instagram, X, Facebook, or LinkedIn
+- When a network has more than one account (for example multiple Facebook Pages), pick which account to publish as
 - Save a draft with a caption and optional images (Instagram drafts can be incomplete until you schedule)
 - Create a draft from a **Studio export** (`exportId`) or **element variation** (`elementVariationId`) — JoAi **copies** those stills onto the post and leaves the originals alone
 - From Studio, **Schedule to Social** opens the composer with that source selected and **generates a caption** in your agent’s voice (regenerate anytime in the composer)

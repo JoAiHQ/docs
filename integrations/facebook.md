@@ -14,10 +14,10 @@ This covers **Social Media publishing** for a Page you manage. It is not a Messe
 
 1. Open **Agent settings → Integrations** → **Facebook**
 2. **Connect Facebook Page** (OAuth)
-3. Grant Page access so JoAi can publish
-4. Use [Social Media](/apps/social) to draft or schedule posts as that Page
+3. Grant Page access so JoAi can publish — every Page you manage is stored on the connection
+4. Use [Social Media](/apps/social) to draft or schedule posts, and pick the Page when you create the post if you manage more than one
 
-JoAi stores the first Page returned for the connected account. Reconnect if you need to switch Pages. The same Page connection can be reused by Social Media and other features such as metrics.
+Reconnect to refresh the list of Pages after Meta access changes. The same Facebook connection can be reused by Social Media and other features such as metrics.
 
 ## How it works
 
