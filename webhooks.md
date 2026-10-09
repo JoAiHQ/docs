@@ -16,7 +16,7 @@ Manage Hooks in the **Automations** native app (**Automations → Hooks**, pick 
 
 | Source | Behavior |
 | --- | --- |
-| **internal** | JoAi event (e.g. `contact.created`) → run a warp |
+| **internal** | JoAi event (`contact.created`, `contact.updated`, `update.created`) → run a warp |
 | **web** | Agent output event → POST to an external URL |
 | **inbound** | `POST /agents/{uuid}/hooks?source=` → map payload → run a warp |
 

@@ -48,7 +48,8 @@ Webhook triggers need an **agent** (inbound delivery is `/agents/{uuid}/hooks`).
 
 1. Open **Automations** → **Hooks**
 2. Choose the **agent** that owns the hook
-3. Create an internal hook (e.g. `contact.created` / `update.created` → warp) or manage existing ones
+3. **New Hook** opens a dialog — pick a trigger (`contact.created`, `contact.updated`, `update.created`), action, optional conditions/inputs
+4. Existing hooks show in the overview list
 
 ## How they work
 
