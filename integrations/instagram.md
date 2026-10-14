@@ -22,10 +22,23 @@ The grant covers messages and publishing. You do not paste an access token, acco
 - **Outbound:** replies from those rooms go through the Instagram adapter
 - **Feed posts:** the Social Media app publishes to this same account when a post is due
 
+## Meta webhooks
+
+Instagram uses one app-level callback (no agent ID in the URL). In Meta → Instagram → **Configure webhooks**:
+
+| Field | Value |
+| --- | --- |
+| Callback URL (devnet) | `https://devnet-cortex.joai.ai/social/webhook/instagram` |
+| Callback URL (mainnet) | `https://cortex.joai.ai/social/webhook/instagram` |
+| Verify token | Same value as JoAi’s Meta verify token |
+
+Subscribe to messaging fields, then Connect Instagram on the agent so JoAi can route by Instagram account ID.
+
 ## Limits
 
 - Professional Instagram accounts only
 - The connection is the Instagram account you approve. Personal accounts that are not professional cannot be selected
+- Meta may require the app to be published before live webhooks are delivered
 
 ## Related
 
