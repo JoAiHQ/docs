@@ -70,6 +70,14 @@ Creating a second contact for the same person is a data-integrity failure.
 - Pass **email and/or phone** whenever known
 - Prefer find-or-create (warps / MCP flows) over blind create
 - If a contact exists, **update** missing fields — do not invent a second row
+- Social inbound (Instagram comments, Telegram, …) matches an existing contact by profile URL, username handle, or a **unique** name before creating a new row
+- When two rows still exist for one person, **merge** the thin duplicate into the fuller contact
+
+### Merge contacts
+
+Open a contact → **Merge** → pick the contact to keep. Activities, conversations, tags, and social links move onto the keeper; empty fields are filled from the duplicate; the duplicate is deleted.
+
+Agents: `joai-contact-merge` / MCP merge tool — pass the duplicate as `contactId` and the keeper as `intoId`.
 
 ## Research before creating from thin context
 
@@ -86,6 +94,7 @@ Requires the **Contacts** app.
 | Tool | Purpose |
 | --- | --- |
 | `list_contacts` / `create_contact` / `update_contact` / `delete_contact` | CRUD |
+| `joai-contact-merge` (warp) | Absorb a duplicate into another contact |
 | `set_contact_property` | Custom properties |
 | `create_contact_activity` / `list_contact_activities` / `delete_contact_activity` | Activities |
 | `list_contact_timeline` | Timeline |

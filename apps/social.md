@@ -31,9 +31,12 @@ Use chat warps / MCP when the agent should draft or schedule for you. Approving 
 - Edit a draft, failed, or cancelled post (scheduled, publishing, and published posts stay locked)
 - Schedule a time in your team timezone, or queue the post to go out on the next job run
 - Publish a ready draft immediately from the queue
-- **Share a link** on a draft, scheduled, or published post — anyone with the link sees a public preview (caption, stills, network, and time), without signing in
-- Cancel a scheduled post, or retry one that failed
-- Filter the queue by status or network: draft, scheduled, publishing, published, failed, cancelled
+- **Share a link** on a draft, scheduled, or published post — anyone with the link sees a public preview (caption, media, format, network, and time), without signing in
+- **View post** on a published post — opens the live post on Instagram, X, Facebook, or LinkedIn
+- Cancel a scheduled post, or retry one that failed — failed publishes also notify the team with a one-tap retry link into `/social`
+- Filter the queue by status or network: draft, scheduled, publishing, published, failed, cancelled — Instagram posts also show a feed / short / story badge
+- See **likes / comments / reach / views** on published Instagram posts after JoAi syncs insights
+- Pick a **suggested time** chip when scheduling Instagram (from your own post performance, with sensible defaults when history is thin)
 
 Creating or scheduling a post asks for approval in chat, unless the agent is in auto mode. That approval only queues the post.
 
@@ -41,9 +44,19 @@ Pass either `media` (team media IDs), `exportId`, or `elementVariationId` — no
 
 ## Instagram
 
-Connect Instagram on the agent first: **Agent settings → Integrations → Instagram**, then **Connect Instagram**. The account used for messages is the account that publishes.
+Connect Instagram on the agent first: **Agent settings → Integrations → Instagram**, then **Connect Instagram**. The account used for messages is the account that publishes. See [Instagram](/integrations/instagram) for DMs, comment private replies, webhooks, metrics, and Meta’s cold-DM limitation.
 
-Images must be JPEG, publicly reachable, and no more than 10. One image is a single post. Two to ten images, in the order you choose, become a carousel. The caption goes on the post, not on each image.
+In the composer, pick a **format** (`feed` | `short` | `story`):
+
+| Format | Media |
+| --- | --- |
+| **Feed** (default) | 1–10 JPEGs (2+ become a carousel), or one MP4 video |
+| **Short** | Exactly one MP4 video (published as an Instagram Reel) |
+| **Story** | Exactly one JPEG image or MP4 video |
+
+Media must be publicly reachable. The caption goes on feed and short posts (Stories are media-first).
+
+After publish, JoAi pulls per-post insights (likes, comments, reach, views) on a delay and shows them in the queue. Instagram comments create or update a CRM contact (matched by Instagram profile URL, username, or a unique name), log a Social activity, and ask the agent for a **draft private reply** the team can review on the contact timeline (not auto-sent). If a thin commenter contact still duplicates someone already in CRM, merge it from the contact profile — see [Contacts](/apps/contacts#merge-contacts).
 
 ## X
 
@@ -53,7 +66,7 @@ Posts can be text only, or text with up to 4 JPEG, PNG, WEBP, or GIF images. Tex
 
 ## Facebook
 
-Connect a Facebook Page on the agent first: **Agent settings → Integrations → Facebook**, then **Connect Facebook Page**. JoAi uses the first Page the account can manage.
+Connect a Facebook Page on the agent first: **Agent settings → Integrations → Facebook**, then **Connect Facebook Page**. If the account manages several Pages, pick which one to publish as when composing.
 
 Posts can be text only, or text with up to 10 JPEG, PNG, WEBP, or GIF images.
 
@@ -75,18 +88,18 @@ Posts belong to the team. You cannot change another team’s posts. Only drafts,
 
 ## Share links
 
-Use **Share link** on any post that is not currently publishing. JoAi keeps a public preview URL (`/social/share?id=…`) with the caption, stills, network, and scheduled or published time — no sign-in required. Deleting the post or revoking the share invalidates the link; sharing again creates a new one.
+Use **Share link** on any post that is not currently publishing. JoAi keeps a public preview URL (`/social/share?id=…`) with the caption, media, format (Instagram), network, and scheduled or published time — no sign-in required. Deleting the post or revoking the share invalidates the link; sharing again creates a new one.
 
 From chat / MCP, `create_social_post`, `schedule_social_post`, `update_social_post`, and `list_social_posts` return that same `shareUrl` so the agent can paste the preview for review.
 
 ## For agents
 
-Upload images with `media_upload`, **or** pass a Studio `exportId` / `elementVariationId`, then:
+Upload media with `media_upload`, **or** pass a Studio `exportId` / `elementVariationId`, then:
 
 | Warp | What it does |
 | --- | --- |
-| `social-post-create` | Draft, or schedule into the queue when `scheduledAt` is set. Optional `exportId` or `elementVariationId` copies stills onto the post. Returns `shareUrl` (public preview). |
-| `social-post-update` | Change a draft, failed, or cancelled post. Returns `shareUrl`. |
+| `social-post-create` | Draft, or schedule into the queue when `scheduledAt` is set. Optional `format` for Instagram (`feed` \| `short` \| `story`). Optional `exportId` or `elementVariationId` copies stills onto the post. Returns `shareUrl` (public preview). |
+| `social-post-update` | Change a draft, failed, or cancelled post (caption, format, media). Returns `shareUrl`. |
 | `social-post-schedule` | Queue a draft (with a time, or for the next job run). Returns `shareUrl`. |
 | `social-post-cancel` | Stop a scheduled post |
 | `social-post-retry` | Re-queue a failed post |
@@ -97,7 +110,9 @@ Warps never post to the networks themselves. Scheduling and retry only enqueue J
 
 MCP tools use the same names: `create_social_post`, `update_social_post`, `schedule_social_post`, `cancel_social_post`, `retry_social_post`, `list_social_posts`, `delete_social_post`. They are available only when Social Media is installed on the team.
 
-`platform` is `instagram`, `x`, `facebook`, or `linkedin`. `scheduledAt` is an ISO time. Without a timezone, JoAi uses the team timezone.
+`platform` is `instagram`, `x`, `facebook`, or `linkedin`. For Instagram, `format` is `feed` (default), `short`, or `story`. `scheduledAt` is an ISO time. Without a timezone, JoAi uses the team timezone.
+
+Account insights (reach, views, profile views, followers) use `metrics-query` / `query_metrics` with `source=instagram` and `resource` set to the numeric Instagram account id (max 30 days). See [Instagram](/integrations/instagram).
 
 ## Related
 
