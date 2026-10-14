@@ -1,6 +1,6 @@
 # Campaigns
 
-Campaigns send personalized messages to an audience of contacts over email, WhatsApp, SMS, or push. They are created as **drafts**, then sent when ready. Campaigns belong to a **team** and use that team's contacts, segments, and agent channel integrations.
+Campaigns send personalized messages to an audience of contacts over email, WhatsApp, SMS, or push. Default create is a **draft**; email / SMS / push can also **send or schedule in the same create** (`send` / `scheduledAt`) so agents get one Freigabe. WhatsApp still needs template approval before send. Campaigns belong to a **team** and use that team's contacts, segments, and agent channel integrations.
 
 Install the **Campaigns** native app under **Team settings → Apps** (see [Native apps](/apps/)).
 
@@ -164,7 +164,9 @@ On update, omit `segmentId` / `tags` / `contactIds` to leave the audience unchan
 
 ### Schedule send
 
-When starting delivery, pass an optional **`scheduledAt`** ISO datetime (API, SDK, or `send_campaign` with `scheduledAt`). Future times set status **scheduled** and dispatch when due; omit or use a past time to send immediately.
+When starting delivery, pass an optional **`scheduledAt`** on **`create_campaign`** / `POST /v1/campaigns`, or later on `send_campaign` / `POST …/send`. Same timezone rules as social posts: ISO with `Z`/offset is an absolute instant; bare wall-clock (e.g. `2026-10-01T10:00:00`) is interpreted in the **team timezone**, then stored as UTC. Must resolve to a future time. Future times set status **scheduled** and dispatch when due; omit `scheduledAt` and set `send=true` (create) or call send without it to start immediately.
+
+On create, `scheduledAt` implies send. Create+send is atomic: if send fails (e.g. channel not configured), no draft is left behind. WhatsApp cannot use create+send / create+schedule — create a draft, submit for approval, then send.
 
 **Cancel schedule** (`POST …/cancel-schedule`) is only available while **scheduled**. It clears `scheduledAt` and returns the campaign to **draft**.
 
@@ -241,9 +243,9 @@ Agent MCP tools (Campaigns app):
 
 | Tool | Purpose |
 | --- | --- |
-| `create_campaign` | Create a draft (`joai-campaign-create`) — email / WhatsApp / SMS / push; optional `installIds` for push |
-| `preview_campaign_audience` | Preview sendable vs skipped (`joai-campaign-audience-preview`) — call **before** `send_campaign` |
-| `send_campaign` | Start delivery (`joai-campaign-send`); optional `scheduledAt` (ISO 8601, future) |
+| `create_campaign` | Create (`joai-campaign-create`) — email / WhatsApp / SMS / push; optional `installIds` for push. Prefer `send=true` or `scheduledAt` for email/SMS/push so create+delivery is **one Freigabe**. Omit both for draft-only. |
+| `preview_campaign_audience` | Preview sendable vs skipped (`joai-campaign-audience-preview`) — call before blasting an existing draft, or with targeting fields before create |
+| `send_campaign` | Start delivery for an **existing** draft (`joai-campaign-send`); optional `scheduledAt` (ISO 8601, future). Prefer create with `send`/`scheduledAt` for new campaigns. |
 | `send_campaign_test` | Smoke-test a draft to one `contactId` (email) or `installId` (push) (`joai-campaign-send-test`) |
 | `list_campaigns` | List campaigns (`joai-campaign-list`) |
 | `list_installs` | List device installs for push (`joai-install-list`) — filter `pushStatus`, search `q` |
@@ -256,13 +258,12 @@ Related warps (often used from automations / form follow-ups):
 
 **Not exposed as dedicated MCP tools today:** update/edit, archive/unarchive, cancel send, list recipients, retry failed sends, WhatsApp submit/refresh. Use the JoAi UI (or HTTP API) for those.
 
-Typical **push** flow via MCP:
+Typical **push** flow via MCP (one Freigabe):
 
-1. `list_installs` with `pushStatus=subscribed` (optional — skip if targeting all devices or a segment)
-2. `create_segment` with `has_install` + `install_push_status=subscribed` **or** `create_campaign` with `channel=push` and `installIds` / no audience for all subscribed
-3. `preview_campaign_audience` with `campaignId` or `channel=push` (+ targeting)
-4. `send_campaign_test` with `installId` to smoke-test one device
-5. `send_campaign` (optional `scheduledAt`)
+1. Optional: `list_installs` / `preview_campaign_audience` / `send_campaign_test` with `installId` to smoke-test
+2. `create_campaign` with `channel=push`, audience (or none for all subscribed), and `send=true` **or** `scheduledAt`
+
+Draft-then-send still works: create without `send`, then `send_campaign`.
 
 When creating via MCP, pass placeholders explicitly — they are **not** inferred from `{{tokens}}` alone:
 
