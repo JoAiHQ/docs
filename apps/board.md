@@ -5,7 +5,7 @@ Board is the team workbench: a kanban of **items** the agent can execute, plus r
 ## Overview
 
 - Kanban columns: **Backlog → Active → Review → Done** (archived separately)
-- Create items, drag between columns, reorder within a column, or **move to top**
+- Create items, then drag between columns or reorder within a column (long-press on mobile)
 - Rich description editor on create/edit; search and highlight from deep links (`?highlight=`)
 - **Auto-execution** on assignment (toggle in Board settings)
 - Archive finished work; reopen from **Archived items**
@@ -18,7 +18,7 @@ Board is the team workbench: a kanban of **items** the agent can execute, plus r
 
 1. Open **Board**
 2. Add cards in a column (except archived)
-3. Drag items across columns or reorder within a column (or use **Move to top** on a card)
+3. Drag items across columns or reorder within a column (on mobile: swipe between columns, long-press a card to pick it up)
 4. Use **search** to filter cards
 5. Open an item for rich description editing, assignment, and execution status
 6. Header links:
