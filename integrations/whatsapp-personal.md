@@ -33,7 +33,7 @@ While sync is running, the desktop CLI posts to JoAi hooks (`?source=wacli`) and
 - **1:1 chats** use a contact room keyed by phone (same CRM contact when the number matches). Own (`FromMe`) messages do not rename or re-bind the contact from WhatsApp’s chat title — only the peer’s number does. Chat titles that match the agent or account holder are ignored for CRM naming.
 - **Groups** use one room per group (`…@g.us`). The group is **not** a contact; the room title follows the WhatsApp group subject when it is distinguishable from a speaker/account push name. Speakers are find-or-created as people contacts when their phone is present. Agent turns use the same social-style identity model: person as sender, group as channel/thread, display name as platform username — message text stays unmodified. You can later link the room’s people to a customer contact via [Relations](/apps/contacts).
 
-Live inbound messages then start a normal agent turn in that room (including groups — same peer-style behavior as your personal WhatsApp). Replies are **channel-delivered**: JoAi does not post a normal agent chat bubble into the room; it runs `@whatsapp-send-text` (approve if Auto mode is off, execute if Auto is on). Photos and voice notes use `@whatsapp-send-media` / `@whatsapp-send-voice` (desktop materializes media URLs into the workspace before `wacli` runs). Outbound send is still temporarily refused (read-only) so approve/execute does not reach WhatsApp until that kill switch is removed.
+Live inbound messages then start a normal agent turn in that room (including groups — same peer-style behavior as your personal WhatsApp). Replies are **channel-delivered**: JoAi does not post a normal agent chat bubble into the room; it runs `@whatsapp-send-text` (approve if Auto mode is off, execute if Auto is on). Photos and voice notes use `@whatsapp-send-media` / `@whatsapp-send-voice` (desktop materializes media URLs into the workspace before `wacli` runs).
 
 Routine inbound WhatsApp payloads do not create separate push notifications; the conversation itself remains visible in its room.
 
@@ -45,13 +45,11 @@ Right-click an integration room in the sidebar and choose **Ignore** (or turn th
 
 ### Photos, voice notes, and files
 
-Sync runs with media download enabled. **Voice notes, photos, videos, and documents** arrive as a short placeholder in the room (caption or a type label like “Voice note” / “Image”), then the desktop downloads the file from the local WhatsApp store into the JoAi workspace and attaches it so you can play/see it (and the agent can use it). Keep the desktop online (and **Auto mode** on for live messages) so import runs without an extra approval tap. Historical sync imports attach files only — they do not prompt the agent. If download/upload fails, JoAi still keeps the text placeholder so the conversation is not stuck. Stickers are labeled only and are not imported as files yet.
+Sync runs with media download enabled. **Voice notes, photos, videos, and documents** arrive as a short placeholder in the room (caption or a type label like “Voice note” / “Image”), then the desktop downloads the file from the local WhatsApp store into the JoAi workspace and attaches it so you can play/see it (and the agent can use it). This includes **your own (FromMe) messages** sent from WhatsApp — they appear on the agent side of the room and still get the file attached; they do not prompt the agent. Keep the desktop online (and **Auto mode** on for live peer messages) so import runs without an extra approval tap. Historical sync imports attach files only — they do not prompt the agent. If download/upload fails, JoAi still keeps the text placeholder so the conversation is not stuck. Stickers are labeled only and are not imported as files yet.
 
 ### Outbound
 
-**Temporarily disabled (read-only sync):** desktop outbound `wacli send …` is refused so sync/inbound can run without risk of accidental sends. Re-enable when the outbound path is trusted again.
-
-When outbound is on, typing or sending in a Personal room uses the normal agent execute / delivery path. JoAi asks Cortex to deliver with platform `whatsapp-personal`; Cortex emits desktop **`WARP_EXECUTE`** actions:
+Typing or sending in a Personal room uses the normal agent execute / delivery path. JoAi asks Cortex to deliver with platform `whatsapp-personal`; Cortex emits desktop **`WARP_EXECUTE`** actions:
 
 - Text → `@whatsapp-send-text`
 - Photos / files → `@whatsapp-send-media` (optional caption)
@@ -61,13 +59,15 @@ When outbound is on, typing or sending in a Personal room uses the normal agent 
 
 The desktop app must be online to execute those warps.
 
+On web/mobile (where CLI cannot run), `@whatsapp-send-text` for a **phone DM** offers **Open in WhatsApp** (`wa.me` with the drafted text). Group JIDs (`…@g.us`) cannot use that handoff.
+
 ### Broadcast
 
 Personal rooms are **not** included in `joai-broadcast`. Only Cortex social platforms (Telegram, Slack, Business WhatsApp, email, …) are.
 
 ## Limits / gotchas
 
-- **Desktop-only** for connect, pair, sync, outbound CLI delivery, and media import
+- **Desktop-only** for connect, pair, sync, outbound CLI delivery, and media import (web/mobile can still open drafted text DMs via **Open in WhatsApp**)
 - If sync stops, inbound pauses until you start it again
 - Offline desktop = no CLI outbound (and no media file import) until the app is back
 - Do not confuse with Business WhatsApp campaigns or Cloud API numbers
