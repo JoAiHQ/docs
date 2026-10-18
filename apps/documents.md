@@ -27,7 +27,7 @@ Old Knowledge links with `?tab=documents` redirect here.
 
 To share a document outside JoAi (e.g. WhatsApp), open it, choose **Make public**, then copy the link or share via WhatsApp. Recipients open a public page on the documents mini-app at `documents.joai.ai/{locale}/{slug}` (locale follows the team language) without signing in. Use the lock control to revoke access.
 
-For sensitive handoffs (credentials, contracts), choose **Add password**. The share URL then includes `?password=…`. Without the query param, recipients see an unlock form. **Remove password** clears protection; the lock control still revokes the whole share.
+For sensitive handoffs (credentials, contracts), choose **Add password**. JoAi copies a share link with `?password=…` so recipients auto-unlock. The password is hashed at rest and never returned later — save that link (or share it) when you create it. Recipients can also open the bare link and use the unlock form. **Remove password** clears protection; the lock control still revokes the whole share.
 
 Prefer **Archive** over delete when a document should leave active knowledge but stay recoverable. Archiving also revokes any public share link. Toggle **Archived** in the documents list to restore.
 
