@@ -62,7 +62,7 @@ Native apps are **not** the same as:
 | **Smart Links** | Short links, variations, kiosk table QR | [Smart Links](/apps/smart-links) |
 | **News** | Deals, events, news updates | [News](/apps/news) |
 | **Social Media** | Draft and schedule Instagram, X, Facebook, and LinkedIn posts | [Social Media](/apps/social) |
-| **Studio** | Generate on-brand video, slideshows, clips, and brand elements | [Studio](/apps/studio) |
+| **Studio** | Generate on-brand video, slideshows, clips, brand elements, and template-based images | [Studio](/apps/studio) · [Templates](/apps/studio-templates) |
 | **Artifacts** | Client deliverables — track and send to contacts | [Artifacts](/artifacts) |
 | **Documents** | Agent training docs — sidebar + MCP when installed | [Documents](/apps/documents) |
 | **Sites** | Brand sites + CMS on sites.joai.ai | [Sites](/sites) |

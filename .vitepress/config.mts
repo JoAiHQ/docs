@@ -38,7 +38,11 @@ export default defineConfig({
           { text: 'Smart Links', link: '/apps/smart-links' },
           { text: 'News', link: '/apps/news' },
           { text: 'Social Media', link: '/apps/social' },
-          { text: 'Studio', link: '/apps/studio' },
+          {
+            text: 'Studio',
+            link: '/apps/studio',
+            items: [{ text: 'Templates', link: '/apps/studio-templates' }],
+          },
           { text: 'Documents', link: '/apps/documents' },
           { text: 'Sites', link: '/sites' },
           { text: 'Meetings', link: '/apps/meeting' },

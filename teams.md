@@ -42,7 +42,7 @@ Teams are collaborative workspaces where multiple users work together, share age
 | **General** | Name, tagline, description, logo, cover, timezone, locale, category, custom key/value settings, **location**, **Wi‑Fi**, **preferred channel**, delete team (non-personal) |
 | **Apps** | Install [native apps](/apps/) and [integrations](/integrations/) |
 | **Members** | Invite, change roles, remove |
-| **Branding** | Brand colors (background / foreground / label) for public surfaces |
+| **Branding** | Brand colors (background / foreground / label / accent) for public surfaces and [Studio templates](/apps/studio-templates#branding) |
 | **Usage & Billing** | Consumption vs plan limits, subscription, payment methods, invoices |
 
 Agent wallets live under **Agent settings → Wallets** ([Wallets](/wallets)). Loyalty lives under the **Contacts** app ([Contacts](/apps/contacts)), not Team settings.
