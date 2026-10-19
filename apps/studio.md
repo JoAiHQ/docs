@@ -78,8 +78,8 @@ Install Studio on the team before expecting these tools. Confirm with `tools/lis
 | `studio_wait` | Wait for `draft-ready` or `composed` |
 | `studio_export` | Export finished media; returns the export and its share URL |
 | `list_projects` / `get_project` / `create_project` / `delete_project` | Project CRUD (Studio or Board). `create_project` takes `template` for template image projects and `outputPreset`, `targetPlatforms`, `selectedSkills` |
-| `list_elements` / `create_element` / `update_element` / `delete_element` | Elements (Studio or Sites). Create/update take `media` for <span v-pre>`{{asset.*}}`</span> images |
-| `list_element_variations` / `generate_element_variation` / `update_element_variation` / `delete_element_variation` | Variations (Studio or Sites). `mode` (`light` / `dark`) selects the template render mode |
+| `list_elements` / `create_element` / `update_element` / `delete_element` | Elements (Studio or Sites); all accept `team` (defaults to the agent team). Create/update take `media` for <span v-pre>`{{asset.*}}`</span> images |
+| `list_element_variations` / `generate_element_variation` / `update_element_variation` / `delete_element_variation` | Variations (Studio or Sites); all accept `team`. `mode` (`light` / `dark`) selects the template render mode |
 | `create_template_post_draft` | Render a template with content and draft a social post from it (requires Social Media) |
 
 Parameters for the template workflow: [Studio templates → MCP tools](/apps/studio-templates#mcp-tools). Live schemas: `tools/list`. See [MCP](/protocols/mcp) and [SKILL.md](https://joai.ai/SKILL.md).
