@@ -18,7 +18,8 @@ Shop is the commerce native app: catalog, orders, coupons, subscriptions, paymen
 | Tab | What you do |
 | --- | --- |
 | **Orders** | List/filter orders; status badge + **Fulfill** for pickup/shipping (stepper dialog); status dropdown for invoices; paid / outstanding / canceled revenue summary; commission agreements |
-| **Products** | Product catalog (variations, media, tags, store listing) |
+| **Returns** | Team Retouren list (order, customer, status, date); approve / reject / receive / refund; create from the order menu |
+| **Products** | Product catalog (variations, media, tags, structured details, store listing) |
 | **Services** | Bookable/sellable services (shared with [Appointments](/apps/appointments)) |
 | **Coupons** | Discount codes (enable under Settings → Storefront first); list shows redemption count; open a coupon to see orders that used it |
 | **Subscriptions** | Merchant view of customer subscriptions (cancel/resume) |
@@ -31,15 +32,39 @@ Use **Open store** in the header to jump to the public storefront.
 1. Open **Shop → Products** (or **Services**)
 2. Create items with prices, SKUs/variations, media, tags, and a **tax rate** (defaults to the team default from Settings → Tax)
 3. Toggle **list on store** / active vs hidden as needed
-4. Optional editor surfaces:
+4. On **Services**, drag rows to set the order shown in your storefront and booking page (or set `order` via API / agents)
+5. Optional editor surfaces:
    - **Variations** (e.g. color / size types)
    - **Volume pricing**
    - **Related products** (kiosk upsells)
+   - **Product details** — reusable sections shown on the storefront (nutrition tables, ingredients, specs, care instructions, etc.). Each section has a key, title, and either label/value rows (`kv`) or a text block (`text`). Titles and values can be translated.
    - **Product configurator** (warp-backed options when configured)
    - **Booking details** on services (same configurator; phone-named/labeled fields are saved on the CRM contact when customers book)
    - **Stock** per product/variation when inventory is on
 
-**Tags:** first tag is the **category** (Shop → Products filter + storefront category chips); further tags are labels (e.g. Vegan). Team product lists return `meta.categories` / `meta.hasUntagged` from those first tags.
+**Product details** live in `meta.details` on the product (API / MCP / warps). Example:
+
+```json
+[
+  {
+    "key": "nutrition",
+    "title": { "de": "Nährwerte", "en": "Nutrition" },
+    "kind": "kv",
+    "rows": [
+      { "label": { "de": "Energie" }, "value": { "de": "350 kcal" } }
+    ]
+  },
+  {
+    "key": "ingredients",
+    "title": { "de": "Zutaten" },
+    "kind": "text",
+    "text": { "de": "Maismehl, Wasser, Salz" }
+  }
+]
+```
+
+Pass `details: []` (MCP) or nested `meta.details: []` (API) to clear all sections. Warps send details via `payload:meta.details`.
+**Tags:** first tag is the **category** (Shop → Products filter + storefront category chips); further tags are labels (e.g. Vegan). Category options for the Products filter come from `GET /v1/products/categories` (`categories` + `hasUntagged`). Product and service lists are paginated (`page` / `perPage`, with `meta.currentPage` / `meta.lastPage` / `meta.total`). Pass `all=1` for a single full-catalog response (capped).
 
 [Kiosk](/kiosk) uses English lowercase product tags as categories — see the kiosk tag list.
 
@@ -55,13 +80,15 @@ Use **Open store** in the header to jump to the public storefront.
 
 The customer contact remains the buyer shown on the invoice. Use **Invoice recipient** during creation or editing when another contact (for example, an accounting inbox) should receive invoice and confirmation emails; leaving it at the default uses the customer contact.
 
-**Customer emails:** Online checkout (card, Mollie, Stripe, …) sends the team-branded order confirmation only after payment. Offline / bank-transfer orders can confirm when placed, then send a payment-received note (with invoice) once paid. On a pending order, **Notify contact** runs `joai-order-notify` through the chosen agent (auto-approved sync execution) so the branded confirmation is sent as that agent. Agents can trigger the same warp from MCP. The same order can be notified about once per hour.
+**Customer emails:** Online checkout (card, Mollie, Stripe, …) sends the team-branded order confirmation only after payment. Offline / bank-transfer orders can confirm when placed, then send a payment-received note (with invoice) once paid. On a pending order, **Notify contact** runs `joai-order-notify` through the chosen agent (auto-approved sync execution) so a branded **confirmation** or **payment reminder** is sent as that agent. Agents can trigger the same warp from MCP (`type`: `confirmation` or `payment-reminder`). Each type can be sent once per hour per order.
 
-Guest pickup checkout asks for a phone number so the shop can coordinate collection. On order review, pickup checkouts let the customer pick an available **Abholzeit** from the team’s appointment calendar (same availability as `/book`). Placing the order books a real pickup appointment and embeds it on the order as `meeting` (with `scheduledAt`, timezone, status, …). That time appears on the customer confirmation email, the merchant order alert, and the delivery note. When Board (Planner) is installed, the order also creates a backlog item with notes, configurations, and the pickup deadline; fulfillment then moves that item forward only — Ready/Shipped → Review, Delivered → Done (never back from Done). After online payment, pickup and shipping orders are **confirmed**; they become **delivered** only when fulfillment or handover is completed.
+**Payment reminders:** Opt in under **Shop → Settings → Payments → Payment reminders**. When enabled, unpaid pending shop orders (not quotes, marketplace purchases, or zero-total) get automatic customer emails on a payment-aware cadence — card/Mollie (and pickup with a reserved slot): **1 → 3 → 7 days**; bank transfer / offline: **3 → 7 → 14 days** — then stop. Already-old unpaid orders may get the first reminder soon after opt-in; later reminders still wait the full gap (not a same-day burst). Paying or canceling the order ends reminders. Manual payment reminders from the order menu count toward the same cap. Each reminder includes the invoice PDF when available (same as order confirmation), uses a guest pay link that works without login, and notifies **active team members** (push); the third/final reminder uses stronger “still unpaid — please follow up” copy.
+
+Guest pickup checkout asks for a phone number so the shop can coordinate collection. Shipping checkout treats phone as optional. When a guest enters a phone, that number is stored on the matched CRM contact (by email) and is what Shop → Orders, fulfill dialogs, and board cards show. A later checkout with a different phone updates the contact. Leaving shipping phone empty does not clear a phone already on the contact. On order review, pickup checkouts let the customer pick an available **Abholzeit** from the team’s appointment calendar (same availability as `/book`). Placing the order books a real pickup appointment and embeds it on the order as `meeting` (with `scheduledAt`, timezone, status, …). That time appears on the customer confirmation email, the merchant order alert, and the delivery note. When Board (Planner) is installed, the order also creates a backlog item with notes, configurations, and the pickup deadline; fulfillment then moves that item forward only — Ready/Shipped → Review, Delivered → Done (never back from Done). After online payment, pickup and shipping orders are **confirmed**; they become **delivered** only when fulfillment or handover is completed.
 
 Invoice and service orders without pickup/shipping stay **pending** until payment is recorded. Changing status to the closed state runs the paid path and shows as **paid** (not “delivered”). Pickup and shipping keep their fulfillment labels (“ready for pickup”, “picked up”, “delivered”).
 
-For **pickup** (Abholung) and **shipping**, Shop → Orders stays calm: status badge plus a **Fulfill** action. The fulfill dialog walks payment → prepare → ready/shipped → collected/delivered with a packing checklist when marking ready or shipped, optional shipping tracking (carrier dropdown loaded from the API + tracking number; the API builds the carrier tracking link; after ship you can correct tracking in the same dialog; MCP `create_fulfillment` / `update_fulfillment` do the same from `carrierCode` + `trackingNumber`), and one primary button per step. Marking a shipping order shipped emails the customer with carrier, tracking number, and link when available. From the same dialog you can open a **delivery note** PDF (Lieferschein) via a signed URL — same visual language as invoices (logo, seller/customer blocks, footer), with order number, date, booked pickup appointment, customer contact, pickup place or shipping address, location instructions, physical line items with quantities, order notes, and handover signature lines — no prices, no customer number. Handoff (collected/delivered) only confirms — no re-checking items. Search orders by phone, order number, or name. Pickup-only shops use Neu / In Vorbereitung / Zur Abholung bereit / Abgeholt filters; mixed pickup+shipping lists use neutral Ready / Completed labels. The list shows time, phone, item quantities, and the concrete payment method (PayPal, card, bank transfer) when Mollie reports it. Mark **ready for pickup** on a paid order emails the customer (DE) with the order number, pickup place, and guest order link; the guest thank-you page shows the same pickup status through prepare → ready → picked up. Marking the fulfillment delivered sets the order to **delivered** (“picked up”). Manual status jumps that skip steps are blocked; cancel remains available from the order menu.
+For **pickup** (Abholung) and **shipping**, Shop → Orders stays calm: status badge plus a **Fulfill** action. The fulfill dialog walks payment → prepare → ready/shipped → collected/delivered with a packing checklist when marking ready or shipped, optional shipping tracking (carrier dropdown loaded from the API + tracking number; the API builds the carrier tracking link; after ship you can correct tracking in the same dialog; MCP `create_fulfillment` / `update_fulfillment` do the same from `carrierCode` + `trackingNumber`), and one primary button per step. Marking a shipping order shipped emails the customer with carrier, tracking number, and link when available. From the same dialog — and from the order menu / packing station on the order page — team managers can open a **delivery note** PDF (Lieferschein) via a signed URL — same visual language as invoices (logo, seller/customer blocks, footer), with order number, date, booked pickup appointment, customer contact, pickup place or shipping address, location instructions, physical line items with quantities, order notes, and handover signature lines — no prices, no customer number. Shipping orders also get a downloadable **shipping label** PDF (Versandetikett) — a compact 100×150 mm address label (from/to + order number). When marking shipped, merchants can opt in to open that label automatically (on by default). Weight and dimensions are not collected yet — they will appear when a carrier API needs them. Packing PDF links are merchant-only (not on guest order access). Carrier APIs are not required yet (manual logistics provider, swappable later). Agents can read `shippingLabelUrl` / `deliveryNoteUrl` from `joai-order-get` when acting as the team. Handoff (collected/delivered) only confirms — no re-checking items. Search orders by phone, order number, or name. Pickup-only shops use Neu / In Vorbereitung / Zur Abholung bereit / Abgeholt filters; mixed pickup+shipping lists use neutral Ready / Completed labels. The list shows time, phone, item quantities, and the concrete payment method (PayPal, card, bank transfer) when Mollie reports it. Mark **ready for pickup** on a paid order emails the customer (DE) with the order number, pickup place, and guest order link; the guest thank-you page shows the same pickup status through prepare → ready → picked up. Marking the fulfillment delivered sets the order to **delivered** (“picked up”). Manual status jumps that skip steps are blocked; cancel remains available from the order menu.
 
 **Post-checkout return:** Mark a brandless [Sites](/sites) record as type `shop` (with a public URL) so guest thank-you pages can send buyers back to that storefront. One shop site per team.
 
@@ -95,7 +122,10 @@ For physical pickup or shipping orders after payment:
 
 1. Open **Fulfill** on the order (list or order page)
 2. Check off items in the dialog, then use the primary action (**ready for pickup** / **shipped**, then **collected** / **delivered**)
-3. For returns: approve → receive → refund from the order row actions
+
+**Returns (Retoure):** A customer can request a return once the order is **paid** and at least one physical item is on a **shipped** or **delivered** fulfillment (pickup counts after **picked up**). Eligibility is per item: only the shipped quantity not already in an open or completed return is offered. When items span multiple shipments, JoAi creates one return per fulfillment. The customer picks items and quantity and gives a reason — on the store order page, from **Your orders** (shown as *Retoure beantragen*), or on the order confirmation page (guests use the link from their email). The order page shows each return’s items, seller note, refund amount, and what to do next. A merchant can also open **Create return** from the order menu to log a return on the customer's behalf (reason, items, optional condition note); MCP `create_return` does the same and persists the return.
+
+Shop → **Returns** lists all returns of the team with order, customer, reason, status, and date. Each return moves **requested → approved → received → refunded**, or can be **rejected** with an optional note for the customer. Approve, reject, receive, and refund use confirmation dialogs (not browser prompts). The customer is emailed on **approve**, **reject**, and **refund**. Refund amounts follow the returned line totals (including tax for net-priced orders) and are processed through the order’s payment provider when connected (e.g. Mollie). The same actions are available on the order row.
 
 Invoice-only orders still use the status control (including **paid** when closed).
 
@@ -110,9 +140,23 @@ Invoice-only orders still use the status control (including **paid** when closed
 | **Delivery** | Shipping zones & rates; fulfillment / pickup locations |
 | **Tax** | VAT / tax rates for the catalog (default + reduced/special rates) |
 | **Inventory** | Team-level stock tracking on/off (then set stock on products/variations) |
-| **Storefront** | [Kiosk](/kiosk) on/off; enable coupons |
+| **Storefront** | [Kiosk](/kiosk) on/off; enable coupons; one-click **reorder** from order history (signed-in customers; unavailable lines are skipped); optional **custom legal page URLs** |
 
 **Order notification emails** (General): optional list of addresses (e.g. `bestellung@shop.example`) that receive a merchant alert when a shop order is placed — paid online orders after payment, bank/offline orders when created. Separate from customer confirmations and team seats.
+
+#### Legal pages and checkout disclosure
+
+Every public storefront gets built-in legal pages at `/{locale}/{team}/legal/{terms|privacy|withdrawal|imprint}`.
+
+**Automatic profile** (no extra settings):
+
+1. Detect merchant country from invoice country → IBAN → timezone  
+2. If EU/EEA/UK (or a generic `Europe/*` timezone) → built-in **14-day withdrawal** notice  
+3. Otherwise → built-in **returns** notice (no statutory withdrawal claim)
+
+Country-specific statutes (FAGG, BGB, …) belong in **custom legal URLs** under Shop → Settings → Storefront when needed. Genuss and similar shops can host their own texts there.
+
+Checkout shows the matching notice and requires acceptance of terms, withdrawal/returns, and privacy before a paid order.
 
 #### Tax rates
 
@@ -144,7 +188,7 @@ Connect a payment account under **Payments** before online pay works. You can di
 | Store | `https://store.joai.ai/{locale}/{team}` |
 | Kiosk | `https://store.joai.ai/{locale}/{team}/kiosk` |
 | Booking (if Appointments) | store book URL / [Sites](/sites) |
-| Order / subscription portal | Pay; request returns (qty/reason); subscription **skip / pause / resume delivery** via portal (`create_portal_session`) |
+| Order / subscription portal | Pay; request returns (*Retoure beantragen*: items, qty, reason) once items are shipped or picked up; subscription **skip / pause / resume delivery** via portal (`create_portal_session`) |
 
 Full host map: [Public surfaces](/apps/public-surfaces).
 
@@ -164,17 +208,17 @@ If those are missing, the UI shows a permission lock and APIs return 403.
 
 | Tool | Purpose |
 | --- | --- |
-| `create_product` / `update_product` / `delete_product` | Products; `create_product` accepts `stock` and optional `taxClassId` |
+| `create_product` / `update_product` / `delete_product` | Products; `create_product` accepts `stock`, optional `taxClassId`, and optional `details` sections; `update_product` accepts optional `details` (pass `[]` to clear) |
 | `create_product_variation` / `update_product_variation` | Variations; both accept `stock` (units available) |
-| `create_service` / `update_service` / `delete_service` / `list_services` | Services (also with Appointments); create/update accept optional `taxClassId` |
+| `create_service` / `update_service` / `delete_service` / `list_services` | Services (also with Appointments); create/update accept optional `taxClassId` and `order` (display sort, lower = earlier) |
 | `tax-class-list` / `tax-class-create` / `tax-class-update` / `tax-class-delete` | Team VAT rates (list first to resolve `taxClassId`) |
 | `create_order` | Order or quote — catalog and/or **custom** lines; optional `invoiceContactId`; custom lines may pass `taxClassId` |
 | `update_order` | Status, dates, or invoice recipient; clear `invoiceContactId` to use the customer |
 | `notify_order` (`joai-order-notify`) | Send branded order confirmation to the customer contact as the executing agent (same path as Shop **Notify contact**) |
-| `list_orders` / `delete_order` | List or delete orders; `list_orders` accepts `couponId` to show redemptions for a coupon |
+| `list_orders` / `delete_order` | List or delete orders (`list_orders` is paginated — use `page` / `perPage`, max 50, and read `meta.lastPage` for more); `list_orders` accepts `couponId` to show redemptions for a coupon |
 | `create_coupon` / `update_coupon` / `delete_coupon` / `list_coupons` | Coupons (`list_coupons` includes `redemptionCount` for team members) |
 | `create_fulfillment` / `update_fulfillment` / `list_fulfillments` | Fulfillment |
-| `list_returns` / `update_return` | Returns (merchant updates) |
+| `list_returns` / `update_return` | Returns (merchant list and updates; also shown in Shop → Returns) |
 
 Shipping zones / fulfillment locations are configured in the UI (no dedicated MCP tools today).
 
@@ -204,7 +248,7 @@ Set `stock` on a variation (in cents-free units) to make it orderable — a vari
 | `place_checkout_order` / `create_checkout_snapshot` / `quote_checkout_shipping_rates` | Checkout |
 | `list_checkout_fulfillment_locations` | Pickup / location options |
 | `pay_order` / `get_order` | Pay and inspect |
-| `create_return` | Start a return |
+| `create_return` | Start a return (paid order, shipped/delivered items) |
 | `list_subscriptions` / `show_subscription` / `cancel_subscription` / `resume_subscription` | Subscriptions |
 | `list_addresses` / `store_address` | Addresses |
 | `create_portal_session` | Customer portal (including subscription delivery management) |

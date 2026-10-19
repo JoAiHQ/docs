@@ -56,8 +56,11 @@ Brandless sites are **not** published on sites.joai.ai.
 4. Per site:
    - Toggle **enabled**
    - Set **type** to **Shop** when this URL is the storefront customers should return to after checkout
-   - Link a **contact** and a **metrics source** + **resource** (same pair as `metrics-query`). For Cloudflare, connect the agent under [Cloudflare integration](/integrations/cloudflare) first, then use `cloudflare` as source and the zone tag as resource.
-   - Optionally enable **monthly report**. If the metrics source is Cloudflare and no agent has a token yet, enabling returns `channel_not_configured` (422) so the Sites UI opens the [Cloudflare](/integrations/cloudflare) setup dialog, and chat/MCP can call `settings-integration-open` with `integration=cloudflare` then retry. On the 1st of each month the platform job creates an **update** artifact with metric blocks for the previous month and runs `artifact-deliver` (draft → approve / auto-mode). The report shows under Artifacts and Contact → Deliveries.
+   - Link a **contact** and a **metrics source** + **resource** (same pair as `metrics-query`):
+     - **Cloudflare** — connect under [Cloudflare](/integrations/cloudflare), use source `cloudflare` and the zone tag as resource
+     - **Google Search Console** — connect under [Google Search Console](/integrations/google-search-console), use source `google_search_console` and a property URL (`sc-domain:example.com` or `https://example.com/`) as resource. Reports search clicks/impressions, not site analytics visitors.
+     - **Instagram** — for Social Media insights (not Sites monthly reports); use `query_metrics` with source `instagram` and the numeric account id. See [Instagram](/integrations/instagram).
+   - Optionally enable **monthly report**. If the metrics integration is missing on the team, enabling returns `channel_not_configured` (422) so the Sites UI opens the matching setup dialog (`cloudflare` or `google-search-console`), and chat/MCP can call `settings-integration-open` then retry. On the 1st of each month the platform job creates an **update** artifact with metric blocks for the previous month and runs `artifact-deliver` (draft → approve / auto-mode). The report shows under Artifacts and Contact → Deliveries.
 5. Per brand-backed site:
    - **Add brand** → provision missing brands, then copy/open the public URL
    - Set **custom domain** (premium) and follow CNAME instructions
@@ -68,9 +71,10 @@ Brandless sites are **not** published on sites.joai.ai.
 From Sites → **Content**:
 
 1. **Create content** with a field schema (structured page data)
-2. Edit drafts; **preview** before going live
-3. **Publish** or **rollback** to a previous version
-4. Manage **elements** and **variations** (reusable blocks; generate variations when supported)
+2. For `image` and `media` fields, choose an existing image from the team media library or upload one directly from the field. The selected media URL is stored with the content record.
+3. Edit drafts; **preview** before going live. An explicitly approved content update can also save and publish in one action.
+4. **Publish** or **rollback** to a previous version
+5. Manage **elements** and **variations** (reusable blocks; generate variations when supported)
 
 These map 1:1 to the Sites MCP tools below.
 
@@ -123,8 +127,8 @@ Requires the **Sites** app.
 | Tool | Purpose |
 | --- | --- |
 | `list_sites` / `create_site` / `update_site` | Portfolio sites; optional `type=shop` + `url` for checkout return; set contact + metrics; `monthlyReport` opts into the 1st-of-month job (does not send now) |
-| `query_metrics` | Read Cloudflare (etc.) metrics for a period |
-| `list_contents` / `get_content` / `create_content` / `update_content` | CMS pages |
+| `query_metrics` | Read Cloudflare, Google Search Console, or Instagram metrics for a period |
+| `list_contents` / `get_content` / `create_content` / `update_content` | CMS pages; `update_content` saves a draft unless its approved `publish` option is set |
 | `preview_content` / `publish_content` / `rollback_content` | Lifecycle |
 | `list_content_versions` | Version history |
 | `list_elements` / `create_element` / `update_element` / `delete_element` | Elements |

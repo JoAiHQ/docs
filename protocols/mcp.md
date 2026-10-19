@@ -42,7 +42,7 @@ Always useful (confirm with `tools/list`):
 
 | Area | Tools |
 | --- | --- |
-| Studio | `studio_send`, `studio_produce`, `studio_wait`, `studio_export` |
+| Studio | `studio_send`, `studio_produce`, `studio_wait`, `studio_export` · elements and templates: see [Studio](/apps/studio#for-agents-mcp) and [Studio templates](/apps/studio-templates#mcp-tools) |
 | Memories | `create_memory`, `update_memory`, `search_memories` |
 | Skills | `list_skills`, `create_skill`, `update_skill`, `delete_skill` |
 | Documents / media | `list_documents`, `create_document`, … · `media_list`, `media_upload`, `media_delete` |

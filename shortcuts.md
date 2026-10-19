@@ -1,13 +1,13 @@
 # Shortcuts, flows & automations
 
-Quick actions and builders live under **Agent settings → Automations**. This is **not** the [Automations](/automations) native app (contact journeys with waits and enrollments).
+Quick actions and builders live under **Agent settings → Automations**. Contact **Journeys** and team **Hooks** live in the [Automations](/automations) native app.
 
 | Tab | Purpose |
 | --- | --- |
 | **Shortcuts** | One-click warp launches in chat |
 | **Alerts** | On-chain / warp event subscriptions — [Alerts](/alerts) |
 | **Flows** | Visual / structured flow builder |
-| **Hooks** | Internal event → warp, and outbound web hooks — [Webhooks](/webhooks) |
+| **Hooks** | Internal event → warp (also under **Automations → Hooks**) — [Webhooks](/webhooks) |
 
 ## Shortcuts
 
@@ -30,12 +30,12 @@ Public flow pages can appear on the store host — see [Public surfaces](/apps/p
 - **Internal** — e.g. `contact.created` → run a warp (MCP `create_hook` with `source=internal`)
 - **Web** — agent output events → POST to your URL (`source=web`)
 
-Manage under **Agent settings → Automations → Hooks**. Distinct from the **Webhooks** integration install under Integrations, and from [Automations](/automations) journeys.
+Prefer **Automations → Hooks** for team management; Agent settings still exposes Hooks for the active agent. Distinct from the **Webhooks** integration under Integrations, and from Automations **Journeys**.
 
 ## Related
 
 - [Agents](/agents)
-- [Automations](/automations) — contact journeys (separate native app)
+- [Automations](/automations) — Journeys + Hooks native app
 - [Alerts](/alerts)
 - [Tasks](/tasks)
 - [Webhooks](/webhooks)

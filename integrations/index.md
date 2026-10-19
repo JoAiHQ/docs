@@ -48,6 +48,7 @@ Integrations are **per agent** (or per team for some utilities). They are not th
 | **GitHub** | @mentions on issues/PRs | [GitHub](/integrations/github) |
 | **Sentry** | Errors → tasks / items | [Sentry](/integrations/sentry) |
 | **Cloudflare** | Zone analytics + Cloudflare warps | [Cloudflare](/integrations/cloudflare) |
+| **Google Search Console** | Search clicks + impressions for site metrics | [Google Search Console](/integrations/google-search-console) |
 
 ### Knowledge
 

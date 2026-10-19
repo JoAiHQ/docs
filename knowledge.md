@@ -1,6 +1,8 @@
 # Knowledge
 
-Knowledge is everything your agent remembers and references: memories, documents, ingestions, skills, goals, and reminders. Open **Agent settings → Knowledge**.
+Knowledge is everything your agent remembers and references: memories, ingestions, skills, goals, and reminders. Open **Agent settings → Knowledge**.
+
+Long-form training documents live in the **[Documents](/apps/documents)** native app (`/documents`), not in Knowledge.
 
 ## Overview
 
@@ -9,7 +11,6 @@ Tabs in Knowledge:
 | Tab | Purpose |
 | --- | --- |
 | **Memory** | Durable facts the agent should keep |
-| **Documents** | Uploaded reference files (PDF, text, …) |
 | **Ingestions** | Pipeline runs from transcripts, articles, connectors |
 | **Skills** | Markdown skill files (scope, tools, media) — see [Skills](/skills) |
 | **Goals** | Measurable goals (also Board MCP) |
@@ -19,22 +20,12 @@ Tabs in Knowledge:
 
 1. Open **Agent settings → Knowledge**
 2. Pick a tab
-3. Create or upload; wait for processing on documents/ingestions
+3. Create or update entries; wait for processing on ingestions
 4. Delete or update outdated entries
 
 ### Memories
 
-Short durable facts. Prefer memories for stable preferences and CRM-adjacent truths; prefer documents for long manuals.
-
-### Documents
-
-Upload PDFs and text. Agents search and cite them in chat / MCP.
-
-To share a document outside JoAi (e.g. WhatsApp), open it in Knowledge → Documents, choose **Make public**, then copy the link or share via WhatsApp. Recipients open a public page on the documents mini-app at `documents.joai.ai/{locale}/{slug}` (locale follows the team language) without signing in. Use the lock control to revoke access.
-
-For sensitive handoffs (credentials, contracts), choose **Add password**. The share URL then includes `?password=…` (same pattern as vleap docs). Without the query param, recipients see an unlock form. **Remove password** clears protection; the lock control still revokes the whole share.
-
-Prefer **Archive** over delete when a document should leave active knowledge but stay recoverable. Archiving also revokes any public share link. Toggle **Archived** in the documents list to restore.
+Short durable facts. Prefer memories for stable preferences and CRM-adjacent truths; prefer [Documents](/apps/documents) for long manuals.
 
 ### Ingestions
 
@@ -49,11 +40,12 @@ Create goals and reminders in Knowledge. Board MCP also exposes `list_goals`, `c
 | Tool | Purpose |
 | --- | --- |
 | `create_memory` / `update_memory` / `search_memories` | Memories |
-| `list_documents` / `create_document` / `update_document` / `delete_document` | Documents (`public: true` publishes a share URL; `password` optionally protects it — empty string clears; `archived: true` soft-retires; `list_documents` with `archived: true` lists the archive) |
 | `ingest_knowledge` | Queue structured ingestion |
 | `list_skills` / `create_skill` / `update_skill` / `delete_skill` | Skills |
 | `list_goals` / `create_goal` / `update_goal_progress` | Goals (Board) |
 | `list_reminders` / `create_reminder` / `delete_reminder` | Reminders (Board) |
+
+Document tools require the [Documents](/apps/documents) app — see that guide.
 
 Meeting ops (when exposed): `ingest_meeting_transcript`, `get_ingestion_ops`, `reprocess_ingestion`.
 
@@ -69,6 +61,7 @@ Live schemas: `tools/list`. See [MCP](/protocols/mcp) and [SKILL.md](https://joa
 
 - [Agents](/agents)
 - [Skills](/skills)
+- [Documents](/apps/documents)
 - [Board](/apps/board)
 - [Meetings](/apps/meeting)
 - [Readwise Reader](/integrations/readwise)

@@ -1,12 +1,12 @@
 # Campaigns
 
-Campaigns send personalized messages to an audience of contacts over email, WhatsApp, SMS, or push. They are created as **drafts**, then sent when ready. Campaigns belong to a **team** and use that team's contacts, segments, and agent channel integrations.
+Campaigns send personalized messages to an audience of contacts over email, WhatsApp, SMS, or push. Default create is a **draft**; email / SMS / push can also **send or schedule in the same create** (`send` / `scheduledAt`) so agents get one Freigabe. WhatsApp still needs template approval before send. Campaigns belong to a **team** and use that team's contacts, segments, and agent channel integrations.
 
 Install the **Campaigns** native app under **Team settings → Apps** (see [Native apps](/apps/)).
 
 ## Overview
 
-- Target a **saved segment**, contacts with specific **tags**, or explicit **contact IDs**
+- Target a **saved segment**, contacts with specific **tags**, explicit **contact IDs**, or (for push) **install IDs** / all subscribed devices
 - Personalize with `{{placeholders}}` from contact fields, static text, or AI prompts
 - WhatsApp templates go through an **approval** flow before send
 - Finished campaigns can be **archived**, and recipients that failed or were skipped can be **retried**
@@ -19,7 +19,7 @@ Install the **Campaigns** native app under **Team settings → Apps** (see [Nati
 | **Email** | Subject + body (plain or HTML) | Static + AI | Own outbound provider + from address |
 | **WhatsApp** | Template body | Static only | Slug-style name, language, category, approval before send |
 | **SMS** | Body | Static + AI | — |
-| **Push** | Title + body | Static + AI | — |
+| **Push** | Title + body | Static + AI | Push integration on the team; audience is **installs** (devices), including anonymous |
 
 AI placeholders (`aiParams`) require an **agent** on the campaign with that channel enabled. For email, set up outbound sending (provider + from address) — the `@inbox.joai.ai` address is for receiving only.
 
@@ -32,8 +32,7 @@ Choose one mode when creating a campaign:
 1. **Segment** — a saved audience (recommended for recurring sends). Pick an existing segment, or create one with **New segment**. The Campaigns page also has a **Segments** section to list, view, edit, and delete segments.
 2. **Tags** — contacts that have any of the selected tags
 3. **Contacts** — pick specific contacts
-
-Audience is fixed at create time. You can edit message content later, not who is targeted.
+4. **Push / installs** — for the push channel: all subscribed devices by default, or specific installs / an install-capable segment
 
 ### Segment builder
 
@@ -53,8 +52,19 @@ Segments are groups of conditions with match **all** or **any** per group. The e
 | `email_contains` | Email substring |
 | `marketing_opt_out` | Marketing opt-out state |
 | `prop` | Custom contact property — `key:value`, e.g. `onboarding-stage:done` |
+| `has_install` | Contact/device has an app install (push audiences) |
+| `install_push_status` | Install push status: `subscribed`, `opted_out`, or `unavailable` |
 
 `prop` matches a custom **contact property** exactly. Properties are set on the contact (in the Contacts app, or with the `set_contact_property` MCP tool) before they can be used in a segment — e.g. set `onboarding-stage` to `done`, then filter with `prop` = `onboarding-stage:done`.
+
+For **all subscribed push devices** (including anonymous installs with no contact), use install-only conditions — do not mix them with contact filters like `tag` if you want anonymous devices included:
+
+```json
+[
+  { "type": "has_install", "value": true },
+  { "type": "install_push_status", "value": "subscribed" }
+]
+```
 
 MCP: `list_segments`, `create_segment`, `delete_segment` (requires [Contacts](/apps/contacts)). There is **no `update_segment`** — edit in the Campaigns UI.
 
@@ -62,16 +72,18 @@ MCP: `list_segments`, `create_segment`, `delete_segment` (requires [Contacts](/a
 
 Pass one or more of:
 
-- `segmentId` — saved segment hashid
-- `tags` — contacts with any of these tags (API-only audience path)
-- `contactIds` — explicit contact hashids
+- `segmentId` — saved segment hashid (when set, other audience fields are ignored)
+- `tags` — contacts with any of these tags
+- `contactIds` — explicit contact hashids (for push, resolves to those contacts’ installs)
+- `installIds` — push only: explicit install (device) hashids from `list_installs` / `GET /v1/installs`
 
-At least one audience source is required on create. Tags and contact IDs can be combined; a segment resolves on its own. Empty audiences (including empty segments) are rejected.
+For **email / WhatsApp / SMS**, at least one audience source is required on create. For **push**, omitting all targeting means **every subscribed install** on the team (including anonymous). Empty non-push audiences (including empty segments) are rejected.
 
-On update, omit `segmentId` / `tags` / `contactIds` to leave the audience unchanged; send any of them to replace it (same non-empty rules as create).
+On update, omit `segmentId` / `tags` / `contactIds` / `installIds` to leave the audience unchanged; send any of them to replace it (same rules as create).
 
+**Dynamic audiences refresh at preview and send.** Push “all subscribed installs”, segments, and tag/contact filters are re-resolved when you preview or start (or run a scheduled) send — so new subscribed devices are included. Explicit `installIds` stay fixed to that device list. Explicit `contactIds` stay fixed to those contacts, but for push their current installs are re-resolved.
 
-Before send, the UI shows how many contacts are **sendable** vs skipped:
+Before send, the UI shows how many recipients are **sendable** vs skipped:
 
 | Skip reason | Meaning |
 | --- | --- |
@@ -153,7 +165,9 @@ On update, omit `segmentId` / `tags` / `contactIds` to leave the audience unchan
 
 ### Schedule send
 
-When starting delivery, pass an optional **`scheduledAt`** ISO datetime (API, SDK, or `send_campaign` with `scheduledAt`). Future times set status **scheduled** and dispatch when due; omit or use a past time to send immediately.
+When starting delivery, pass an optional **`scheduledAt`** on **`create_campaign`** / `POST /v1/campaigns`, or later on `send_campaign` / `POST …/send`. Same timezone rules as social posts: ISO with `Z`/offset is an absolute instant; bare wall-clock (e.g. `2026-10-01T10:00:00`) is interpreted in the **team timezone**, then stored as UTC. Must resolve to a future time. Future times set status **scheduled** and dispatch when due; omit `scheduledAt` and set `send=true` (create) or call send without it to start immediately.
+
+On create, `scheduledAt` implies send. Create+send is atomic: if send fails (e.g. channel not configured), no draft is left behind. WhatsApp cannot use create+send / create+schedule — create a draft, submit for approval, then send.
 
 **Cancel schedule** (`POST …/cancel-schedule`) is only available while **scheduled**. It clears `scheduledAt` and returns the campaign to **draft**.
 
@@ -219,29 +233,38 @@ Only **completed** and **failed** campaigns can be archived. Archived campaigns 
 3. Map every `{{placeholder}}` (static/contact or AI) and pick an agent when using AI
 4. Check the audience preview (sendable vs skipped)
 5. For WhatsApp: language + category, then submit for approval
-6. **Send test** (email only) to your inbox — real delivery with a `[TEST]` subject; does not start the campaign or attach the audience
+6. **Send test** to your inbox (email) or a device (push) — real delivery; does not start the campaign or attach the audience
 7. Send when ready (confirm dialog shows sendable count and auto-mode notes)
 
-Use the in-app message preview to sanity-check personalization before sending. Prefer **Send test** for a real email round-trip.
+Use the in-app message preview to sanity-check personalization before sending. Prefer **Send test** for a real round-trip.
 
 ## MCP / agents
 
-Agent MCP tools:
+Agent MCP tools (Campaigns app):
 
 | Tool | Purpose |
 | --- | --- |
-| `create_campaign` | Create a draft (`joai-campaign-create`) |
-| `preview_campaign_audience` | Preview sendable vs skipped counts (`joai-campaign-audience-preview`) — call **before** `send_campaign` |
-| `send_campaign` | Start delivery (`joai-campaign-send`); optional `scheduledAt` (ISO 8601, future) |
+| `create_campaign` | Create (`joai-campaign-create`) — email / WhatsApp / SMS / push; optional `installIds` for push. Prefer `send=true` or `scheduledAt` for email/SMS/push so create+delivery is **one Freigabe**. Omit both for draft-only. |
+| `preview_campaign_audience` | Preview sendable vs skipped (`joai-campaign-audience-preview`) — call before blasting an existing draft, or with targeting fields before create |
+| `send_campaign` | Start delivery for an **existing** draft (`joai-campaign-send`); optional `scheduledAt` (ISO 8601, future). Prefer create with `send`/`scheduledAt` for new campaigns. |
+| `send_campaign_test` | Smoke-test a draft to one `contactId` (email) or `installId` (push) (`joai-campaign-send-test`) |
 | `list_campaigns` | List campaigns (`joai-campaign-list`) |
+| `list_installs` | List device installs for push (`joai-install-list`) — filter `pushStatus`, search `q` |
 | `campaign_stats` | Team campaign stats (`joai-campaign-stats`) |
 | `delete_campaign` | Delete a campaign (`joai-campaign-delete`) |
 
-Related warp (often used from automations / form follow-ups):
+Related warps (often used from automations / form follow-ups):
 
 - `joai-campaign-send-contact` — send an existing campaign to one contact by email, optionally delayed (`2h`, `3d`, …)
 
-**Not exposed as dedicated MCP tools today:** update/edit, archive/unarchive, cancel send, test send, list recipients, retry failed sends, WhatsApp submit/refresh. Use the JoAi UI (or HTTP API) for those.
+**Not exposed as dedicated MCP tools today:** update/edit, archive/unarchive, cancel send, list recipients, retry failed sends, WhatsApp submit/refresh. Use the JoAi UI (or HTTP API) for those.
+
+Typical **push** flow via MCP (one Freigabe):
+
+1. Optional: `list_installs` / `preview_campaign_audience` / `send_campaign_test` with `installId` to smoke-test
+2. `create_campaign` with `channel=push`, audience (or none for all subscribed), and `send=true` **or** `scheduledAt`
+
+Draft-then-send still works: create without `send`, then `send_campaign`.
 
 When creating via MCP, pass placeholders explicitly — they are **not** inferred from `{{tokens}}` alone:
 
@@ -257,9 +280,21 @@ When creating via MCP, pass placeholders explicitly — they are **not** inferre
 }
 ```
 
+Push example (specific devices):
+
+```json
+{
+  "name": "Event reminder",
+  "channel": "push",
+  "subject": "Tonight",
+  "content": "Doors open at 19:00",
+  "installIds": ["…", "…"]
+}
+```
+
 If `aiParams` is set and no `agentId` is passed, MCP defaults to the **connected agent**. That agent still needs an active channel integration.
 
-Before `send_campaign`, call `preview_campaign_audience` (with `campaignId`, or `channel` plus `segmentId` / `tags` / `contactIds`) to confirm sendable recipients and skip reasons (`pending_consent`, `opted_out`, `missing_channel`, `approval_skipped`).
+Before `send_campaign`, call `preview_campaign_audience` (with `campaignId`, or `channel` plus `segmentId` / `tags` / `contactIds` / `installIds`) to confirm sendable recipients and skip reasons (`pending_consent`, `opted_out`, `missing_channel`, `approval_skipped`).
 
 After `send_campaign`, delivery may wait on warp approval when the sending agent is not in **auto mode**. Approve in JoAi or poll `check_warp_executions` until messages go out.
 
@@ -267,7 +302,8 @@ For live schemas, call `tools/list` on the agent MCP endpoint. See also [MCP](/p
 
 ## Tips
 
-- Prefer segments over one-off contact lists when you will reuse the audience
+- Prefer segments over one-off contact/install lists when you will reuse the audience
+- For push to everyone subscribed (including anonymous), omit audience on create or use an install-only segment
 - Map every placeholder before send — empty `templateParams` is the usual reason `{{name}}` arrives blank
 - For WhatsApp, use a slug name and map all placeholders up front or create/submit will fail validation
 - Pick an agent that actually has the channel integration before using AI slots

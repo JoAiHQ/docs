@@ -41,10 +41,13 @@ On desktop, if no folder is connected yet, the UI nudges you to set one up.
 
 ## For agents
 
-File/media and document tools are general agent tooling (not gated solely by Workspace):
+Media tools are general agent tooling (not gated solely by Workspace):
 
 - Media: `media_list`, `media_upload`, `media_delete`
-- Documents: `list_documents`, `create_document`, `update_document`, `delete_document`, ingest
+
+Document MCP tools require the **[Documents](/apps/documents)** native app:
+
+- `list_documents`, `create_document`, `update_document`, `delete_document`
 
 Confirm with `tools/list`. See [MCP](/protocols/mcp), [Knowledge](/knowledge), [SKILL.md](https://joai.ai/SKILL.md).
 

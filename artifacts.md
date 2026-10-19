@@ -6,7 +6,7 @@ Install the **Artifacts** native app from team **Apps** to manage deliverables i
 
 ## Overview
 
-- Register a deliverable with title, type, optional URL / password, attached **media**, and extra link
+- Register a deliverable with title, type, optional URL / access password (hashed at rest), attached **media**, and extra link
 - Attach a **contact** (and optionally an **order** / quote)
 - Status flow: **draft → ready → sent** (or **archived**)
 - **Deliver** from the dashboard with a message you write — pick the **sending agent** (same idea as campaigns; that agent’s email/SMS/WhatsApp integration is used) — or **Generate with AI** to run the `artifact-deliver` warp in chat (draft → edit → approve → send). Structured document blocks are still appended on send when present.
@@ -35,7 +35,7 @@ Install the **Artifacts** native app from team **Apps** to manage deliverables i
 ## Recommended flow
 
 1. Create each deliverable (deck, demo, agreement, …) with contact and URLs and/or media, status `ready`
-2. Deliver with **one or more** artifact IDs — one message covering all links/passwords → edit → approve → send
+2. Deliver with **one or more** artifact IDs — one message covering all links (include any password you just set; JoAi does not return stored passwords) → edit → approve → send
 3. All included artifacts become **sent**; a delivery record stores what went out
 
 For a local PDF/image via MCP: `media_upload` → `create_artifact` with `media: ["…"]` (and optional `url`) → `deliver_artifacts`. `url` and `media` are both optional.
