@@ -92,8 +92,8 @@ Your AI assistant works 24/7 in Cloud Mode, so it's always available when you ne
 
 Download JoAi today and get AI agents that actually do things.
 
-Terms of Use: https://legal.vleap.ai/general/legal-notice.html
-Privacy Policy: https://legal.vleap.ai/policies/privacy.html
+Terms of Use: https://legal.vleap.at/general/legal-notice.html
+Privacy Policy: https://legal.vleap.at/policies/privacy.html
 
 ## Download JoAi
 
