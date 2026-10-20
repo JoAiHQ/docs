@@ -101,7 +101,8 @@ Upload media with `media_upload`, **or** pass a Studio `exportId` / `elementVari
 
 | Warp | What it does |
 | --- | --- |
-| `social-post-create` | Draft, or schedule into the queue when `scheduledAt` is set. Optional `format` for Instagram (`feed` \| `short` \| `story`). Optional `exportId` or `elementVariationId` copies stills onto the post. Returns `shareUrl` (public preview). |
+| `social-accounts-list` | List connected profiles and Facebook Pages with their `accounts[].id` |
+| `social-post-create` | Draft, or schedule into the queue when `scheduledAt` is set. Pass `accountId` to publish as a specific profile or Page. Optional `format` for Instagram (`feed` \| `short` \| `story`). Optional `exportId` or `elementVariationId` copies stills onto the post. Returns `shareUrl` (public preview). |
 | `social-post-update` | Change a draft, failed, or cancelled post (caption, format, media). Returns `shareUrl`. |
 | `social-post-schedule` | Queue a draft (with a time, or for the next job run). Returns `shareUrl`. |
 | `social-post-cancel` | Stop a scheduled post |
@@ -109,11 +110,13 @@ Upload media with `media_upload`, **or** pass a Studio `exportId` / `elementVari
 | `social-post-list` | List posts, optionally by status or network — each item includes `shareUrl` when sharable |
 | `social-post-delete` | Delete a post that is not currently publishing |
 
-On MCP, `create_template_post_draft` (`elementId`, `values`, `platform`, `format?`, `body?`, `mode?`, `team`) renders a [Studio template](/apps/studio-templates) into a new variation (`mode` is `light` by default or `dark`) and drafts a post from it. It never schedules; the reviewer approves with `schedule_social_post`.
+On MCP, `create_template_post_draft` (`elementId`, `values`, `platform`, `accountId?`, `format?`, `body?`, `mode?`, `team`) renders a [Studio template](/apps/studio-templates) into a new variation (`mode` is `light` by default or `dark`) and drafts a post from it. It never schedules; the reviewer approves with `schedule_social_post`.
 
 Warps never post to the networks themselves. Scheduling and retry only enqueue JoAi's publish job.
 
-MCP tools use the same names: `create_social_post`, `update_social_post`, `schedule_social_post`, `cancel_social_post`, `retry_social_post`, `list_social_posts`, `delete_social_post`, plus `create_template_post_draft`. They are available only when Social Media is installed on the team.
+MCP tools use the same names: `create_social_post`, `update_social_post`, `schedule_social_post`, `cancel_social_post`, `retry_social_post`, `list_social_posts`, `list_social_accounts`, `delete_social_post`, plus `create_template_post_draft`. They are available only when Social Media is installed on the team.
+
+Call `list_social_accounts` before creating a post when the team has more than one connected profile or Facebook Page, then pass the chosen `accounts[].id` as `accountId`. Omitting `accountId` uses the default profile.
 
 `platform` is `instagram`, `x`, `facebook`, or `linkedin`. For Instagram, `format` is `feed` (default), `short`, or `story`. `scheduledAt` is an ISO time. Without a timezone, JoAi uses the team timezone.
 
