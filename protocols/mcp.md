@@ -30,7 +30,7 @@ Always useful (confirm with `tools/list`):
 | Tool | Purpose |
 | --- | --- |
 | `prompt_agent` | Chat / instruct the agent (room-aware) |
-| `joai_agent_info` / `joai_list_agents` | Agent metadata |
+| `joai_agent_info` / `joai_list_agents` | Agent metadata; `joai_list_agents` lists the current team or accepts a `team` slug |
 | `list_public_teams` | Public teams |
 | `ingest_knowledge` | Queue ingestion |
 
