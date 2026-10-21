@@ -26,6 +26,8 @@ At the bottom of **Calendars**, add a team calendar feed with its public `.ics` 
 
 JoAi fetches active team feeds once each day. You can also use **Sync now** after adding or changing a source. New or changed source events become team event updates; optionally enable automatic publishing when the source is trusted. A cancelled source event is archived, and a future event removed from the source is archived as well.
 
+When an agent manages feeds through an action or MCP, it can explicitly select the target team with its team slug. This keeps calendar sources, their imported updates, and approval cards attached to the intended team rather than to the agent's default team. The agent owner must be a member with permission to manage that target team.
+
 ## How it works
 
 - JoAi uses the connected calendar for time awareness, scheduling-related agent behavior, and event creation where supported
