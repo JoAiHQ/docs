@@ -44,6 +44,7 @@ export default defineConfig({
             items: [{ text: 'Templates', link: '/apps/studio-templates' }],
           },
           { text: 'Documents', link: '/apps/documents' },
+          { text: 'Client proposals', link: '/apps/proposals' },
           { text: 'Sites', link: '/sites' },
           { text: 'Meetings', link: '/apps/meeting' },
           { text: 'Workspace', link: '/apps/files' },
