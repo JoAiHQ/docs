@@ -54,9 +54,9 @@ Use the returned `shareUrl`; do not rebuild it. There is no MCP confirm tool —
 
 The API returns a ready-to-share `shareUrl` for each proposal. The host and route are configured by the frontend deployment, not by JoAi. Treat the URL as opaque and always use the value returned by `create_client_proposal` or `GET /v1/proposals`.
 
-The shared page renders the proposal copy and the required/optional items. Required items are locked; optional items are selectable. Confirmation opens a summary of the selection before submitting.
+The shared page renders the proposal copy in the team’s language (no per-visitor language switcher), with the required/optional items. Required items are locked; optional items are selectable. Confirmation opens a summary of the selection before submitting.
 
-Do not construct or rewrite the share URL. Use the API value so locale, environment, and deployment routing stay correct.
+Do not construct or rewrite the share URL. Use the API value so environment and deployment routing stay correct.
 
 DNS and hosting are deployment responsibilities; JoAi stores the proposal data.
 
