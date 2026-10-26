@@ -18,9 +18,9 @@ A quote is a pre-order, not an invoice:
 
 - No invoice number or invoice PDF is created at quote time.
 - No subscription is created, even when the selected services are recurring.
-- Inventory is not reserved.
+- Inventory is not reserved at quote time.
 
-The quote becomes an order when the team accepts/confirms it through the normal order status flow. Invoice and billing behavior applies at that point according to the team’s payment configuration.
+The quote becomes an order when the team accepts/confirms it through the normal order status flow. Inventory, invoice, and billing behavior then apply according to the team’s stock and payment configuration.
 
 ## API and SDK
 
