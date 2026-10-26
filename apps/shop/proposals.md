@@ -56,6 +56,8 @@ The API returns a ready-to-share `shareUrl` for each proposal. The host and rout
 
 The shared page renders the proposal copy in the team’s language (no per-visitor language switcher), with the required/optional items. Required items are locked; optional items are selectable. Confirmation opens a summary of the selection before submitting.
 
+A `403` response includes `requiresPassword`: `true` means the access code is missing or wrong; `false` means the proposal is unavailable or expired, so do not show the password prompt.
+
 Do not construct or rewrite the share URL. Use the API value so environment and deployment routing stay correct.
 
 DNS and hosting are deployment responsibilities; JoAi stores the proposal data.
