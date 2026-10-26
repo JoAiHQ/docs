@@ -35,6 +35,7 @@ Use chat warps / MCP when the agent should draft or schedule for you. Approving 
 - **Share a link** on a draft, scheduled, or published post — anyone with the link sees a public preview (caption, media, format, network, and time), without signing in
 - **View post** on a published post — opens the live post on Instagram, X, Facebook, or LinkedIn
 - Cancel a scheduled post, or retry one that failed — failed publishes also notify the team with a one-tap retry link into `/social`
+- Successful publishes notify the whole team with an in-app/push message and a link to the live post
 - Filter the queue by status or network: draft, scheduled, publishing, published, failed, cancelled — Instagram posts also show a feed / short / story badge
 - See **likes / comments / reach / views** on published Instagram posts after JoAi syncs insights
 - Pick a **suggested time** chip when scheduling Instagram (from your own post performance, with sensible defaults when history is thin)

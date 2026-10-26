@@ -298,14 +298,14 @@ Notes:
 
 | Tool | Parameters | Notes |
 | --- | --- | --- |
-| `list_elements` | — | Team element library; find `template` elements and their ids |
-| `create_element` | `name`, `type` (`character` · `environment` · `style` · `product` · `brand` · `template`), `description?`, `spec?`, `media?` | For templates `spec` is the full definition. `media` is a list of team media IDs from `media_upload`; image names become <span v-pre>`{{asset.<name>}}`</span> placeholders |
-| `update_element` | `elementId`, `name?`, `type?`, `description?`, `spec?`, `media?` | For templates pass the **full** definition; it replaces the old one. `media` attaches team media IDs (adds to the element's existing media) |
-| `delete_element` | `elementId` | |
-| `list_element_variations` | `elementId` | Variations with labels, overrides and images |
-| `generate_element_variation` | `elementId`, `overrides?`, `aspectRatio?`, `label?`, `mode?` | Templates render instantly; other types generate an AI image in the background. `aspectRatio` (`1:1` default, `16:9`, `9:16`, `4:3`, `3:4`) applies to AI elements; `mode` (`light` default, `dark`) applies to templates; `label` names the variation |
-| `update_element_variation` | `elementId`, `variationId`, `label?`, `aspectRatio?`, `mode?`, `overrides?` | `{}` clears overrides. Does not re-render |
-| `delete_element_variation` | `elementId`, `variationId` | |
+| `list_elements` | `team?` | Team element library; find `template` elements and their ids. `team` defaults to the connected agent's team |
+| `create_element` | `name`, `type` (`character` · `environment` · `style` · `product` · `brand` · `template`), `description?`, `spec?`, `media?`, `team?` | For templates `spec` is the full definition. `media` is a list of team media IDs from `media_upload`; image names become <span v-pre>`{{asset.<name>}}`</span> placeholders |
+| `update_element` | `elementId`, `name?`, `type?`, `description?`, `spec?`, `media?`, `team?` | For templates pass the **full** definition; it replaces the old one. `media` attaches team media IDs (adds to the element's existing media) |
+| `delete_element` | `elementId`, `team?` | |
+| `list_element_variations` | `elementId`, `team?` | Variations with labels, overrides and images |
+| `generate_element_variation` | `elementId`, `overrides?`, `aspectRatio?`, `label?`, `mode?`, `team?` | Templates render instantly; other types generate an AI image in the background. `aspectRatio` (`1:1` default, `16:9`, `9:16`, `4:3`, `3:4`) applies to AI elements; `mode` (`light` default, `dark`) applies to templates; `label` names the variation |
+| `update_element_variation` | `elementId`, `variationId`, `label?`, `aspectRatio?`, `mode?`, `overrides?`, `team?` | `{}` clears overrides. Does not re-render |
+| `delete_element_variation` | `elementId`, `variationId`, `team?` | |
 | `create_template_post_draft` | `elementId`, `values`, `platform` (`instagram` · `x` · `facebook` · `linkedin`), `format?` (`feed` · `story`), `body?`, `mode?`, `team` | Render + draft in one step. `mode` is `light` (default) or `dark`. Never schedules |
 | `create_project` | `name`, `brief?`, `outputPreset?`, `targetPlatforms?`, `selectedSkills?`, `template?` `{ elementVariationId, mode?, values? }` | With `template` the project is an image project rendered from that variation. `outputPreset` is `9:16 social`, `16:9 launch` or `1:1 square teaser` |
 | `studio_produce` / `studio_wait` / `studio_export` | `projectId` (`studio_wait` also `targetStatus`, `timeoutSeconds?`) | Template projects go straight to `composed`; the export holds the PNG |
@@ -313,7 +313,7 @@ Notes:
 | `update_social_post` / `schedule_social_post` | see [Social Media](/apps/social#for-agents) | Scheduling needs approval |
 | `media_upload` | `team`, `type` (`brand` · `reference` · `template` · `output`), `fileUrl` / `filePath` / `fileBase64`, … | Use the returned URL in image fields |
 
-Live schemas: `tools/list`. Attach images to an element (for <span v-pre>`{{asset.*}}`</span>) with the element's `media` on the REST API or the `media` parameter of `create_element` / `update_element`.
+All element tools accept an optional `team` slug; omit it to use the connected agent's team. Live schemas: `tools/list`. Attach images to an element (for <span v-pre>`{{asset.*}}`</span>) with the element's `media` on the REST API or the `media` parameter of `create_element` / `update_element`.
 
 ## Designing good images
 

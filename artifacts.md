@@ -47,6 +47,14 @@ For a local PDF/image via MCP: `media_upload` → `create_artifact` with `media:
 
 One delivery can cover several artifacts. Delivery history keeps the recipient even if an artifact’s contact is later changed.
 
+## Public link
+
+Every **ready** or **sent** artifact has a public page at `https://joai.ai/{locale}/artifacts?id={id}`. The artifact's own `url` stays the deliverable link (for example the PDF or demo).
+
+If the artifact has a password, the page shows a password form before revealing the content. The shared API is `GET /v1/artifacts/shared/{id}`; send the password in the `X-Artifact-Password` header (the `?password=` query is also accepted). Until the correct password is supplied it returns `403` with `requiresPassword: true`. Draft and archived artifacts are not public.
+
+Delivery messages include this link automatically, even when the artifact has no structured blocks. The artifact card in chat also previews image URLs and links to the public page once the artifact exists.
+
 ## In the app
 
 1. Install **Artifacts** under team **Apps**
@@ -84,6 +92,7 @@ See [SKILL.md](https://joai.ai/SKILL.md) and [Warps](/warps/general).
 ## API
 
 - `GET|POST /v1/artifacts`
+- `GET /v1/artifacts/shared/{id}` — shared page data; optional `X-Artifact-Password` header, returns `403` with `requiresPassword: true` while protected
 - `GET|PATCH|DELETE /v1/artifacts/{id}`
 - `POST /v1/artifacts/deliver` — body: `artifactIds[]`, `message`, `integration` (`email` | `sms` | `whatsapp`), optional `subject`, `contactIds[]`, `agentId` (agent UUID; defaults to request agent or the team’s first agent)
 - `GET /v1/artifacts?ids=id1,id2` — load a specific set
