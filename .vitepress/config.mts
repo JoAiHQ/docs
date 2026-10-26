@@ -27,7 +27,11 @@ export default defineConfig({
           { text: 'Overview', link: '/apps/' },
           { text: 'Public surfaces', link: '/apps/public-surfaces' },
           { text: 'Board', link: '/apps/board' },
-          { text: 'Shop', link: '/apps/shop' },
+          {
+            text: 'Shop',
+            link: '/apps/shop',
+            items: [{ text: 'Client proposals', link: '/apps/shop/proposals' }],
+          },
           { text: 'Kiosk', link: '/kiosk' },
           { text: 'Contacts', link: '/apps/contacts' },
           { text: 'Loyalty', link: '/apps/loyalty' },

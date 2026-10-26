@@ -70,6 +70,8 @@ Pass `details: []` (MCP) or nested `meta.details: []` (API) to clear all section
 
 ### Orders and quotes
 
+Need a configurable client-facing scope before creating the quote? See [Client proposals](/apps/shop/proposals).
+
 1. Open **Shop → Orders**
 2. **New order** → pick a [contact](/apps/contacts), add lines, optionally send confirmation
 3. Choose **Order** or **Quote**

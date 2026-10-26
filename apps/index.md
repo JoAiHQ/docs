@@ -52,7 +52,7 @@ Native apps are **not** the same as:
 | App | What it does | Guide |
 | --- | --- | --- |
 | **Board** | Kanban items, auto-execution; MCP for tasks/goals/hooks/blueprints/projects | [Board](/apps/board) |
-| **Shop** | Products, services, orders, coupons, payments, storefront | [Shop](/apps/shop) |
+| **Shop** | Products, services, orders, coupons, payments, storefront, client proposals | [Shop](/apps/shop) · [Proposals](/apps/shop/proposals) |
 | **Contacts** | CRM, tags, timeline; segments via Campaigns | [Contacts](/apps/contacts) |
 | **Loyalty** | Points, tiers, rewards, scanner, wallet passes | [Loyalty](/apps/loyalty) |
 | **Campaigns** | Email, WhatsApp, SMS, push + segment audiences | [Campaigns](/campaigns) |
