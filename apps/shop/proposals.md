@@ -8,7 +8,7 @@ A client proposal is a configurable, shareable scope created after a discovery c
 2. Mark foundation work as required. The client can review it but cannot remove it. Optional items remain selectable on the shared page.
 3. Share the private link returned by the API. When an access code is configured, pass it only via the `X-Proposal-Password` header on the public endpoints.
 4. The client reviews the selection in a confirmation dialog, then confirms once.
-5. JoAi creates exactly one quote order with the chosen items and sends the quote-confirmation email to the contact.
+5. JoAi creates exactly one quote order with the chosen items and sends the quote-confirmation email to the contact, including a quote PDF.
 
 Confirmation is idempotent: retrying the same confirmation returns the existing converted proposal and does not create a second quote.
 
