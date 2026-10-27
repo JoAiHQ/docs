@@ -54,7 +54,7 @@ Use the returned `shareUrl`; do not rebuild it. There is no MCP confirm tool —
 
 The API returns a ready-to-share `shareUrl` for each proposal. The host and route are configured by the frontend deployment, not by JoAi. Treat the URL as opaque and always use the value returned by `create_client_proposal` or `GET /v1/proposals`.
 
-The shared page renders the proposal copy in the team’s language (no per-visitor language switcher), with the required/optional items. Required items are locked; optional items are selectable. Confirmation opens a summary of the selection before submitting.
+The shared page renders the proposal copy in the team’s language (no per-visitor language switcher), with the required/optional items. Required items are locked; optional items are selectable. Confirmation opens a summary of the selection before submitting. Converted proposals expose `selectedItemIds` so a revisit shows the accepted selection.
 
 A `403` response includes `requiresPassword`: `true` means the access code is missing or wrong; `false` means the proposal is unavailable or expired, so do not show the password prompt.
 
