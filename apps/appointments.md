@@ -15,6 +15,7 @@ Appointments is the booking native app: availability, capacity, requests, and a 
 
 ### Home
 
+- **New appointment** — team members can book a slot for one or more CRM contacts, choosing staff, service, and an available time; staff bookings skip customer notice/approval rules and are confirmed immediately
 - **Upcoming meetings** — join video when configured, cancel, open contact, open [meeting summary](/apps/meeting) when linked
 - **Request queue** — approve or decline pending requests (food & drink teams may assign a **table** on approve)
 
