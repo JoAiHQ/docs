@@ -39,7 +39,7 @@ Use **Open store** in the header to jump to the public storefront.
    - **Related products** (kiosk upsells)
    - **Product details** — reusable sections shown on the storefront (nutrition tables, ingredients, specs, care instructions, etc.). Each section has a key, title, and either label/value rows (`kv`) or a text block (`text`). Titles and values can be translated.
    - **Product configurator** (warp-backed options when configured)
-   - **Booking details** on services (same configurator; phone-named/labeled fields are saved on the CRM contact when customers book)
+   - **Booking details** on services (same configurator; set it via `settings.configurator` on `create_service` / `update_service`; phone-named/labeled fields are saved on the CRM contact when customers book)
    - **Stock** per product/variation when inventory is on
 
 **Product details** live in `meta.details` on the product (API / MCP / warps). Example:
@@ -212,7 +212,7 @@ If those are missing, the UI shows a permission lock and APIs return 403.
 | --- | --- |
 | `create_product` / `update_product` / `delete_product` | Products; `create_product` accepts `stock`, optional `taxClassId`, and optional `details` sections; `update_product` accepts optional `details` (pass `[]` to clear) |
 | `create_product_variation` / `update_product_variation` | Variations; both accept `stock` (units available) |
-| `create_service` / `update_service` / `delete_service` / `list_services` | Services (also with Appointments); create/update accept optional `taxClassId` and `order` (display sort, lower = earlier) |
+| `create_service` / `update_service` / `delete_service` / `list_services` | Services (also with Appointments); create/update accept optional `taxClassId`, `order` (display sort, lower = earlier), and `settings.configurator` (booking detail fields; pass `[]` to disable) |
 | `tax-class-list` / `tax-class-create` / `tax-class-update` / `tax-class-delete` | Team VAT rates (list first to resolve `taxClassId`) |
 | `create_order` | Order or quote — catalog and/or **custom** lines; optional `invoiceContactId`; custom lines may pass `taxClassId` |
 | `update_order` | Status, dates, or invoice recipient; clear `invoiceContactId` to use the customer |
