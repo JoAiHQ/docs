@@ -41,6 +41,8 @@ Use **Open store** in the header to jump to the public storefront.
    - **Product configurator** (warp-backed options when configured)
    - **Booking details** on services (same configurator; set it via `settings.configurator` on `create_service` / `update_service`; phone-named/labeled fields are saved on the CRM contact when customers book)
    - **Stock** per product/variation when inventory is on
+   - **Barcode** per variation (EAN/GTIN/UPC or your own code, unique per team; product search matches it exactly)
+   - **External references** per variation (link icon in the variations table): the article ID of the same item in a till/POS, ERP, marketplace, supplier, or other system. Each external ID is unique per team and source, and a variation can have several
 
 **Product details** live in `meta.details` on the product (API / MCP / warps). Example:
 
@@ -211,7 +213,9 @@ If those are missing, the UI shows a permission lock and APIs return 403.
 | Tool | Purpose |
 | --- | --- |
 | `create_product` / `update_product` / `delete_product` | Products; `create_product` accepts `stock`, optional `taxClassId`, and optional `details` sections; `update_product` accepts optional `details` (pass `[]` to clear) |
-| `create_product_variation` / `update_product_variation` | Variations; both accept `stock` (units available) |
+| `create_product_variation` / `update_product_variation` | Variations; both accept `stock` (units available) and `barcode` (unique per team; omit it to keep the current barcode, pass `null` to remove it on update) |
+| `add_product_variation_external_reference` / `update_product_variation_external_reference` / `remove_product_variation_external_reference` | Link a variation to its article ID in another system (`source`: `pos`, `erp`, `marketplace`, `supplier`, `other`; `externalId` unique per team and source) |
+| `find_product_variation` | Find one variation by `barcode`, or by `source` + `externalId` (checked first, then the barcode) |
 | `create_service` / `update_service` / `delete_service` / `list_services` | Services (also with Appointments); create/update accept optional `taxClassId`, `order` (display sort, lower = earlier), and `settings.configurator` (booking detail fields; pass `[]` to disable) |
 | `tax-class-list` / `tax-class-create` / `tax-class-update` / `tax-class-delete` | Team VAT rates (list first to resolve `taxClassId`) |
 | `create_order` | Order or quote — catalog and/or **custom** lines; optional `invoiceContactId`; custom lines may pass `taxClassId` |
