@@ -39,6 +39,7 @@ export default defineConfig({
           { text: 'Automations', link: '/automations' },
           { text: 'Forms', link: '/apps/forms' },
           { text: 'Appointments', link: '/apps/appointments' },
+          { text: 'Reviews', link: '/apps/reviews' },
           { text: 'Smart Links', link: '/apps/smart-links' },
           { text: 'News', link: '/apps/news' },
           { text: 'Social Media', link: '/apps/social' },

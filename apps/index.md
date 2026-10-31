@@ -59,6 +59,7 @@ Native apps are **not** the same as:
 | **Automations** | Welcome series, nurture drips, webhook enroll | [Automations](/automations) |
 | **Forms** | Build, publish, share, submissions | [Forms](/apps/forms) |
 | **Appointments** | Policy, requests, public book page | [Appointments](/apps/appointments) |
+| **Reviews** | Review requests, ratings, public review routing | [Reviews](/apps/reviews) |
 | **Smart Links** | Short links, variations, kiosk table QR | [Smart Links](/apps/smart-links) |
 | **News** | Deals, events, news updates | [News](/apps/news) |
 | **Social Media** | Draft and schedule Instagram, X, Facebook, and LinkedIn posts | [Social Media](/apps/social) |
