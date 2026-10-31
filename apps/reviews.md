@@ -24,7 +24,7 @@ Do not gate the public review link by rating and do not offer incentives for rev
 5. Choose email, SMS, WhatsApp, or a combination
 6. Set the private follow-up threshold (default: 3)
 
-Requests respect the team timezone and quiet hours.
+Requests respect the team timezone and avoid sending overnight.
 
 ## Triggers
 
@@ -38,7 +38,7 @@ Both triggers create the same review request shape, so the feature is not tied t
 The customer receives a tokenized link:
 
 ```text
-https://joai.ai/{locale}/review/{token}
+https://joai.ai/{locale}/review?token={token}
 ```
 
 No login is required. The token expires after 60 days. The page shows the business, subject, and first name only — never contact details.
