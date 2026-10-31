@@ -24,13 +24,18 @@ The quote becomes an order when the team accepts/confirms it through the normal 
 
 ## API and SDK
 
-Authenticated team members can create and list proposals through `POST /v1/proposals` and `GET /v1/proposals`. The response includes a ready-to-share `shareUrl`; use it instead of constructing the URL yourself.
+Authenticated team members can create, list, and inspect proposals through `POST /v1/proposals`, `GET /v1/proposals`, and `GET /v1/proposals/{id}`. Team stats are available at `GET /v1/proposals/stats` (`totalCount`, `sentCount`, `convertedCount`, `pipelineValueCents`). Responses include a ready-to-share `shareUrl`; use it instead of constructing the URL yourself.
 
-The SDK exposes the same interface:
+Proposal admin endpoints are team-scoped. Create the client with the active team once and omit team arguments from the calls:
 
 ```ts
-client.proposals.create(team, input)
-client.proposals.list(team)
+import { createClient } from '@joai/sdk'
+
+const client = createClient({ apiToken, team })
+client.proposals.create(input)
+client.proposals.list({ page, perPage })
+client.proposals.stats()
+client.proposals.get(id)
 client.proposals.getShared(slug, password?)
 client.proposals.confirm(slug, password?, itemIds)
 ```
