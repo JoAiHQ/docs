@@ -27,8 +27,9 @@ Appointments is the booking native app: availability, capacity, requests, and a 
 4. **Booking agent** — which agent owns booking automations
 5. Notification email for the team
 6. Master **online booking** switch (disables the public page without uninstalling)
+7. **Appearance** — choose the public booking page theme and preview it before saving
 
-Capacity can be limited **per booking** or **per person**.
+Capacity can be limited **per booking** or **per person**. Booking themes change the public page’s surfaces, typography, spacing, and accent treatment without changing the flow; existing teams stay on the default theme until changed.
 
 `blockedDates` / holidays may exist on the policy payload for agents/API; there is no dedicated holidays UI in the product today. Appointment policy can also align with **team place** hours when place is set (`update_team_place` / place settings) — prefer documenting place on [Teams](/teams) and syncing via policy MCP when automating.
 
