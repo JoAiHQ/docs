@@ -15,6 +15,8 @@ Install it under **Team settings → Apps**, then open **Reviews** in the sideba
 
 Do not gate the public review link by rating and do not offer incentives for reviews. The public link is always available; low ratings additionally trigger a private follow-up.
 
+Google reviews imported from the team's selected Google place are **not** part of this list. They are synced separately, shown on public business profiles, and do not create review-request rows, follow-ups, or stats here.
+
 ## Settings
 
 1. Open **Reviews**

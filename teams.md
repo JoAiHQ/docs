@@ -47,6 +47,17 @@ Teams are collaborative workspaces where multiple users work together, share age
 
 Agent wallets live under **Agent settings → Wallets** ([Wallets](/wallets)). Loyalty lives under the **Contacts** app ([Contacts](/apps/contacts)), not Team settings.
 
+### Google place data
+
+Team **General → Location** uses a native Google place. JoAi stores the place's address, coordinates, rating, review count, and its latest Google reviews.
+
+- The place details and the latest reviews refresh **weekly**.
+- Selecting a place refreshes them immediately.
+- Teams with appointment opening-hours sync enabled also refresh the place details daily.
+- Admins can force a refresh with `php artisan team:sync-place <team-slug>`.
+
+Google reviews are shown on public business profiles (for example on city sites) together with a link to the full review list on Google Maps.
+
 ### Native apps on a team
 
 Install modules under **Team settings → Apps**. See the full matrix in [Native apps](/apps/).
