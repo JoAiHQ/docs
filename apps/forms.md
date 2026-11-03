@@ -7,8 +7,9 @@ Forms collect structured information from customers — leads, intake, opt-ins, 
 - Build forms with fields, title, and description
 - **Publish** / lock, share URL, **QR**, smart link, or **embed**
 - Review **submissions** (with activity sparkline on overview)
-- Optional **marketing opt-in**, **email submission notifications**, **public results**, **list in shop**
-- Push notifications to active team members on every submission (always on)
+- Optional **marketing opt-in**, **additional notification recipients**, **public results**, **list in shop**
+- Team members control email and push notifications in their notification settings
+- Up to 10 additional recipient addresses per form can also receive every submission
 - Chain a **next action** after submit (pick a warp + map inputs)
 - Agents manage forms end-to-end over **MCP** when Forms is installed
 
@@ -32,9 +33,11 @@ Forms collect structured information from customers — leads, intake, opt-ins, 
 | **Fields** | Questions / inputs |
 | **Next action** | Pick a warp and map form outputs → warp inputs after successful submit |
 | **Marketing opt-in** | Adds consent checkbox for campaigns |
-| **Submission notifications** | Optional email to the team on new responses (push is always sent) |
+| **Additional recipients** | Up to 10 extra email addresses that also receive every new response; team members follow their own notification settings |
 | **Public results** | Optional `/results` page for respondents |
 | **In shop** | Show the form on the team storefront |
+
+Team members control email and push notifications for form submissions in their personal notification settings. Add up to 10 additional email addresses separated by commas in the form editor to also send each response to those addresses. Recipient addresses are only visible to team members, never on the public form. Agents can set the same recipients with `notificationEmails` on `create_form` / `update_form`.
 
 ### Sharing
 
