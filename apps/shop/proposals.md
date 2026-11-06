@@ -24,7 +24,23 @@ The quote becomes an order when the team accepts/confirms it through the normal 
 
 ## API and SDK
 
-Authenticated team members can create, list, and inspect proposals through `POST /v1/proposals`, `GET /v1/proposals`, and `GET /v1/proposals/{id}`. Team stats are available at `GET /v1/proposals/stats` (`totalCount`, `sentCount`, `convertedCount`, `pipelineValueCents`). Responses include a ready-to-share `shareUrl`; use it instead of constructing the URL yourself.
+Authenticated team members can create, list, inspect, update, archive, publish, and delete proposals. Item editing is available through a dedicated item API. Team stats are available at `GET /v1/proposals/stats` (`totalCount`, `sentCount`, `convertedCount`, `pipelineValueCents`). Responses include a ready-to-share `shareUrl`; use it instead of constructing the URL yourself.
+
+Proposal endpoints:
+
+- `POST /v1/proposals` — create a proposal
+- `GET /v1/proposals` — list proposals (archived proposals are hidden unless `includeArchived=true`)
+- `GET /v1/proposals/{id}` — read one proposal with its items
+- `PUT /v1/proposals/{id}` — update proposal metadata
+- `DELETE /v1/proposals/{id}` — delete a draft, expired, or archived proposal
+- `POST /v1/proposals/{id}/archive` — archive an editable proposal
+- `POST /v1/proposals/{id}/publish` — mark a proposal ready to share; does not send an email
+- `PUT /v1/proposals/{id}/items` — replace the complete item list
+- `POST /v1/proposals/{id}/items` — add one item
+- `PUT /v1/proposals/{id}/items/{itemId}` — update one item
+- `DELETE /v1/proposals/{id}/items/{itemId}` — remove one item
+
+Item price overrides are in cents. A proposal must keep at least one item. Removing the last member of a choice group clears that group.
 
 Proposal admin endpoints are team-scoped. Create the client with the active team once and omit team arguments from the calls:
 
@@ -36,6 +52,13 @@ client.proposals.create(input)
 client.proposals.list({ page, perPage })
 client.proposals.stats()
 client.proposals.get(id)
+client.proposals.archive(id)
+client.proposals.publish(id)
+client.proposals.delete(id)
+client.proposals.setItems(id, items)
+client.proposals.addItem(id, item)
+client.proposals.updateItem(id, itemId, input)
+client.proposals.removeItem(id, itemId)
 client.proposals.getShared(slug, password?)
 client.proposals.confirm(slug, password?, itemIds)
 ```
@@ -49,23 +72,31 @@ Requires the **Shop** app. Proposal tools are part of Shop admin tooling:
 | Tool | Purpose |
 | --- | --- |
 | `create_client_proposal` | Create a proposal from service/product variation IDs. Returns `id` and `shareUrl`; does **not** create a quote. |
-| `list_client_proposals` | List proposals with status (`draft`, `sent`, `converted`, `expired`) and `quoteId`. |
+| `list_client_proposals` | List proposals with status (`draft`, `sent`, `converted`, `expired`, `archived`) and `quoteId`. |
+| `get_client_proposal` | Read one proposal with its items, status, share URL, and quote. |
+| `set_client_proposal_items` | Replace the complete item list, for example to restructure a proposal or dissolve choice groups. |
+| `add_client_proposal_item` | Add one service or product variation to a proposal. |
+| `update_client_proposal_item` | Update required flag, quantity, minimum term, choice group, position, or price override. |
+| `remove_client_proposal_item` | Remove one item. The last remaining item cannot be removed. |
+| `archive_client_proposal` | Hide an editable proposal from the default list and public share page. |
+| `publish_client_proposal` | Mark a proposal ready to share. This does not send an email. |
+| `delete_client_proposal` | Delete a draft, expired, or archived proposal. Sent, converted, and quoted proposals cannot be deleted. |
 
-Key inputs for `create_client_proposal`: `contactId`, `title`, `items` (`id`, `type: service|productVariation`, `required`, optional `quantity`/`position`), optional `objective`, `intro`, `nextStep`, `couponId`, `validUntil`, `password`, and `send` (default `true`).
+Key inputs for `create_client_proposal`: `contactId`, `title`, `items` (`id`, `type: service|productVariation`, `required`, optional `quantity`/`position`/`minimumTermDays`/`choiceGroup`), optional `objective`, `intro`, `nextStep`, `agreements`, `couponId`, `validUntil`, `password`, and `send` (default `true`).
+
+Item tools use `proposalId` plus `items` or `itemId`. `price` is an optional unit-price override in cents. `update_client_proposal_item` accepts `null` for `minimumTermDays`, `choiceGroup`, or `price` to clear the value and restore the catalog price for `price`.
 
 Use the returned `shareUrl`; do not rebuild it. There is no MCP confirm tool — the client confirms on the public page, which creates the single quote idempotently.
 
 ## Shared page
 
-The API returns a ready-to-share `shareUrl` for each proposal. The host and route are configured by the frontend deployment, not by JoAi. Treat the URL as opaque and always use the value returned by `create_client_proposal` or `GET /v1/proposals`.
+The API returns a ready-to-share `shareUrl` for each proposal, pointing at JoAi's first-party offer page: `/{locale}/proposals?proposal={slug}`. Always use the value returned by `create_client_proposal` or `GET /v1/proposals`.
 
 The shared page renders the proposal copy in the team’s language (no per-visitor language switcher), with the required/optional items. Required items are locked; optional items are selectable. Confirmation opens a summary of the selection before submitting. Converted proposals expose `selectedItemIds` so a revisit shows the accepted selection.
 
 A `403` response includes `requiresPassword`: `true` means the access code is missing or wrong; `false` means the proposal is unavailable or expired, so do not show the password prompt.
 
-Do not construct or rewrite the share URL. Use the API value so environment and deployment routing stay correct.
-
-DNS and hosting are deployment responsibilities; JoAi stores the proposal data.
+Do not construct or rewrite the share URL. JoAi hosts the offer page and renders it with the team's branding and language.
 
 ## Automating from discovery notes
 
