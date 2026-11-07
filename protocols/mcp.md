@@ -59,7 +59,7 @@ Create/reuse durable MCP rooms:
 
 `POST https://api.joai.ai/mcp/rooms`
 
-Pass `room` into `prompt_agent`. Stream: `GET https://cortex.joai.ai/agents/stream/{roomId}?key={secKey}`
+Pass `room` into `prompt_agent`. Stream: `GET https://cortex.joai.ai/agents/stream/{roomId}?streamToken={streamToken}`
 
 Manage rooms in product under **Agent settings → Rooms**.
 
