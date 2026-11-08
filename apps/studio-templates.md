@@ -164,7 +164,7 @@ Where the mode applies:
 
 - **Studio test panel** — toggle **Light** / **Dark**
 - **Projects** — `template.mode` (`light` or `dark`)
-- **Variations** — a `mode` (`light`, default, or `dark`) set when creating or updating a variation; re-rendering the variation keeps that mode. `create_template_post_draft` takes the same `mode`. A variation with `mode: "dark"` renders dark without needing a project.
+- **Variations** — a `mode` (`light`, default, or `dark`) set when creating or updating a variation; re-rendering the variation keeps that mode. `create_social_post` with `template` takes the same `mode`. A variation with `mode: "dark"` renders dark without needing a project.
 
 ## Fonts
 
@@ -276,19 +276,19 @@ Over the REST API the same preview is `POST /teams/{team}/elements/{element}/ren
 
 ## Workflow for agents
 
-Install **Studio** (element and project tools; element tools also come with **Sites**) and **Social Media** (post tools, including `create_template_post_draft`). Confirm with `tools/list`.
+Install **Studio** (element and project tools; element tools also come with **Sites**) and **Social Media** (post tools). Confirm with `tools/list`.
 
 1. **Find or create the template.** `list_elements` → reuse a `template` element if one fits. Otherwise `create_element` with `type: "template"` and a full `spec`. Ask the team to check it in the test panel before using it for real posts.
 2. **Fill in real content.** Collect the actual facts (title, date, place, numbers, photo URL, credit). Respect each field's `maxLength`; leave optional fields out instead of inventing them.
 3. **Render and draft the post** — pick one:
-   - **One step:** `create_template_post_draft` with `elementId`, `values`, `platform`, optional `format`, `body` and `mode`. It saves a new variation with `overrides: { sample: values }` and drafts the post from it. Uses the base layout and size; `mode` defaults to `light` (pass `dark` for a dark post).
+   - **One step:** `create_social_post` with `template: { elementId, values, mode? }` plus `platform`, optional `format` and `body`. It saves a new variation with `overrides: { sample: values }` and drafts the post from it. Uses the base layout and size; `mode` defaults to `light` (pass `dark` for a dark post). Set `draft: false` or `scheduledAt` to schedule.
    - **Specific layout or size:** `generate_element_variation` with `overrides` (for example `{ "size": { "width": 1080, "height": 1920 }, "sample": { … } }`), optional `label`, `aspectRatio` for AI elements and `mode` for templates, then check the variation image (`list_element_variations`) and `create_social_post` with `elementVariationId`.
    - **A project record:** `generate_element_variation` (the layout), then `create_project` with `template: { elementVariationId, mode, values }` → `studio_produce` → `studio_wait` with `targetStatus: "composed"` → `studio_export` → `create_social_post` with the export's id as `exportId`.
-4. **Hand over for approval.** Share the post's `shareUrl` preview and the caption. The draft stays a draft until a person approves `schedule_social_post` (or schedules it in `/social`). Never schedule or publish without that approval.
+4. **Hand over for approval.** Share the post's `shareUrl` preview and the caption. The draft stays a draft until a person approves scheduling it (via `create_social_post` / `update_social_post` with `scheduledAt`, or in `/social`). Never schedule or publish without that approval.
 
 Notes:
 
-- `create_template_post_draft` values **replace** the sample values — include every field the image should show.
+- `create_social_post` with `template` values **replace** the sample values — include every field the image should show.
 - Project renders use exactly `template.values`; samples are not used there, so empty values render as empty.
 - A post from `elementVariationId` gets **every image of the variation** (primary first). Template variations hold one image, so use a fresh variation per post; re-rendering replaces the current image in place.
 - Instagram needs JPEG: rendered PNGs are converted to JPEG automatically when attached (transparency becomes white).
@@ -306,11 +306,10 @@ Notes:
 | `generate_element_variation` | `elementId`, `overrides?`, `aspectRatio?`, `label?`, `mode?`, `team?` | Templates render instantly; other types generate an AI image in the background. `aspectRatio` (`1:1` default, `16:9`, `9:16`, `4:3`, `3:4`) applies to AI elements; `mode` (`light` default, `dark`) applies to templates; `label` names the variation |
 | `update_element_variation` | `elementId`, `variationId`, `label?`, `aspectRatio?`, `mode?`, `overrides?`, `team?` | `{}` clears overrides. Does not re-render |
 | `delete_element_variation` | `elementId`, `variationId`, `team?` | |
-| `create_template_post_draft` | `elementId`, `values`, `platform` (`instagram` · `x` · `facebook` · `linkedin`), `format?` (`feed` · `story`), `body?`, `mode?`, `team` | Render + draft in one step. `mode` is `light` (default) or `dark`. Never schedules |
 | `create_project` | `name`, `brief?`, `outputPreset?`, `targetPlatforms?`, `selectedSkills?`, `template?` `{ elementVariationId, mode?, values? }` | With `template` the project is an image project rendered from that variation. `outputPreset` is `9:16 social`, `16:9 launch` or `1:1 square teaser` |
 | `studio_produce` / `studio_wait` / `studio_export` | `projectId` (`studio_wait` also `targetStatus`, `timeoutSeconds?`) | Template projects go straight to `composed`; the export holds the PNG |
-| `create_social_post` | `platform`, `team`, `format?`, `body?`, one of `media` · `exportId` · `elementVariationId`, `scheduledAt?` | Omit `scheduledAt` to keep a draft |
-| `update_social_post` / `schedule_social_post` | see [Social Media](/apps/social#for-agents) | Scheduling needs approval |
+| `create_social_post` | `platform`, `team`, `format?`, `body?`, one of `media` · `exportId` · `elementVariationId` · `template` (`elementId`, `values`, `mode?`), `draft?`, `scheduledAt?` | Omit `scheduledAt` and leave `draft` unset/true to keep a draft; `draft: false` schedules immediately |
+| `update_social_post` | `socialPostId`, `body?`, `format?`, `media?`, `scheduledAt?`, `team` | Add `scheduledAt` to schedule it; scheduling needs approval |
 | `media_upload` | `team`, `type` (`brand` · `reference` · `template` · `output`), `fileUrl` / `filePath` / `fileBase64`, … | Use the returned URL in image fields |
 
 All element tools accept an optional `team` slug; omit it to use the connected agent's team. Live schemas: `tools/list`. Attach images to an element (for <span v-pre>`{{asset.*}}`</span>) with the element's `media` on the REST API or the `media` parameter of `create_element` / `update_element`.

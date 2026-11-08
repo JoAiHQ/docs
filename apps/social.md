@@ -27,7 +27,7 @@ Use chat warps / MCP when the agent should draft or schedule for you. Approving 
 - When a network has more than one account (for example multiple Facebook Pages), pick which account to publish as
 - Save a draft with a caption and optional images (Instagram drafts can be incomplete until you schedule)
 - Create a draft from a **Studio export** (`exportId`) or **element variation** (`elementVariationId`) — JoAi **copies** those stills onto the post and leaves the originals alone. A variation contributes all of its images, primary image first
-- Render a [Studio template](/apps/studio-templates) with content and draft a post from it in one step (`create_template_post_draft`)
+- Render a [Studio template](/apps/studio-templates) with content and draft a post from it in one step (`create_social_post` with `template`)
 - From Studio, **Schedule to Social** opens the composer with that source selected and **generates a caption** in your agent’s voice (regenerate anytime in the composer)
 - Edit a draft, failed, or cancelled post (scheduled, publishing, and published posts stay locked)
 - Schedule a time in your team timezone, or queue the post to go out on the next job run
@@ -44,7 +44,7 @@ Creating or scheduling a post asks for approval in chat, unless the agent is in 
 
 Pass either `media` (team media IDs), `exportId`, or `elementVariationId` — not a mix. Video-only Studio exports do not attach stills for feed posts yet.
 
-Drafts are never published on their own: a post only goes out after it is scheduled (by a person in `/social`, or by an approved `schedule_social_post`) and the publish job runs.
+Drafts are never published on their own: a post only goes out after it is scheduled (by a person in `/social`, or by an approved `create_social_post` / `update_social_post` with `scheduledAt`) and the publish job runs.
 
 ## Instagram
 
@@ -94,7 +94,7 @@ Posts belong to the team. You cannot change another team’s posts. Only drafts,
 
 Use **Share link** on any post that is not currently publishing. JoAi keeps a public preview URL (`/social/share?id=…`) with the caption, media, format (Instagram), network, and scheduled or published time — no sign-in required. Deleting the post or revoking the share invalidates the link; sharing again creates a new one.
 
-From chat / MCP, `create_social_post`, `schedule_social_post`, `update_social_post`, and `list_social_posts` return that same `shareUrl` so the agent can paste the preview for review.
+From chat / MCP, `create_social_post`, `update_social_post`, and `list_social_posts` return that same `shareUrl` so the agent can paste the preview for review.
 
 ## For agents
 
@@ -107,15 +107,14 @@ Upload media with `media_upload`, **or** pass a Studio `exportId` / `elementVari
 | `social-post-update` | Change a draft, failed, or cancelled post (caption, format, media). Returns `shareUrl`. |
 | `social-post-schedule` | Queue a draft (with a time, or for the next job run). Returns `shareUrl`. |
 | `social-post-cancel` | Stop a scheduled post |
-| `social-post-retry` | Re-queue a failed post |
 | `social-post-list` | List posts, optionally by status or network — each item includes `shareUrl` when sharable |
 | `social-post-delete` | Delete a post that is not currently publishing |
 
-On MCP, `create_template_post_draft` (`elementId`, `values`, `platform`, `accountId?`, `format?`, `body?`, `mode?`, `team`) renders a [Studio template](/apps/studio-templates) into a new variation (`mode` is `light` by default or `dark`) and drafts a post from it. It never schedules; the reviewer approves with `schedule_social_post`.
+On MCP, `create_social_post` accepts `template` (`elementId`, `values`, `mode?`) to render a [Studio template](/apps/studio-templates) into a new variation and draft the post from it. Set `draft: false` to schedule immediately, or pass `scheduledAt`; omit both to keep a draft. `update_social_post` accepts `scheduledAt` to schedule a draft, failed, or cancelled post later.
 
-Warps never post to the networks themselves. Scheduling and retry only enqueue JoAi's publish job.
+Warps never post to the networks themselves. Scheduling only enqueues JoAi's publish job; transient publish failures are retried internally with backoff.
 
-MCP tools use the same names: `create_social_post`, `update_social_post`, `schedule_social_post`, `cancel_social_post`, `retry_social_post`, `list_social_posts`, `list_social_accounts`, `delete_social_post`, plus `create_template_post_draft`. They are available only when Social Media is installed on the team.
+MCP tools: `create_social_post`, `update_social_post`, `cancel_social_post`, `list_social_posts`, `list_social_accounts`, `delete_social_post`. They are available only when Social Media is installed on the team.
 
 Call `list_social_accounts` before creating a post when the team has more than one connected profile or Facebook Page, then pass the chosen `accounts[].id` as `accountId`. Omitting `accountId` uses the default profile.
 
