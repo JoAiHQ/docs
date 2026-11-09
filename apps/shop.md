@@ -66,7 +66,7 @@ Use **Open store** in the header to jump to the public storefront.
 ```
 
 Pass `details: []` (MCP) or nested `meta.details: []` (API) to clear all sections. Warps send details via `payload:meta.details`.
-**Tags:** first tag is the **category** (Shop → Products filter + storefront category chips); further tags are labels (e.g. Vegan). Category options for the Products filter come from `GET /v1/products/categories` (`categories` + `hasUntagged`). Product and service lists are paginated (`page` / `perPage`, with `meta.currentPage` / `meta.lastPage` / `meta.total`). Pass `all=1` for a single full-catalog response (capped).
+**Tags:** first tag is the **category** (Shop → Products filter + storefront category chips); further tags are labels (e.g. Vegan). Category options for the Products filter come from `GET /v1/products/categories` (`categories` + `hasUntagged`). The Products list also filters by stock (`stock=out_of_stock|low_stock|in_stock|unlimited`; `low_stock` uses the team threshold, default 5), active state (`active=0|1`), and sorts via `sort=featured|name|price_asc|price_desc`. Product and service lists are paginated (`page` / `perPage`, with `meta.currentPage` / `meta.lastPage` / `meta.total`). Pass `all=1` for a single full-catalog response (capped).
 
 [Kiosk](/kiosk) uses English lowercase product tags as categories — see the kiosk tag list.
 
@@ -143,7 +143,7 @@ Invoice-only orders still use the status control (including **paid** when closed
 | **Payments** | Online payments on/off; Stripe Connect / Mollie Connect; bank details |
 | **Delivery** | Shipping zones & rates; fulfillment / pickup locations |
 | **Tax** | VAT / tax rates for the catalog (default + reduced/special rates) |
-| **Inventory** | Team-level stock tracking on/off (then set stock on products/variations) |
+| **Inventory** | Team-level stock tracking on/off and low stock threshold (default 5); then set stock on products/variations |
 | **Storefront** | [Kiosk](/kiosk) on/off; enable coupons; one-click **reorder** from order history (signed-in customers; unavailable lines are skipped); optional **custom legal page URLs** |
 
 **Order notification emails** (General): optional list of addresses (e.g. `bestellung@shop.example`) that receive a merchant alert when a shop order is placed — paid online orders after payment, bank/offline orders when created. Separate from customer confirmations and team seats.
