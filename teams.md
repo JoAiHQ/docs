@@ -69,7 +69,7 @@ Installed apps appear in the sidebar when they have a nav entry and unlock match
 - **Owner** — full control, can delete team and transfer ownership
 - **Admin** — manage settings, members, and resources
 - **Member** — use team resources and edit content
-- **Developer** — build with team agents, wallets, and secrets
+- **Developer** — build with team agents, wallets, secrets, and sites
 
 ### Adding members
 

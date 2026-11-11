@@ -1,6 +1,6 @@
 # Sites
 
-Sites are website instances belonging to a team. A team can have many sites.
+Sites are website instances belonging to a team. A team can have many sites. Owners, admins, and developers can create and manage sites.
 
 ## With or without a brand
 
