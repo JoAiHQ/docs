@@ -27,7 +27,7 @@ Use chat warps / MCP when the agent should draft or schedule for you. Approving 
 - When a network has more than one account (for example multiple Facebook Pages), pick which account to publish as
 - Save a draft with a caption and optional images (Instagram drafts can be incomplete until you schedule)
 - Create a draft from a **Studio export** (`exportId`) or **element variation** (`elementVariationId`) — JoAi **copies** those stills onto the post and leaves the originals alone. A variation contributes all of its images, primary image first
-- Render a [Studio template](/apps/studio-templates) with content and draft a post from it in one step (`create_social_post` with `template`)
+- Render a [Studio template](/apps/studio-templates) through a project export, then draft the post from that export (`create_social_post` with `exportId`)
 - From Studio, **Schedule to Social** opens the composer with that source selected and **generates a caption** in your agent’s voice (regenerate anytime in the composer)
 - Edit a draft, failed, or cancelled post (scheduled, publishing, and published posts stay locked)
 - Schedule a time in your team timezone, or queue the post to go out on the next job run
@@ -110,7 +110,7 @@ Upload media with `media_upload`, **or** pass a Studio `exportId` / `elementVari
 | `social-post-list` | List posts, optionally by status or network — each item includes `shareUrl` when sharable |
 | `social-post-delete` | Delete a post that is not currently publishing |
 
-On MCP, `create_social_post` accepts `template` (`elementId`, `values`, `mode?`) to render a [Studio template](/apps/studio-templates) into a new variation and draft the post from it. Set `draft: false` to schedule immediately, or pass `scheduledAt`; omit both to keep a draft. `update_social_post` accepts `scheduledAt` to schedule a draft, failed, or cancelled post later.
+On MCP, render a [Studio template](/apps/studio-templates) through the normal Studio project flow and pass the resulting `exportId` to `create_social_post`. Set `draft: false` to schedule immediately, or pass `scheduledAt`; omit both to keep a draft. `update_social_post` accepts `scheduledAt` to schedule a draft, failed, or cancelled post later.
 
 Warps never post to the networks themselves. Scheduling only enqueues JoAi's publish job; transient publish failures are retried internally with backoff.
 

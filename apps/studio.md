@@ -20,7 +20,7 @@ Install **Studio** under **Team settings → Apps**. It then appears in the side
 | --- | --- |
 | **Element** | A reusable building block with a name, type, description and a definition (`spec`) |
 | **Element type** | `character`, `environment`, `style`, `product`, `brand` — AI-generated visuals described by a visual spec — or `template` — a fixed layout rendered from content without AI |
-| **Variation** | A variant of an element. Stores `overrides` merged over the element's definition and holds the resulting image(s); one is the **primary image**. For templates a variation is a post type or format (other size, layout or content) |
+| **Variation** | A reusable variant of an element. Stores `overrides` merged over the element's definition and holds the resulting image(s); one is the **primary image**. For templates a variation is a post type or format (other size or layout); content values are supplied when a project renders it |
 | **Project** | One production: brief → storyboard → generate → produce → export. A project can be pinned to a template variation to render a still directly |
 | **Export** | The rendered result of a project (images and/or video). Use it as the source of a social post (`exportId`) |
 

@@ -9,7 +9,7 @@ This page is the complete reference for building templates and turning them into
 | Concept | What it is |
 | --- | --- |
 | **Template element** | The base layout: size, colour tokens, content fields, fonts, sample content and the node tree (`spec`) |
-| **Variation** | A saved variant of the template — a post type or format. Stores a partial definition in `overrides` (for example another `size`, `root` or `sample`) and gets a rendered image right away |
+| **Variation** | A saved, reusable variant of the template — a post type or format. Stores a partial definition in `overrides` (for example another `size` or `root`) and gets a rendered image right away. Content values are supplied when rendering a project, not stored on the variation |
 | **Content values** | The text, numbers and image URLs filled into the template's fields for one post |
 | **Project** | Optional. A Studio image project pinned to one template variation, with `mode` (light / dark) and `values`; producing it renders the still, exporting it creates an **export** |
 | **Export** | The rendered still(s) of a project, with a permanent share page. Usable as a Social Media source (`exportId`) |
@@ -164,7 +164,7 @@ Where the mode applies:
 
 - **Studio test panel** — toggle **Light** / **Dark**
 - **Projects** — `template.mode` (`light` or `dark`)
-- **Variations** — a `mode` (`light`, default, or `dark`) set when creating or updating a variation; re-rendering the variation keeps that mode. `create_social_post` with `template` takes the same `mode`. A variation with `mode: "dark"` renders dark without needing a project.
+- **Variations** — a `mode` (`light`, default, or `dark`) set when creating or updating a variation; re-rendering the variation keeps that mode. A project pinned to the variation uses the project's `mode`. A variation with `mode: "dark"` renders dark without needing a project.
 
 ## Fonts
 
@@ -256,7 +256,9 @@ Without `photo` the image and credit disappear and the text block fills the canv
 
 A variation stores `overrides`: a partial definition with any of `size`, `tokens`, `fields`, `fonts`, `sample`, `root` (`version` is not allowed). Overrides replace **whole top-level keys** — an overridden `sample` replaces every sample value, an overridden `root` replaces the whole tree.
 
-Use variations for post types and formats of one design: a square feed post, a 4:5 portrait, a 9:16 Story, a version without photo, or one saved post with its content in `sample`.
+Variations are reusable design presets, not event records. Content values belong to the **project** that renders the variation, so one Event template can have a Feed variation and a Story variation and render many different events through them.
+
+Use variations for post types and formats of one design: a square feed post, a 4:5 portrait, a 9:16 Story, or a version without photo.
 
 - Creating a variation renders its image immediately (with the merged `sample` as content, in the variation's `mode`, default `light`) and makes it the primary image.
 - Editing a variation's overrides does not re-render it; **Regenerate** (or a new variation) does. Re-rendering a template variation **replaces** its previous image, so a variation always holds exactly one current image.
@@ -280,17 +282,17 @@ Install **Studio** (element and project tools; element tools also come with **Si
 
 1. **Find or create the template.** `list_elements` → reuse a `template` element if one fits. Otherwise `create_element` with `type: "template"` and a full `spec`. Ask the team to check it in the test panel before using it for real posts.
 2. **Fill in real content.** Collect the actual facts (title, date, place, numbers, photo URL, credit). Respect each field's `maxLength`; leave optional fields out instead of inventing them.
-3. **Render and draft the post** — pick one:
-   - **One step:** `create_social_post` with `template: { elementId, values, mode? }` plus `platform`, optional `format` and `body`. It saves a new variation with `overrides: { sample: values }` and drafts the post from it. Uses the base layout and size; `mode` defaults to `light` (pass `dark` for a dark post). Set `draft: false` or `scheduledAt` to schedule.
-   - **Specific layout or size:** `generate_element_variation` with `overrides` (for example `{ "size": { "width": 1080, "height": 1920 }, "sample": { … } }`), optional `label`, `aspectRatio` for AI elements and `mode` for templates, then check the variation image (`list_element_variations`) and `create_social_post` with `elementVariationId`.
-   - **A project record:** `generate_element_variation` (the layout), then `create_project` with `template: { elementVariationId, mode, values }` → `studio_produce` → `studio_wait` with `targetStatus: "composed"` → `studio_export` → `create_social_post` with the export's id as `exportId`.
+3. **Render, export, and draft the post.**
+   - **Pick the variation.** Use an existing Feed or Story variation. If you need a different layout or size, create it first with `generate_element_variation` and `overrides` (for example `{ "size": { "width": 1080, "height": 1920 } }`).
+   - **Render a project.** `create_project` with `template: { elementVariationId, mode, values }`, where `values` are the event facts.
+   - **Produce and export.** `studio_produce` → `studio_wait` with `targetStatus: "composed"` → `studio_export`. The export is the rendered artifact.
+   - **Draft the post.** `create_social_post` with the export's `uuid` as `exportId`, plus `platform`, optional `format` and `body`.
 4. **Hand over for approval.** Share the post's `shareUrl` preview and the caption. The draft stays a draft until a person approves scheduling it (via `create_social_post` / `update_social_post` with `scheduledAt`, or in `/social`). Never schedule or publish without that approval.
 
 Notes:
 
-- `create_social_post` with `template` values **replace** the sample values — include every field the image should show.
 - Project renders use exactly `template.values`; samples are not used there, so empty values render as empty.
-- A post from `elementVariationId` gets **every image of the variation** (primary first). Template variations hold one image, so use a fresh variation per post; re-rendering replaces the current image in place.
+- A post from `elementVariationId` gets **every image of the variation** (primary first). Template variations hold one image; treat it as a design preview. For a specific event, render a project and use its export instead.
 - Instagram needs JPEG: rendered PNGs are converted to JPEG automatically when attached (transparency becomes white).
 - Images must be publicly reachable PNG, JPEG, GIF or SVG; WebP and images slower than 10 seconds are treated as missing.
 
@@ -303,12 +305,12 @@ Notes:
 | `update_element` | `elementId`, `name?`, `type?`, `description?`, `spec?`, `media?`, `team?` | For templates pass the **full** definition; it replaces the old one. `media` attaches team media IDs (adds to the element's existing media) |
 | `delete_element` | `elementId`, `team?` | |
 | `list_element_variations` | `elementId`, `team?` | Variations with labels, overrides and images |
-| `generate_element_variation` | `elementId`, `overrides?`, `aspectRatio?`, `label?`, `mode?`, `team?` | Templates render instantly; other types generate an AI image in the background. `aspectRatio` (`1:1` default, `16:9`, `9:16`, `4:3`, `3:4`) applies to AI elements; `mode` (`light` default, `dark`) applies to templates; `label` names the variation |
+| `generate_element_variation` | `elementId`, `overrides?`, `aspectRatio?`, `label?`, `mode?`, `team?` | Templates render instantly; other types generate an AI image in the background. `overrides` changes the design (size, root). `aspectRatio` (`1:1` default, `16:9`, `9:16`, `4:3`, `3:4`) applies to AI elements; `mode` (`light` default, `dark`) applies to templates; `label` names the variation |
 | `update_element_variation` | `elementId`, `variationId`, `label?`, `aspectRatio?`, `mode?`, `overrides?`, `team?` | `{}` clears overrides. Does not re-render |
 | `delete_element_variation` | `elementId`, `variationId`, `team?` | |
 | `create_project` | `name`, `brief?`, `outputPreset?`, `targetPlatforms?`, `selectedSkills?`, `template?` `{ elementVariationId, mode?, values? }` | With `template` the project is an image project rendered from that variation. `outputPreset` is `9:16 social`, `16:9 launch` or `1:1 square teaser` |
 | `studio_produce` / `studio_wait` / `studio_export` | `projectId` (`studio_wait` also `targetStatus`, `timeoutSeconds?`) | Template projects go straight to `composed`; the export holds the PNG |
-| `create_social_post` | `platform`, `team`, `format?`, `body?`, one of `media` · `exportId` · `elementVariationId` · `template` (`elementId`, `values`, `mode?`), `draft?`, `scheduledAt?` | Omit `scheduledAt` and leave `draft` unset/true to keep a draft; `draft: false` schedules immediately |
+| `create_social_post` | `platform`, `team`, `format?`, `body?`, one of `media` · `exportId` · `elementVariationId`, `draft?`, `scheduledAt?` | Omit `scheduledAt` and leave `draft` unset/true to keep a draft; `draft: false` schedules immediately. For a template render, pass the export `uuid` from `studio_export` as `exportId` |
 | `update_social_post` | `socialPostId`, `body?`, `format?`, `media?`, `scheduledAt?`, `team` | Add `scheduledAt` to schedule it; scheduling needs approval |
 | `media_upload` | `team`, `type` (`brand` · `reference` · `template` · `output`), `fileUrl` / `filePath` / `fileBase64`, … | Use the returned URL in image fields |
 
