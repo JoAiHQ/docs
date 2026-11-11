@@ -33,7 +33,8 @@ Use **Open store** in the header to jump to the public storefront.
 2. Create items with prices, SKUs/variations, media, tags, and a **tax rate** (defaults to the team default from Settings → Tax)
 3. Toggle **list on store** / active vs hidden as needed
 4. On **Services**, drag rows to set the order shown in your storefront and booking page (or set `order` via API / agents)
-5. Optional editor surfaces:
+5. Set `priceDisplay` to `from` when the price is only a starting price (e.g. “ab 60 €”). Products with several distinct active variation prices show as from automatically; default is an exact price.
+6. Optional editor surfaces:
    - **Variations** (e.g. color / size types)
    - **Volume pricing**
    - **Related products** (kiosk upsells)
@@ -212,11 +213,11 @@ If those are missing, the UI shows a permission lock and APIs return 403.
 
 | Tool | Purpose |
 | --- | --- |
-| `create_product` / `update_product` / `delete_product` | Products; `create_product` accepts `stock`, optional `taxClassId`, and optional `details` sections; `update_product` accepts optional `details` (pass `[]` to clear) |
-| `create_product_variation` / `update_product_variation` | Variations; both accept `stock` (units available) and `barcode` (unique per team; omit it to keep the current barcode, pass `null` to remove it on update) |
+| `create_product` / `update_product` / `delete_product` | Products; `create_product` accepts `stock`, optional `taxClassId`, optional `priceDisplay` (`exact` / `from`), and optional `details` sections; `update_product` accepts optional `details` (pass `[]` to clear) and `priceDisplay` |
+| `create_product_variation` / `update_product_variation` | Variations; both accept `stock` (units available, `null` = unlimited) and `barcode` (unique per team; omit it to keep the current barcode, pass `null` to remove it on update) |
 | `add_product_variation_external_reference` / `update_product_variation_external_reference` / `remove_product_variation_external_reference` | Link a variation to its article ID in another system (`source`: `pos`, `erp`, `marketplace`, `supplier`, `other`; `externalId` unique per team and source) |
 | `find_product_variation` | Find one variation by `barcode`, or by `source` + `externalId` (checked first, then the barcode) |
-| `create_service` / `update_service` / `delete_service` / `list_services` | Services (also with Appointments); create/update accept optional `taxClassId`, `order` (display sort, lower = earlier), and `settings.configurator` (booking detail fields; pass `[]` to disable) |
+| `create_service` / `update_service` / `delete_service` / `list_services` | Services (also with Appointments); create/update accept optional `taxClassId`, `order` (display sort, lower = earlier), `priceDisplay` (`exact` / `from`), and `settings.configurator` (booking detail fields; pass `[]` to disable) |
 | `tax-class-list` / `tax-class-create` / `tax-class-update` / `tax-class-delete` | Team VAT rates (list first to resolve `taxClassId`) |
 | `create_order` | Order or quote — catalog and/or **custom** lines; optional `invoiceContactId`; custom lines may pass `taxClassId` |
 | `update_order` | Status, dates, or invoice recipient; clear `invoiceContactId` to use the customer |
@@ -228,7 +229,7 @@ If those are missing, the UI shows a permission lock and APIs return 403.
 
 Shipping zones / fulfillment locations are configured in the UI (no dedicated MCP tools today).
 
-Set `stock` on a variation (in cents-free units) to make it orderable — a variation with `stock` `0` or unset is treated as unavailable and the shop will not accept orders for it. `update_product` and `update_product_variation` only change the fields you pass, so a partial update never clears price, stock, visibility, or media.
+Set `stock` on a variation to track units available: a positive number caps orders at the remaining units, `0` marks it out of stock, and `null` means unlimited stock. `update_product` and `update_product_variation` only change the fields you pass, so a partial update never clears price, stock, visibility, or media; pass `stock: null` explicitly to restore unlimited stock.
 
 **Custom line** (`unitPrice` = cents; optional `taxClassId` from `tax-class-list`):
 
