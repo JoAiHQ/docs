@@ -7,6 +7,7 @@ Give your agent an email address. Receive mail into JoAi, and optionally send wi
 - An active JoAi agent
 - For **sending**: a supported provider (e.g. Resend) API key and from-address (or use JoAi defaults when offered)
 - Optional **Reply-To**: a real inbox address for human replies (e.g. send from `updates@mail.example.com`, reply to `you@example.com`)
+- Optional **custom inbound domain**: your own Resend account with a verified domain, an inbound route pointing at the JoAi webhook, and the webhook's signing secret
 
 ## Setup
 
@@ -17,6 +18,17 @@ Give your agent an email address. Receive mail into JoAi, and optionally send wi
 5. Configure the provider webhook JoAi displays (e.g. Resend → Cortex webhook) so inbound mail is delivered
 
 You can run in **receive-only** mode until sending credentials are set.
+
+### Custom inbound domain
+
+By default the agent receives mail at `handle` on the shared JoAi inbound domain. Enter **your own domain** next to the handle (e.g. `example.com`) and the agent receives at `handle@example.com` instead. A custom domain runs on your own Resend account, not the JoAi platform account:
+
+1. Verify the domain in your Resend account
+2. Point an inbound route (catch-all or a specific address) at the JoAi webhook URL shown in the settings
+3. Save that account's API key as the provider API key
+4. Paste the webhook's signing secret — inbound mail is only accepted once it is stored
+
+Leave the domain empty to go back to the shared inbound domain.
 
 ## How it works
 

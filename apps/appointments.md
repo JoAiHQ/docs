@@ -97,7 +97,7 @@ Requires **Appointments** (service tools also work when **Shop** is installed).
 | `book_appointment` | Book a confirmed slot |
 | `reschedule_appointment` / `cancel_appointment` | Change or cancel |
 | `create_appointment_request` / `update_appointment_request` / `list_appointment_requests` | Request queue |
-| `list_services` / `create_service` / `update_service` / `delete_service` | Bookable services |
+| `list_services` / `create_service` / `update_service` / `delete_service` | Bookable services; create/update accept `priceDisplay` (`exact` / `from`) |
 
 Typical agent flow:
 
