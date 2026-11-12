@@ -56,7 +56,7 @@ Brandless sites are **not** published on sites.joai.ai.
 4. Per site:
    - Toggle **enabled**
    - Open the **edit page** (pen icon) for reporting, metrics, monthly reports, custom domain, and online status
-   - When uptime monitoring is enabled, the **Online status** badge links to the public status page (`/uptime/{siteId}`)
+   - When uptime monitoring is enabled, the **Online status** badge links to the public status page (`/uptime/{siteId}`). An optional check path such as `/health` makes monitoring request that path while the status page continues to show the main site URL
    - Set **type** to **Shop** when this URL is the storefront customers should return to after checkout
    - Link a **contact** and a **metrics source** + **resource** (same pair as `metrics-query`):
      - **JoAi Analytics** — native, cookie-free web traffic for JoAi-hosted or external sites. Use source `analytics`, add the public hostnames that may send data, and let JoAi create the site key. JoAi-hosted sites add the tracker automatically; external sites use the install snippet in Sites. It reports daily unique visitors and page views without storing cookies, browser storage, query strings, page referrers, raw IP addresses, or user agents. Reporting reads daily rollups rather than raw traffic.
