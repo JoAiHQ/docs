@@ -63,6 +63,7 @@ Brandless sites are **not** published on sites.joai.ai.
      - **Cloudflare** — connect under [Cloudflare](/integrations/cloudflare), use source `cloudflare` and the zone tag as resource
      - **Google Search Console** — connect under [Google Search Console](/integrations/google-search-console), use source `google_search_console` and a property URL (`sc-domain:example.com` or `https://example.com/`) as resource. Reports search clicks/impressions, not site analytics visitors.
      - **Instagram** — for Social Media insights (not Sites monthly reports); use `query_metrics` with source `instagram` and the numeric account id. See [Instagram](/integrations/instagram).
+   - **Transfer to another team** (site settings): pick a team where you have site-manage permission and confirm. The site keeps its slug, URL, custom domain, analytics, uptime, and monthly report settings. The linked contact is remapped by email when the target team has a matching contact, otherwise detached, and the custom domain is re-verified under the target team. The transfer fails if the site slug or brand slug is already used there.
    - Optionally enable **monthly report**. Native JoAi Analytics requires no third-party integration. For Cloudflare or Google Search Console, a missing integration returns `channel_not_configured` (422) so the Sites UI opens the matching setup dialog, and chat/MCP can call `settings-integration-open` then retry. On the 1st of each month the platform job creates an **update** artifact with metric blocks for the previous month and runs `artifact-deliver` (draft → approve / auto-mode). The email is written for business owners in plain language (no CTR/impression jargon) and contains the full report itself, so no separate public artifact link is added. The report still shows under Artifacts and Contact → Deliveries.
 5. Per brand-backed site:
    - **Add brand** → provision missing brands, then copy/open the public URL
@@ -130,6 +131,7 @@ Requires the **Sites** app.
 | Tool | Purpose |
 | --- | --- |
 | `list_sites` / `create_site` / `update_site` | Portfolio sites; optional `type=shop` + `url` for checkout return; set contact + metrics; `monthlyReport` opts into the 1st-of-month job (does not send now) |
+| `transfer_site` | Move a site to another team you manage; re-verifies the custom domain and remaps or detaches the linked contact |
 | `query_metrics` | Read Cloudflare, Google Search Console, or Instagram metrics for a period |
 | `list_contents` / `get_content` / `create_content` / `update_content` | CMS pages; `update_content` saves a draft unless its approved `publish` option is set |
 | `preview_content` / `publish_content` / `rollback_content` | Lifecycle |
@@ -137,7 +139,7 @@ Requires the **Sites** app.
 | `list_elements` / `create_element` / `update_element` / `delete_element` | Elements |
 | `list_element_variations` / `generate_element_variation` / `update_element_variation` / `delete_element_variation` | Variations |
 
-Related Warps: `joai/site-list`, `joai/site-create`, `joai/site-update`, `joai/site-provision`, `joai/metrics-query`. When `monthlyReport` is on, the platform job creates an `update` artifact and runs `artifact-deliver` on the 1st.
+Related Warps: `joai/site-list`, `joai/site-create`, `joai/site-update`, `joai/site-transfer`, `joai/site-provision`, `joai/metrics-query`. When `monthlyReport` is on, the platform job creates an `update` artifact and runs `artifact-deliver` on the 1st.
 
 Live schemas: `tools/list`. See [MCP](/protocols/mcp) and [SKILL.md](https://joai.ai/SKILL.md).
 
