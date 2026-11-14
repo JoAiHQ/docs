@@ -87,7 +87,7 @@ Site create/update/provision and element create/update/delete (plus variation ge
 
 ### How routes work (brand config)
 
-Brand configs in `joai--warps` map URL paths to Warps:
+Brand configs in the Warps repository map URL paths to Warps:
 
 ```json
 {
@@ -143,9 +143,9 @@ Live schemas: `tools/list`. See [MCP](/protocols/mcp) and [SKILL.md](https://joa
 
 ## Building your own brand
 
-1. Add `joai--warps/warps/{brand}/`
+1. Add `warps/{brand}/` in the Warps repository
 2. Create `brand.ts` with a `site` config
 3. Publish the brand catalog
 4. Teams enable the site from Sites settings
 
-See contributor docs in `joai--warps`.
+See the contributor docs in the Warps repository.

@@ -49,7 +49,7 @@ Update tools are gated by the **Board** app in MCP:
 
 `list_updates` mirrors `@joai/sdk` `client.updates.list`:
 
-- `tags` (e.g. `hollabrunn-digital`) — city-wide public feed across teams; `team` not required
+- `tags` (e.g. `example-city`) — city-wide public feed across teams; `team` not required
 - `team` — scope to one team slug
 - Optional: `type` (`deal` | `event` | `news` | `article`), `status`, `active` (default true), `with` (e.g. `["team"]`)
 

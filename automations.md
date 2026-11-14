@@ -87,7 +87,7 @@ Example create payload:
 
 ```json
 {
-  "name": "Hollabrunn · B2B welcome",
+  "name": "Example · B2B welcome",
   "triggerType": "prop",
   "triggerConfig": { "propKey": "onboarding-stage", "propValue": "done" },
   "actions": [
@@ -99,7 +99,7 @@ Example create payload:
         "inputs": {
           "contactId": { "source": "contact", "path": "contact.id" },
           "message": { "source": "literal", "value": "Hallo {{name}}" },
-          "subject": { "source": "literal", "value": "Kurz zu hollabrunn.digital" },
+          "subject": { "source": "literal", "value": "Kurz zu example.com" },
           "integration": { "source": "literal", "value": "email" },
           "recipientId": { "source": "contact", "path": "contact.email" }
         }
