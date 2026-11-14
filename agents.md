@@ -43,6 +43,7 @@ Access via **Agents > Settings** or agent settings button.
 - **Mode** - Switch between Local/Cloud/External
 - **Character** - Customize personality traits
 - **Password** - Set agent password protection
+- **Primary agent** - Use this agent as the default sender for team-level emails and reports
 
 ### Auto Mode
 

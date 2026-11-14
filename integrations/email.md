@@ -30,6 +30,10 @@ By default the agent receives mail at `handle` on the shared JoAi inbound domain
 
 Leave the domain empty to go back to the shared inbound domain.
 
+### Primary agent
+
+If a team has more than one agent, mark one as the **Primary agent**. Team-level emails such as monthly website reports use that agent's Email integration and From address. One agent per team can be primary; selecting another replaces it. If the primary agent has no configured Email integration, JoAi falls back to the team's first configured sender.
+
 ## How it works
 
 - **Inbound:** provider webhooks deliver mail into email rooms / threads for the agent
