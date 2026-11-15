@@ -21,8 +21,9 @@ Install **Sites** under **Team settings → Apps**, then open **Sites** in the s
 ## Overview
 
 - Many **sites** per team (`slug` is unique per team)
-- Brand-backed sites: live URL on **sites.joai.ai** (optional custom domain on premium)
+- Brand-backed sites: live URL on **sites.joai.ai**
 - Brandless sites: portfolio records, contact linkage, metrics source + resource, optional monthly report
+- Optional **custom domain** (premium) for any site, brand-backed or brandless
 - Edit **CMS content** and **elements** on brand-backed sites
 - Same Warps power the browser UI and agent MCP calls — no duplicate logic
 - Pair with [Appointments](/apps/appointments) for booking brands, [Forms](/apps/forms) for intake, [Contracts](/apps/contracts) for on-chain apps
@@ -42,7 +43,7 @@ https://sites.joai.ai/{teamSlug}/{brandSlug}/configure
 | Testnet | `testnet-sites.joai.ai` |
 | Devnet | `devnet-sites.joai.ai` |
 
-Optional **custom domain** (premium, brand-backed sites): point a CNAME at the Sites host for your environment. See [Public surfaces](/apps/public-surfaces).
+Optional **custom domain** (premium, any site). Brand-backed sites point a CNAME at the Sites host for your environment. Brandless / externally hosted sites keep their own hosting; verify ownership with the TXT record, or automatically via the HTTP `.well-known/joai-site-verification` route when the host implements it (the shared clients host does). See [Public surfaces](/apps/public-surfaces).
 
 Brandless sites are **not** published on sites.joai.ai.
 
@@ -67,8 +68,8 @@ Brandless sites are **not** published on sites.joai.ai.
    - Optionally enable **monthly report**. Native JoAi Analytics requires no third-party integration. For Cloudflare or Google Search Console, a missing integration returns `channel_not_configured` (422) so the Sites UI opens the matching setup dialog, and chat/MCP can call `settings-integration-open` then retry. On the 1st of each month the platform job creates an **update** artifact with metric blocks for the previous month and runs `artifact-deliver` (draft → approve / auto-mode). The email is written for business owners in plain language (no CTR/impression jargon) and contains the full report itself, so no separate public artifact link is added. The report still shows under Artifacts and Contact → Deliveries.
 5. Per brand-backed site:
    - **Add brand** → provision missing brands, then copy/open the public URL
-   - Set **custom domain** (premium) and follow CNAME instructions
-6. Open **Content** (`/sites/content`) for CMS pages and elements
+6. Set or verify the **custom domain** in the site edit page: brand-backed sites get CNAME instructions; brandless / external sites verify via TXT or HTTP. The section always shows its state (none, pending, verified, or upgrade required) instead of disappearing.
+7. Open **Content** (`/sites/content`) for CMS pages and elements
 
 ### Content and elements (`/sites/content`)
 
