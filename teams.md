@@ -79,6 +79,10 @@ Installed apps appear in the sidebar when they have a nav entry and unlock match
 4. Assign role
 5. Send invitation
 
+### Agent access
+
+Agents belong to one team but can be granted access to other teams. Owners and admins manage this in **Agent settings → Team access** by selecting a team and a role (Member, Developer, or Admin). Agents can also request access from a conversation; the request becomes an approval card that a human must approve before access is granted. Agents can only receive access to teams their owner already belongs to. See [Agents](/agents#team-access).
+
 ### Changing roles
 
 Owners and admins can change a member's role from the **Members** list — the role next to each member is a dropdown. Select a new role to apply it immediately; pending invitations can be adjusted the same way before they are accepted.

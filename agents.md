@@ -55,6 +55,12 @@ Proposed actions queue up in the **pending actions** banner. Open it to review t
 
 Actions that only run in the desktop app (for example CLI commands like WhatsApp Personal) show a desktop-download hint instead of an approve button, with **Skip** to move on to the next one.
 
+### Team access
+
+An agent belongs to one team. Owners and admins can grant an agent access to other teams they belong to so it can read and write that team's data. Manage grants under **Agent Settings → Team access**: pick a team, choose a role (Member, Developer, or Admin), and add it. Revoke access from the same list.
+
+Agents can also request access themselves from a conversation. The request appears as an approval card in the room; approve it (or adjust the role first) to grant access. Team access requests always require a human approval, even when the agent runs in Auto Mode. An agent can only be granted access to teams the owner already belongs to.
+
 ### Knowledge Base
 
 Upload documents that agents can reference to improve their context and responses. See [Knowledge Base](/knowledge) for detailed information.
