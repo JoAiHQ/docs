@@ -81,7 +81,7 @@ Installed apps appear in the sidebar when they have a nav entry and unlock match
 
 ### Agent access
 
-Agents belong to one team but can be granted access to other teams. Owners and admins manage this in **Agent settings → Team access** by selecting a team and a role (Member, Developer, or Admin). Agents can also request access from a conversation; the request becomes an approval card that a human must approve before access is granted. Agents can only receive access to teams their owner already belongs to. See [Agents](/agents#team-access).
+Agents belong to one team but can be granted access to other teams. Owners and admins manage this in **Agent settings → Team access** by selecting a team and a role (Member, Developer, or Admin). Agents can also request access from a conversation; the request becomes an approval card that a human must approve before access is granted. Agents can only receive access to teams where their owner can manage member roles. See [Agents](/agents#team-access).
 
 ### Changing roles
 
