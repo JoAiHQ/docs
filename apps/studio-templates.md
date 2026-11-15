@@ -234,7 +234,7 @@ Every `fontFamily` in the tree must be bundled or declared, otherwise saving fai
 
 Satori falls back glyph-by-glyph across every loaded font. If none of them has a character, it may draw a fallback or a missing-glyph box, so load a family that covers unusual symbols (for example a mono font for `●`). The fit measurement follows the same fallback order.
 
-With `textTransform: "uppercase"`, the renderer replaces `ß` with `ẞ` (U+1E9E) and uppercases the text when a loaded font has that glyph; otherwise Satori's uppercase result is `SS`. Most bundled and Latin brand fonts have `ẞ`.
+With `textTransform: "uppercase"`, the renderer replaces `ß` with `ẞ` (U+1E9E) and uppercases the text when the font resolved for that node (including an inherited `fontFamily`) has that glyph; otherwise normal uppercase produces `SS`. Many brand fonts (for example Arial, Anton, Arimo and Raleway) do not have `ẞ`, so they render `SS`.
 
 ## Starters
 
