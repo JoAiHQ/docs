@@ -40,7 +40,7 @@ The definition is the element's `spec`:
 | `tokens` | no | Design tokens per mode: `{ "light": { "name": "value" }, "dark": { … } }`. Values are strings (max 512 chars) and may contain placeholders such as <span v-pre>`{{brand.accent}}`</span> |
 | `fields` | no | Up to 30 content fields (see [Fields](#fields)) |
 | `fonts` | no | Up to 8 custom font files (see [Fonts](#fonts)) |
-| `sample` | no | Sample values keyed by field key. Used for previews and whenever a variation renders without explicit values |
+| `sample` | no | Sample values keyed by field key. Used for previews and as defaults when a render omits a value; explicit values always win |
 | `root` | yes, to render | The root node of the layout tree (see [Nodes](#nodes)) |
 
 Limits: at most **200 nodes** and **12 levels** of nesting.
@@ -56,6 +56,7 @@ Each field declares one piece of content the caller fills in:
 | `label` | Optional display label (max 128). Without it the key is humanised (`photoCredit` → “Photo credit”) |
 | `required` | Optional boolean |
 | `maxLength` | Optional, 1–2000. Max characters for text values (default 2000) |
+| `credit` | Optional boolean. Set `false` on an image field when images using it never need a credit node (for example a logo). Defaults to requiring a credit for content photos |
 
 How values are validated when you render with explicit values:
 
@@ -77,8 +78,9 @@ Every node has a `type`, an optional `style` and an optional `when`.
 | Type | Extra keys | Renders |
 | --- | --- | --- |
 | `box` | `children` (array of nodes) | A flex container. Only boxes can have children |
-| `text` | `text` (required), `maxLines`, `fit` | Text with placeholders. Renders nothing when the resolved text is empty |
-| `image` | `src` (required) | An image from a URL or placeholder. Renders nothing when the image is missing or cannot be loaded |
+| `text` | `text` (required), `maxLines`, `fit`, `wrap` | Text with placeholders. Renders nothing when the resolved text is empty |
+| `image` | `src` (required), `grade` | An image from a URL or placeholder, optionally graded server-side. Renders nothing when the image is missing or cannot be loaded |
+| `path` | `d` (required), `viewBox` (required), `stroke`, `strokeWidth`, `strokeDasharray`, `fill` | An inline SVG path for lines, routes and dividers |
 | `credit` | `text` (required) | Photo credit text. Styled like text; it exists so JoAi can enforce credits (see [Photo credits](#photo-credits)) |
 
 **`style`** is a subset of CSS that the renderer (Satori, flexbox only — no grid, no classes) supports. Values are strings or numbers (numbers are pixels) and may use placeholders. Allowed properties:
@@ -88,7 +90,7 @@ Every node has a `type`, an optional `style` and an optional `when`.
 - Spacing: `margin`, `marginTop`, `marginRight`, `marginBottom`, `marginLeft`, `padding`, `paddingTop`, `paddingRight`, `paddingBottom`, `paddingLeft`
 - Background: `background`, `backgroundColor`, `backgroundImage`, `backgroundSize`, `backgroundPosition`, `backgroundRepeat`, `backgroundClip`
 - Border: `border`, `borderTop`, `borderRight`, `borderBottom`, `borderLeft`, `borderWidth`, `borderStyle`, `borderColor`, `borderRadius`, `borderTopLeftRadius`, `borderTopRightRadius`, `borderBottomRightRadius`, `borderBottomLeftRadius`
-- Effects: `boxShadow`, `opacity`, `transform`, `transformOrigin`, `filter`, `objectFit`, `objectPosition`, `clipPath`, `mixBlendMode`
+- Effects: `boxShadow`, `opacity`, `transform`, `transformOrigin`, `filter`, `objectFit`, `objectPosition`, `clipPath`. `filter` supports basic CSS filters for simple effects; for photo grading use `grade` instead. Blend modes such as `mixBlendMode` are not supported
 - Text: `color`, `fontFamily`, `fontSize`, `fontWeight`, `fontStyle`, `lineHeight`, `letterSpacing`, `textAlign`, `textTransform`, `textDecoration`, `textShadow`, `whiteSpace`, `wordBreak`, `textOverflow`, `lineClamp`
 
 Any other property is rejected when you save. Boxes are `display: flex` by default.
@@ -101,12 +103,12 @@ Any other property is rejected when you save. Boxes are `display: flex` by defau
 
 For `image` fields, <span v-pre>`{{asset.*}}`</span> and `brand.logo`, “has a value” means the image actually loaded. Use `when` to hide optional lines and their labels instead of leaving gaps.
 
-**`maxLines`** (text only) clamps the text to that many lines.
+**`maxLines`** (text only) clamps text without `fit` to that many lines. With `fit`, the size shrinks until the wrapped text fits instead.
 
-**`fit`** (text only) auto-sizes long text. It needs a numeric `style.fontSize` as the largest size:
+**`fit`** (text only) auto-sizes long text. The starting size is `style.fontSize` — a number, a numeric string such as `"92"` or `"92px"`, or a token such as <span v-pre>`"{{token.headlineSize}}"`</span> — or the matching step:
 
 ```json
-"fit": { "width": 936, "min": 56, "steps": [{ "over": 40, "fontSize": 84 }], "em": 0.6 }
+"fit": { "width": 936, "min": 56, "steps": [{ "over": 40, "fontSize": 84 }] }
 ```
 
 | Key | Meaning |
@@ -114,13 +116,56 @@ For `image` fields, <span v-pre>`{{asset.*}}`</span> and `brand.logo`, “has a 
 | `width` | Available width in px (usually canvas width minus horizontal padding) |
 | `min` | Smallest font size allowed |
 | `steps` | Optional. Once the text is longer than `over` characters, start at `fontSize` instead |
-| `em` | Optional average glyph width in em, for fonts much narrower or wider than the default estimate |
+| `em` | Optional override for the average glyph width in em. The renderer measures the real loaded font by default and falls back to an estimate when no loaded font matches |
 
-The renderer starts at the matching step (or `style.fontSize`), caps the size so the longest word fits `width`, then steps down until the text fits `maxLines`, never below `min`. Combine `fit` with `maxLines` for headlines. Use a no-break space inside numbers or short groups that must not wrap (for example `1 250`).
+The renderer resolves placeholders first, then measures the effective text style. `fontFamily`, `fontSize`, `fontWeight`, `fontStyle`, `letterSpacing` and `textTransform` are inherited from parent boxes; the node's own style wins. It greedily wraps words into lines of `fit.width` per paragraph — an explicit `\n` starts a new paragraph, and every paragraph counts as at least one line — and steps down until the wrapped line count fits `maxLines`, never below `min`. A word that is wider than the box stays alone on its line. Fitted text nodes also default to `flexShrink: 0`, so a tight flex column cannot squeeze the headline. Use a no-break space inside numbers or short groups that must not wrap (for example `1 250`). To render explicit `\n` breaks, also set `whiteSpace: "pre-line"`.
+
+**`wrap: "balance"`** (text only) evens out a short multi-line headline. It is opt-in, and a headline that already fits on one line is left exactly as it is, so centered text is not shifted or clipped:
+
+```json
+{ "type": "text", "text": "{{headline}}", "maxLines": 2, "fit": { "width": 936, "min": 56 }, "wrap": "balance", "style": { "fontSize": 104, "textAlign": "center" } }
+```
+
+The renderer inserts balanced breaks at the final font size and sets `whiteSpace: "pre-line"`. Lines have no trailing spaces and center correctly. Balance needs a numeric `fit.width` or `style.width`; without one it does nothing.
+
+**`grade`** (image only) grades a photo on the server before it goes into Satori:
+
+```json
+{ "type": "image", "src": "{{photo}}", "grade": { "brightness": 1.05, "contrast": 1.1, "saturate": 0.9, "grayscale": 0, "tint": "{{token.accent}}", "tintOpacity": 0.2 }, "style": { "objectPosition": "{{photoFocus}}" } }
+```
+
+| Key | Default | Meaning |
+| --- | --- | --- |
+| `brightness` | `1` | Multiplier; `1.05` is slightly brighter |
+| `contrast` | `1` | Multiplier around mid-grey |
+| `saturate` | `1` | Colour saturation multiplier; `0.9` is slightly muted |
+| `grayscale` | `0` | `0`–`1`; `1` is fully grayscale |
+| `tint` | none | Colour tint, usually a token or brand colour |
+| `tintOpacity` | `1` | `0`–`1` strength of the tint |
+
+All grade values may use placeholders. Grading is applied with sharp and the result is a PNG. If grading fails, the original image is used; WebP/AVIF that cannot be converted are treated as missing. `objectPosition` is a normal style value and may come from a field; an empty value falls back to `50% 50%`.
+
+**`path`** draws an inline SVG path for routes, lines and dividers. Required `d` and `viewBox`; optional `stroke`, `strokeWidth`, `strokeDasharray` and `fill`. Placeholders work in every prop. Use the normal `style` for size and position:
+
+```json
+{ "type": "path", "d": "M0 0 H936", "viewBox": "0 0 936 4", "stroke": "{{token.accent}}", "strokeWidth": 2, "strokeDasharray": "2 10", "fill": "none", "style": { "width": 936, "height": 4 } }
+```
+
+Keep the path in a `viewBox` that matches its intended aspect ratio, then set `width`/`height` in the style. Paths are SVG, so they stay crisp at any size.
+
+### Renderer limits
+
+- Flexbox only: no CSS grid, classes, pseudo-elements or external stylesheets. Layouts are boxes plus `position: absolute` where needed.
+- Text wraps automatically. Use `whiteSpace: "pre-line"` when you want explicit `\n` breaks in a normal text node (`wrap: "balance"` sets it for you).
+- No CSS `text-wrap`; use `wrap: "balance"`.
+- No blend modes: `mixBlendMode` and similar properties are rejected when saving. CSS `filter` works for simple effects; use `grade` for photos so the result is baked into the image.
+- Fonts must be TTF, OTF or WOFF and declared in `fonts` (or one of the bundled families). WOFF2 is skipped.
+- Satori falls back glyph-by-glyph across all loaded fonts. If no loaded font has a glyph, it may render a fallback or a missing-glyph box, so attach a font that covers unusual symbols.
+- Output is PNG (Social converts it to JPEG when Instagram needs it).
 
 ### Placeholders
 
-Placeholders work in `text`, `src`, style values, token values and font `src`:
+Placeholders work in `text`, `src`, path props, `grade` values, style values, token values and font `src`:
 
 | Placeholder | Resolves to |
 | --- | --- |
@@ -185,6 +230,12 @@ Custom fonts are declared in `fonts` and used via `style.fontFamily`:
 
 Every `fontFamily` in the tree must be bundled or declared, otherwise saving fails. A declared font that cannot be downloaded (or takes longer than 10 seconds) is skipped and the text falls back to Montserrat. In the app, upload the font file to the team media library first, then pick it under the template definition's font list.
 
+### Glyphs and uppercase
+
+Satori falls back glyph-by-glyph across every loaded font. If none of them has a character, it may draw a fallback or a missing-glyph box, so load a family that covers unusual symbols (for example a mono font for `●`). The fit measurement follows the same fallback order.
+
+With `textTransform: "uppercase"`, the renderer replaces `ß` with `ẞ` (U+1E9E) and uppercases the text when a loaded font has that glyph; otherwise Satori's uppercase result is `SS`. Most bundled and Latin brand fonts have `ẞ`.
+
 ## Starters
 
 New template elements can start from a neutral starter (**Start from** in the create dialog). All use 1080 × 1080, brand tokens for light/dark and the team logo when present:
@@ -199,9 +250,21 @@ New template elements can start from a neutral starter (**Start from** in the cr
 
 Starters are a starting point — change size, fields and tree to fit the post type.
 
+## Images
+
+Image nodes accept PNG, JPEG, GIF, SVG, WebP and AVIF. WebP and AVIF are converted to PNG automatically with sharp before Satori sees them; other formats, or an image that takes longer than 10 seconds, are treated as missing. Use images at least as large as the canvas (for example 1080 × 1350) with `objectFit: "cover"`, and avoid upscaled or heavily compressed sources. For photo grading and per-photo focus, use `grade` and a field-driven `objectPosition` as shown under [Nodes](#nodes).
+
 ## Photo credits
 
 If an `image` node's `src` uses a content field (a photo supplied per post, as opposed to <span v-pre>`{{brand.logo}}`</span>, <span v-pre>`{{asset.*}}`</span> or tokens), the template **must contain a `credit` node**; saving fails otherwise. Give it a credit field and guard it with `when`, as in the Photo starter.
+
+A brand or logo image field can opt out of the credit requirement with `"credit": false`:
+
+```json
+{ "key": "logo", "type": "image", "credit": false }
+```
+
+An image that only uses `credit: false` fields (typically the team's own logo or asset) needs no credit node. As soon as the image references a content field without the opt-out, a credit node is required.
 
 Rule for third-party photos (anything you did not create or own): credit the source **on the image** (credit field) **and in the post caption**. Leave the credit empty only for the team's own photos.
 
@@ -220,22 +283,24 @@ A 4:5 announcement post with an optional photo, credit, accent date, auto-fitted
   "fields": [
     { "key": "headline", "type": "text", "label": "Headline", "required": true, "maxLength": 70 },
     { "key": "date", "type": "text", "label": "Date", "maxLength": 40 },
+    { "key": "photoFocus", "type": "text", "label": "Photo focus (for example 50% 30%)", "maxLength": 32 },
     { "key": "photo", "type": "image", "label": "Photo" },
     { "key": "photoCredit", "type": "text", "label": "Photo credit", "maxLength": 60 }
   ],
-  "sample": { "headline": "A short, concrete headline", "date": "Saturday, 18:00" },
+  "sample": { "headline": "A short, concrete headline", "date": "Saturday, 18:00", "photoFocus": "50% 35%" },
   "root": {
     "type": "box",
     "style": { "width": "100%", "height": "100%", "position": "relative", "flexDirection": "column", "backgroundColor": "{{token.bg}}", "color": "{{token.fg}}" },
     "children": [
-      { "type": "image", "src": "{{photo}}", "when": { "has": "photo" }, "style": { "width": "100%", "height": 810, "objectFit": "cover" } },
+      { "type": "image", "src": "{{photo}}", "when": { "has": "photo" }, "grade": { "brightness": 1.03, "contrast": 1.08, "saturate": 1.05, "tint": "{{brand.accent}}", "tintOpacity": 0.1 }, "style": { "width": "100%", "height": 810, "objectFit": "cover", "objectPosition": "{{photoFocus}}" } },
       { "type": "credit", "text": "Photo: {{photoCredit}}", "when": { "has": "photoCredit" }, "style": { "position": "absolute", "top": 762, "right": 24, "fontSize": 22, "color": "#FFFFFF", "backgroundColor": "{{token.scrim}}", "padding": "4px 10px" } },
       {
         "type": "box",
         "style": { "flexDirection": "column", "flexGrow": 1, "justifyContent": "flex-end", "padding": 72, "gap": 24 },
         "children": [
           { "type": "text", "text": "{{date}}", "when": { "has": "date" }, "style": { "fontSize": 36, "fontWeight": 700, "color": "{{token.accent}}" } },
-          { "type": "text", "text": "{{headline}}", "maxLines": 3, "fit": { "width": 936, "min": 56, "steps": [{ "over": 40, "fontSize": 84 }] }, "style": { "fontSize": 104, "fontWeight": 800, "lineHeight": 1.05 } },
+          { "type": "path", "d": "M0 0 H936", "viewBox": "0 0 936 4", "stroke": "{{token.accent}}", "strokeWidth": 2, "strokeDasharray": "2 10", "fill": "none", "style": { "width": 936, "height": 4 } },
+          { "type": "text", "text": "{{headline}}", "maxLines": 3, "fit": { "width": 936, "min": 56, "steps": [{ "over": 40, "fontSize": 84 }] }, "wrap": "balance", "style": { "fontSize": 104, "fontWeight": 800, "lineHeight": 1.05 } },
           { "type": "image", "src": "{{brand.logo}}", "when": { "has": "brand.logo" }, "style": { "height": 56, "objectFit": "contain", "alignSelf": "flex-start" } }
         ]
       }
@@ -247,10 +312,10 @@ A 4:5 announcement post with an optional photo, credit, accent date, auto-fitted
 Content values for one post:
 
 ```json
-{ "headline": "Summer opening hours start Monday", "date": "From 1 July", "photo": "https://example.com/photo.jpg", "photoCredit": "Jane Doe" }
+{ "headline": "Summer opening hours start Monday", "date": "From 1 July", "photoFocus": "50% 25%", "photo": "https://example.com/photo.jpg", "photoCredit": "Jane Doe" }
 ```
 
-Without `photo` the image and credit disappear and the text block fills the canvas. A Story variant of the same template only needs `{ "size": { "width": 1080, "height": 1920 } }` as overrides if the tree uses flex and percentages — keep the width at 1080 so pixel values like `fit.width` stay correct.
+The photo is graded once and focused per post with `photoFocus`; the headline uses real-font fit plus balance, and the path draws a dashed divider. The credit is required because `photo` is a content image. A brand logo image (<span v-pre>`{{brand.logo}}`</span> or a field with `"credit": false`) needs no credit. Without `photo` the image and credit disappear and the text block fills the canvas. A Story variant of the same template only needs `{ "size": { "width": 1080, "height": 1920 } }` as overrides if the tree uses flex and percentages — keep the width at 1080 so pixel values like `fit.width` stay correct.
 
 ## Variations
 
@@ -276,6 +341,19 @@ In the app: **Studio → Elements →** your template.
 
 Over the REST API the same preview is `POST /teams/{team}/elements/{element}/render` or `…/variations/{variation}/render` with `{ "values": { … }, "mode": "light" | "dark" }`; it returns `{ imageBase64, mimeType }` and validates `values` against the fields. There is no MCP preview tool — render a variation and look at its image instead.
 
+### Local render
+
+Run the gen app on its port (`cd apps/gen && npm run dev`, default 3011) and the API with `APP_ENV=local`. `TemplateGateway` then posts to `http://localhost:3011/image/template`; both services must share the same `GEN_TOKEN`. From the API repo, render a template directly:
+
+```php
+$element = App\Domain\Project\Models\Element::where('type', 'template')->first();
+$result = app(App\Domain\Project\Actions\RenderElementTemplateAction::class)
+    ->execute($element, null, ['headline' => 'A real headline'], App\Domain\Project\TemplateMode::Light);
+// $result['imageBase64'], $result['mimeType']
+```
+
+To preview a raw definition without saving an element, POST `{ "spec": …, "values": { … }, "mode": "light" }` to the gen route with `Authorization: Bearer <GEN_TOKEN>`. Stress-test each template once with the longest realistic value for every field (use its `maxLength`) before saving it.
+
 ## Workflow for agents
 
 Install **Studio** (element and project tools; element tools also come with **Sites**) and **Social Media** (post tools). Confirm with `tools/list`.
@@ -291,10 +369,10 @@ Install **Studio** (element and project tools; element tools also come with **Si
 
 Notes:
 
-- Project renders use exactly `template.values`; samples are not used there, so empty values render as empty.
+- Project renders use `template.values`, with the definition's `sample` values as defaults for fields you leave out; explicit values win.
 - A post from `elementVariationId` gets **every image of the variation** (primary first). Template variations hold one image; treat it as a design preview. For a specific event, render a project and use its export instead.
 - Instagram needs JPEG: rendered PNGs are converted to JPEG automatically when attached (transparency becomes white).
-- Images must be publicly reachable PNG, JPEG, GIF or SVG; WebP and images slower than 10 seconds are treated as missing.
+- Images must be publicly reachable PNG, JPEG, GIF or SVG; WebP and AVIF are converted to PNG automatically. Images slower than 10 seconds are treated as missing.
 
 ## MCP tools
 
@@ -314,9 +392,13 @@ Notes:
 | `update_social_post` | `socialPostId`, `body?`, `format?`, `media?`, `scheduledAt?`, `team` | Add `scheduledAt` to schedule it; scheduling needs approval |
 | `media_upload` | `team`, `type` (`brand` · `reference` · `template` · `output`), `fileUrl` / `filePath` / `fileBase64`, … | Use the returned URL in image fields |
 
+Template specs created through MCP can use `wrap: "balance"` on text, `grade` on images, `path` nodes (`d` plus `viewBox`) and `fields[].credit: false` for logo-only image fields.
+
 All element tools accept an optional `team` slug; omit it to use the connected agent's team. Live schemas: `tools/list`. Attach images to an element (for <span v-pre>`{{asset.*}}`</span>) with the element's `media` on the REST API or the `media` parameter of `create_element` / `update_element`.
 
 ## Designing good images
+
+**Brand, not skeleton.** Build each team's design language from its real brand sources: the website CSS colours, real font files, logo, real photos and signature motifs. Avoid reusing one generic skeleton across teams. Pick the formats that fit the business — event, result, product, service, team intro, offer — and keep templates generic through fields and tokens. Never bake text into images or hardcode per-post positions.
 
 **Hierarchy.** One message per image. One dominant element (headline or number), one supporting line, logo small. Size steps should be clear — for example 104 / 36 / 22 px on a 1080 canvas rather than 48 / 40 / 36.
 
