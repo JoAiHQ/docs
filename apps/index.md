@@ -60,7 +60,7 @@ Native apps are **not** the same as:
 | **Forms** | Build, publish, share, submissions | [Forms](/apps/forms) |
 | **Appointments** | Policy, requests, public book page | [Appointments](/apps/appointments) |
 | **Reviews** | Review requests, ratings, public review routing | [Reviews](/apps/reviews) |
-| **Accounting** | Double-entry journal, order revenue bookings, VAT summary, period locks | [Accounting](/accounting) |
+| **Accounting** | Double-entry journal, order revenue bookings, bank statement import, VAT summary, period locks | [Accounting](/accounting) |
 | **Smart Links** | Short links, variations, kiosk table QR | [Smart Links](/apps/smart-links) |
 | **News** | Deals, events, news updates | [News](/apps/news) |
 | **Social Media** | Draft and schedule Instagram, X, Facebook, and LinkedIn posts | [Social Media](/apps/social) |

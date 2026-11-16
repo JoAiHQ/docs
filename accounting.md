@@ -23,6 +23,20 @@ Book a JoAi order from its invoice net and VAT amounts. The booking uses the ord
 
 VAT is taken exactly from the JoAi invoice tax breakdown, per rate and per document. When an order is converted to EUR or the converted bucket amounts do not add up to the document total by one cent, the difference is posted to the last revenue line. Debits and credits therefore always balance while the invoice VAT remains the source of truth.
 
+## Bank accounts and statement import
+
+Each bank account stores its IBAN, BIC, currency, provider, opening balance and the linked ledger account (for example `BA`). Imported bank lines are the source of truth for E/A bookings.
+
+Supported statement formats:
+
+- N26 CSV export
+- CAMT.053 XML from most Austrian banks
+- Generic CSV with a reusable column mapping saved on the bank account
+
+Every import creates a bank import record with imported, skipped and duplicate counts. Re-importing the same file or overlapping date ranges is safe: rows are deduplicated by the bank's external ID, or by a stable hash plus occurrence index when the bank provides no ID.
+
+Importing raw bank data never touches the ledger and does not need approval. Matching and booking bank lines are a later step.
+
 ## VAT summary
 
 The VAT summary aggregates final bookings by tax code into Austrian UVA fields, including total turnover (`000`), 20% (`022`), input VAT (`060`), and reverse charge (`057`/`066`).
