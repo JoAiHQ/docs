@@ -27,6 +27,7 @@ export default defineConfig({
           { text: 'Overview', link: '/apps/' },
           { text: 'Public surfaces', link: '/apps/public-surfaces' },
           { text: 'Board', link: '/apps/board' },
+          { text: 'Accounting', link: '/accounting' },
           {
             text: 'Shop',
             link: '/apps/shop',

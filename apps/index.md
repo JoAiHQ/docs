@@ -25,7 +25,7 @@ During onboarding, JoAi may suggest apps from your interests:
 | web3 | Wallets, Contracts |
 | payments | Shop, Wallets |
 | health / fitness | Appointments, Contacts, Loyalty |
-| finance | Wallets, Board |
+| finance | Accounting, Wallets, Board |
 | research | Board |
 
 You can change installs anytime under Apps.
@@ -35,7 +35,7 @@ You can change installs anytime under Apps.
 | Concept | Meaning |
 | --- | --- |
 | **Installed** | Listed under `Team settings → Apps` for this team |
-| **Sidebar** | Board, Shop, Contacts, Campaigns, Automations, Forms, Appointments, Smart Links, News, Social Media, Studio, Artifacts, Documents, Sites, Meetings, Contracts |
+| **Sidebar** | Board, Accounting, Shop, Contacts, Campaigns, Automations, Forms, Appointments, Smart Links, News, Social Media, Studio, Artifacts, Documents, Sites, Meetings, Contracts |
 | **Chat / settings only** | Workspace (chat control + `/files`), Wallets, Heartbeats, Voice dictation |
 | **Plan lock** | Some apps need a higher plan — they show locked until you upgrade |
 | **MCP gating** | Agent tools for that app appear only when the app is installed on the team |
@@ -60,6 +60,7 @@ Native apps are **not** the same as:
 | **Forms** | Build, publish, share, submissions | [Forms](/apps/forms) |
 | **Appointments** | Policy, requests, public book page | [Appointments](/apps/appointments) |
 | **Reviews** | Review requests, ratings, public review routing | [Reviews](/apps/reviews) |
+| **Accounting** | Double-entry journal, order revenue bookings, VAT summary, period locks | [Accounting](/accounting) |
 | **Smart Links** | Short links, variations, kiosk table QR | [Smart Links](/apps/smart-links) |
 | **News** | Deals, events, news updates | [News](/apps/news) |
 | **Social Media** | Draft and schedule Instagram, X, Facebook, and LinkedIn posts | [Social Media](/apps/social) |
