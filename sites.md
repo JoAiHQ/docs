@@ -68,7 +68,7 @@ Brandless sites are **not** published on sites.joai.ai.
    - Optionally enable **monthly report**. Native JoAi Analytics requires no third-party integration. For Cloudflare or Google Search Console, a missing integration returns `channel_not_configured` (422) so the Sites UI opens the matching setup dialog, and chat/MCP can call `settings-integration-open` then retry. On the 1st of each month the platform job creates an **update** artifact with metric blocks for the previous month and runs `artifact-deliver` (draft → approve / auto-mode). The email is written for business owners in plain language (no CTR/impression jargon) and contains the full report itself, so no separate public artifact link is added. The report still shows under Artifacts and Contact → Deliveries.
 5. Per brand-backed site:
    - **Add brand** → provision missing brands, then copy/open the public URL
-6. Set or verify the **custom domain** in the site edit page: brand-backed sites get CNAME instructions; brandless / external sites verify via TXT or HTTP. The section always shows its state (none, pending, verified, or upgrade required) instead of disappearing.
+6. Set or verify the **custom domain** in the site edit page: brand-backed sites get CNAME instructions; brandless / external sites verify via TXT or HTTP. The section always shows its state (none, pending, verified, or upgrade required) instead of disappearing. Verified domains are re-checked weekly: failed checks show in the site settings and notify the team, and the domain is marked unverified after three consecutive failures.
 7. Open **Content** (`/sites/content`) for CMS pages and elements
 
 ### Content and elements (`/sites/content`)
