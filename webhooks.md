@@ -46,7 +46,7 @@ curl "https://api.joai.ai/agents/{uuid}/hooks?source=deploy&token=$HOOK_SECRET&m
 - `GET` and `POST` both work; query params are part of the payload, so a warp can map `message`, `level`, or any other field.
 - Two auth modes, two capabilities:
   - **Bearer header / HMAC signature** — full inbound hook: a matching `Hook` runs its warp (or enrolls the journey).
-  - **`?token=` in the URL** — notification-only: posts `message` as the agent (proactive message + push) and records the sample. It never runs warps, automations, `session.start`, or `permission.request`, so a leaked URL cannot do more than send you notifications. Use this for CI services that cannot set headers.
+  - **`?token=` in the URL** — notification-only: posts `message` as a chat message from the agent in its default room, notifies you, and records the sample. It never runs warps, automations, `session.start`, or `permission.request`, so a leaked URL cannot do more than send you notifications. Use this for CI services that cannot set headers.
 - Inbound messaging providers (WhatsApp / wacli) do not accept `?token=`; they require the HMAC signature header so a leaked URL cannot spoof messages.
 - The secret is a per-source agent secret (`HOOK_SECRET_<SOURCE>`). Show, copy, and rotate it from the **Webhooks** integration panel; rotate programmatically with `POST /v1/agents/{agent}/hooks/{source}/secret/rotate`.
 - Rotating invalidates the old secret immediately, so update your CI secret afterwards.

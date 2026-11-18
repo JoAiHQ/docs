@@ -10,7 +10,7 @@ Configure **outbound** HTTP callbacks when your agent performs actions or sends 
 ## Setup
 
 1. Open **Agent settings → Integrations** → **Webhooks**
-2. Copy the **deployment hook** URL. It already contains the `deploy` source and its token — ping it from CI with `GET` or `POST`, optionally with `&message=`. This URL is notification-only: it posts the message as your agent (proactive message + push), never runs warps. Use the rotate button to replace the token.
+2. Copy the **deployment hook** URL. It already contains the `deploy` source and its token — ping it from CI with `GET` or `POST`, optionally with `&message=`. This URL is notification-only: it posts the message as a chat message from your agent, notifies you, and never runs warps. Use the rotate button to replace the token.
 3. Optionally manage **API tokens** from the same panel (also available under [API Tokens](/integrations/api-tokens))
 4. Use the **inbound hook mapper** when you need to map external sources to warps / handlers
 5. Add outbound webhook destinations (URL, secret, retries, headers) in the webhooks manager
