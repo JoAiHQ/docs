@@ -254,6 +254,12 @@ Starters are a starting point — change size, fields and tree to fit the post t
 
 Image nodes accept PNG, JPEG, GIF, SVG, WebP and AVIF. WebP and AVIF are converted to PNG automatically with sharp before Satori sees them; other formats, or an image that takes longer than 10 seconds, are treated as missing. Use images at least as large as the canvas (for example 1080 × 1350) with `objectFit: "cover"`, and avoid upscaled or heavily compressed sources. For photo grading and per-photo focus, use `grade` and a field-driven `objectPosition` as shown under [Nodes](#nodes).
 
+## Brand template library
+
+Brand templates are created per team as Studio `template` elements and variations with the existing Studio tools/MCP (`create_element`, `generate_element_variation`, `update_element`). Media — fonts, logos and photos — comes from that team's own media library and is referenced with <span v-pre>`{{asset.x}}`</span> or media ids. A template's variations are that brand's formats (for example Feed and Story).
+
+Each brand has its own design language (colours, fonts, photo treatment, motifs and card formats). Do not reuse one brand's skeleton for another or copy another brand's design.
+
 ## Photo credits
 
 If an `image` node's `src` uses a content field (a photo supplied per post, as opposed to <span v-pre>`{{brand.logo}}`</span>, <span v-pre>`{{asset.*}}`</span> or tokens), the template **must contain a `credit` node**; saving fails otherwise. Give it a credit field and guard it with `when`, as in the Photo starter.
@@ -362,7 +368,7 @@ Install **Studio** (element and project tools; element tools also come with **Si
 2. **Fill in real content.** Collect the actual facts (title, date, place, numbers, photo URL, credit). Respect each field's `maxLength`; leave optional fields out instead of inventing them.
 3. **Render, export, and draft the post.**
    - **Pick the variation.** Use an existing Feed or Story variation. If you need a different layout or size, create it first with `generate_element_variation` and `overrides` (for example `{ "size": { "width": 1080, "height": 1920 } }`).
-   - **Render a project.** `create_project` with `template: { elementVariationId, mode, values }`, where `values` are the event facts.
+   - **Render a project.** `create_project` with `template: { elementVariationId, mode, values }`, where `values` are the event facts. A wrong value is fixed with `update_project` on the same project — do not create a second one.
    - **Produce and export.** `studio_produce` → `studio_wait` with `targetStatus: "composed"` → `studio_export`. The export is the rendered artifact.
    - **Draft the post.** `create_social_post` with the export's `uuid` as `exportId`, plus `platform`, optional `format` and `body`.
 4. **Hand over for approval.** Share the post's `shareUrl` preview and the caption. The draft stays a draft until a person approves scheduling it (via `create_social_post` / `update_social_post` with `scheduledAt`, or in `/social`). Never schedule or publish without that approval.
@@ -387,6 +393,7 @@ Notes:
 | `update_element_variation` | `elementId`, `variationId`, `label?`, `aspectRatio?`, `mode?`, `overrides?`, `team?` | `{}` clears overrides. Does not re-render |
 | `delete_element_variation` | `elementId`, `variationId`, `team?` | |
 | `create_project` | `name`, `brief?`, `outputPreset?`, `targetPlatforms?`, `selectedSkills?`, `template?` `{ elementVariationId, mode?, values? }` | With `template` the project is an image project rendered from that variation. `outputPreset` is `9:16 social`, `16:9 launch` or `1:1 square teaser` |
+| `update_project` | `projectId`, `name?`, `brief?`, `outputPreset?`, `targetPlatforms?`, `selectedSkills?`, `template?`, `team?` | Edits the project in place — never create a second project to fix a value. Editing the template sets it back to `draft` and clears the previous render, so `studio_produce` again. `template: null` unpins it |
 | `studio_produce` / `studio_wait` / `studio_export` | `projectId` (`studio_wait` also `targetStatus`, `timeoutSeconds?`) | Template projects go straight to `composed`; the export holds the PNG |
 | `create_social_post` | `platform`, `team`, `format?`, `body?`, one of `media` · `exportId` · `elementVariationId`, `draft?`, `scheduledAt?` | Omit `scheduledAt` and leave `draft` unset/true to keep a draft; `draft: false` schedules immediately. For a template render, pass the export `uuid` from `studio_export` as `exportId` |
 | `update_social_post` | `socialPostId`, `body?`, `format?`, `media?`, `scheduledAt?`, `team` | Add `scheduledAt` to schedule it; scheduling needs approval |

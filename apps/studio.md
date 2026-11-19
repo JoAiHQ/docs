@@ -77,7 +77,7 @@ Install Studio on the team before expecting these tools. Confirm with `tools/lis
 | `studio_produce` | Produce when draft-ready (template projects render directly) |
 | `studio_wait` | Wait for `draft-ready` or `composed` |
 | `studio_export` | Export finished media; returns the export and its share URL |
-| `list_projects` / `get_project` / `create_project` / `delete_project` | Project CRUD (Studio or Board). `create_project` takes `template` for template image projects and `outputPreset`, `targetPlatforms`, `selectedSkills` |
+| `list_projects` / `get_project` / `create_project` / `update_project` / `delete_project` | Project CRUD (Studio or Board). `create_project` takes `template` for template image projects and `outputPreset`, `targetPlatforms`, `selectedSkills`. `update_project` changes any of those on an existing project; editing the template sets it back to draft and clears the previous render, so produce it again |
 | `list_elements` / `create_element` / `update_element` / `delete_element` | Elements (Studio or Sites); all accept `team` (defaults to the agent team). Create/update take `media` for <span v-pre>`{{asset.*}}`</span> images |
 | `list_element_variations` / `generate_element_variation` / `update_element_variation` / `delete_element_variation` | Variations (Studio or Sites); all accept `team`. `mode` (`light` / `dark`) selects the template render mode |
 
