@@ -70,6 +70,14 @@ Tags are explicit strings on the item. The `repo:` prefix is a convention read b
 - **Warps:** `joai/item-create` or `joai/item-update` with the `tags` input.
 - Hashtags in the title cannot carry the colon; set the full tag explicitly.
 
+### Assigning agents
+
+`create_item` assigns the calling agent by default. To assign a different agent — for example a tester — pass `agents` as an array of agent UUIDs. `update_item` replaces the existing agent assignments with `agents`; pass `[]` to clear them.
+
+- **MCP:** `create_item` or `update_item` with `agents: ["<agent-uuid>"]`.
+- **Agent UUIDs:** use `joai_list_agents` or the Board UI.
+- **Warps / REST:** `joai/item-create` / `joai/item-update` with the `agents` JSON array. The REST API accepts the same field as `agents`.
+
 ### Where related Board MCP concepts live in the UI
 
 Board MCP covers more than the kanban. Product UIs:
