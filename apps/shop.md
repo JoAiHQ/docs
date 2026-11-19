@@ -45,6 +45,8 @@ Use **Open store** in the header to jump to the public storefront.
    - **Barcode** per variation (EAN/GTIN/UPC or your own code, unique per team; product search matches it exactly)
    - **External references** per variation (link icon in the variations table): the article ID of the same item in a till/POS, ERP, marketplace, supplier, or other system. Each external ID is unique per team and source, and a variation can have several
 
+**Product sorting:** `GET /v1/products` accepts an ordered `sort` list such as `sort=availability:desc,name:asc`. Fields: `featured`, `name`, `price`, `availability`; append `:asc` or `:desc` to override the field default (`featured:desc`, `name:asc`, `price:asc`, `availability:desc`). Multiple keys apply in order, so pagination stays stable. The legacy values `price_asc`, `price_desc` and `name` still work.
+
 **Volume pricing:** add quantity tiers with a minimum quantity and unit price. The storefront product page and cart apply the highest reached tier, re-price the line when the quantity changes, and keep order lines/checkout on the same tier.
 
 **Product details** live in `meta.details` on the product (API / MCP / warps). Example:
