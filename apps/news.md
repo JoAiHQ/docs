@@ -1,13 +1,13 @@
 # News
 
-News publishes customer-facing **updates** (deals, events, news posts, and articles). Install **News** under **Team settings → Apps**, then open **News** in the sidebar (product route label: **Updates**). Solo pricing highlights shop updates and deals.
+News publishes customer-facing **updates** (deals, events, news posts, articles, and jobs). Install **News** under **Team settings → Apps**, then open **News** in the sidebar (product route label: **Updates**). Solo pricing highlights shop updates and deals.
 
 Installing News unlocks the Updates UI. MCP update tools are gated by **Board** (usually already installed) — News alone does not add a separate MCP gate.
 
 ## Overview
 
 - Create updates with title, body, images, optional link, and schedule window
-- Types: **deal**, **event**, **news**, **article**
+- Types: **deal**, **event**, **news**, **article**, **job**
 - Statuses: **draft**, **published**, **archived**
 - Published updates can surface on the **storefront** (including store **events** listings) and brand [Sites](/sites) where configured
 
@@ -28,6 +28,26 @@ Installing News unlocks the Updates UI. MCP update tools are gated by **Board** 
 | **event** | Time-bound happenings (use starts / ends) |
 | **news** | General announcements |
 | **article** | Longer marketing or blog posts |
+| **job** | Open positions and hiring posts |
+
+### Statuses
+
+### Job metadata
+
+Jobs use the normal update fields plus optional string props:
+
+| Prop | Use |
+| --- | --- |
+| `jobLocation` | Place, e.g. `Hollabrunn` |
+| `jobWorkplaceType` | `onsite`, `hybrid`, or `remote` |
+| `jobEmploymentType` | `full-time`, `part-time`, `contract`, `internship`, `temporary`, `volunteer`, `other`; comma-separate multiple |
+| `jobSalaryMin`, `jobSalaryMax` | Gross salary amount |
+| `jobSalaryUnit` | `hour`, `day`, `week`, `month`, `year` |
+| `jobSalaryCurrency` | ISO currency, default `EUR` |
+| `jobStartDate` | ISO date when the role starts |
+| `jobApplyEmail` | Optional application email |
+
+Use `linkUrl` for the canonical job/apply page, `startsAt` for the posting date, and `endsAt` for the application deadline.
 
 ### Statuses
 
@@ -51,7 +71,7 @@ Update tools are gated by the **Board** app in MCP:
 
 - `tags` (e.g. `example-city`) — city-wide public feed across teams; `team` not required
 - `team` — scope to one team slug
-- Optional: `type` (`deal` | `event` | `news` | `article`), `status`, `active` (default true), `with` (e.g. `["team"]`)
+- Optional: `type` (`deal` | `event` | `news` | `article` | `job`), `status`, `active` (default true), `with` (e.g. `["team"]`)
 
 Install Board (usually already present) and call these tools, or manage updates in the News UI.
 
