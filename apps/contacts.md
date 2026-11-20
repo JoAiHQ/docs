@@ -55,6 +55,16 @@ Relations are **read from the first contact’s point of view** and stored once 
 
 Each relation appears on both contacts, with the type shown from that contact’s perspective. Each relation can also carry an optional short **note** — for example how the two people met or what a referral was about — which you can add or edit inline. Agents (MCP) can additionally change a relation’s type or clear its note.
 
+### Stages and funnel
+
+Contact stages are an ordered pipeline each team defines for itself — for example outreached, onboarding, onboarded. A stage has a stable `key` that agents and routines use, a display name, and a position that fixes the order.
+
+- **Stages** (`/contacts/stages`): add, rename, reorder and archive stages.
+- **Stage on a contact**: pick a stage in the contact panel. Every change records the time, the acting agent or user, and an optional reason.
+- **Funnel** (`/contacts/funnel`): how many contacts sit in each stage, how many entered and exited in the last 30 days, and how many have no stage yet.
+
+Stages are data, not code: another team can run a completely different pipeline without any change to the app.
+
 ### Segments
 
 Reusable audiences for campaigns. **Create and manage segments in [Campaigns](/campaigns)** (list + inline creator while building a campaign). MCP segment tools still require the **Contacts** app installed.
@@ -100,6 +110,9 @@ Requires the **Contacts** app.
 | `list_contact_timeline` | Timeline |
 | `create_contact_relation` / `list_contact_relations` / `update_contact_relation` / `delete_contact_relation` | Link contacts, change a relation’s type, add notes, or remove a relation |
 | `list_segments` / `create_segment` / `delete_segment` | Segments (no `update_segment` — edit in Campaigns UI) |
+| `list_contact_stages` / `upsert_contact_stage` | Read or define the team's stages (key, name, position, archived) |
+| `set_contact_stage` | Move a contact onto a stage, with an optional reason |
+| `get_contact_funnel` | Contacts per stage plus how many entered and exited in a window |
 
 Warps such as `joai-contact-find-or-create` are preferred for onboarding. Pass `team` when operating outside the agent’s default team.
 
