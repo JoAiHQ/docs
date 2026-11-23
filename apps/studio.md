@@ -73,7 +73,7 @@ Install Studio on the team before expecting these tools. Confirm with `tools/lis
 
 | Tool | Purpose |
 | --- | --- |
-| `studio_send` | Start or continue a studio project (generative or `outputType: "clips"`) |
+| `studio_send` | Start or continue a studio project (generative or `outputType: "clips"`). Takes `team` (the agent's own team or one granted to it; defaults to the agent team) so it can act on a project in another team |
 | `studio_produce` | Produce when draft-ready (template projects render directly) |
 | `studio_wait` | Wait for `draft-ready` or `composed` |
 | `studio_export` | Export finished media; returns the export and its share URL |
