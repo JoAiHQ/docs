@@ -45,6 +45,18 @@ Access via **Agents > Settings** or agent settings button.
 - **Password** - Set agent password protection
 - **Primary agent** - Use this agent as the default sender for team-level emails and reports
 
+### Voice
+
+Voice settings control audio replies and the agent's cloned voice.
+
+- **Voice output** - Let the agent answer with audio
+- **Voice** - Pick a built-in voice or your cloned one
+- **My voice** - Record or upload 1–2 samples, then clone. Recording opens a guide that shows a short text in your language: read it out loud, listen to the take, then create the clone. Aim for 20–40 seconds of calm, natural speech in a quiet room; uploads accept MP3, WAV, OGG and M4A up to 3 MB each.
+
+A cloned voice is used to send WhatsApp voice notes through the personal WhatsApp integration. The message text is only the script; the recipient gets the voice note. Sending requires the [desktop app](/desktop) with personal WhatsApp connected.
+
+Only clone a voice you own or have explicit permission to use.
+
 ### Auto Mode
 
 Agent responses always pass through a delivery action selected for the current room or provider. With Auto Mode enabled, the action executes immediately; with Auto Mode disabled, the response remains editable and waits for approval before delivery.
