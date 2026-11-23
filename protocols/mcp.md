@@ -45,7 +45,7 @@ Always useful (confirm with `tools/list`):
 | Studio | `studio_send`, `studio_produce`, `studio_wait`, `studio_export` · elements and templates: see [Studio](/apps/studio#for-agents-mcp) and [Studio templates](/apps/studio-templates#mcp-tools) |
 | Memories | `create_memory`, `update_memory`, `search_memories` |
 | Skills | `list_skills`, `create_skill`, `update_skill`, `delete_skill` |
-| Documents / media | `list_documents`, `create_document`, … · `media_list`, `media_upload`, `media_delete` |
+| Documents / media | `list_documents`, `create_document`, … · `media_list`, `media_upload`, `media_update`, `media_delete` |
 | Private warps / apps | `list_private_warps`, `create_private_warp`, … · `create_private_app` |
 | Rooms | `list_rooms` (team-wide, optional `team` slug), `get_room_messages` |
 | Secrets | `secret_list`, `secret_status`, `secret_set`, `secret_clear` (keys/status only — never values) |

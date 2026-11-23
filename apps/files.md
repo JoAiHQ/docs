@@ -43,7 +43,7 @@ On desktop, if no folder is connected yet, the UI nudges you to set one up.
 
 Media tools are general agent tooling (not gated solely by Workspace):
 
-- Media: `media_list`, `media_upload`, `media_delete`
+- Media: `media_list`, `media_upload`, `media_update`, `media_delete`
 
 Document MCP tools require the **[Documents](/apps/documents)** native app:
 

@@ -17,7 +17,11 @@ Set the team setting `bookkeeping.method`:
 
 ## Order revenue
 
-Book a JoAi order from its invoice net and VAT amounts. The booking uses the order currency, tax breakdown, contact, and invoice date. In cash mode it is dated on payment; in accrual mode on the invoice date. Rebooking the same order is idempotent.
+Order revenue books itself. When an order becomes paid — confirmed, processing, shipped or delivered — JoAi books its invoice net and VAT to the ledger: in cash mode on the payment date, in accrual mode on the invoice date against receivables. The booking uses the order currency, tax breakdown, contact, and invoice date. Teams without the Accounting app are untouched.
+
+Automatic bookings are tagged `automation` and are idempotent: an order keeps its first booking. A canceled or fully refunded order — the return flow marks it `returned` — is reversed automatically with a linked reversal entry, booked in the period of the cancellation. A partially refunded order stays booked at its full amount until you book a credit note for the refunded share.
+
+You can still book a single order by hand, for example when a booking failed against a locked period.
 
 ## Rounding
 

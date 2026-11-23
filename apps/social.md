@@ -70,7 +70,7 @@ Posts can be text only, or text with up to 4 JPEG, PNG, WEBP, or GIF images. Tex
 
 ## Facebook
 
-Connect a Facebook Page on the agent first: **Agent settings → Integrations → Facebook**, then **Connect Facebook Page**. If the account manages several Pages, pick which one to publish as when composing.
+Connect a Facebook Page on the agent first: **Agent settings → Integrations → Facebook**, then **Connect Facebook Page**. Pick the default Page in the integration settings; when composing you can still switch to another Page you manage.
 
 Posts can be text only, or text with up to 10 JPEG, PNG, WEBP, or GIF images.
 
@@ -116,7 +116,7 @@ Warps never post to the networks themselves. Scheduling only enqueues JoAi's pub
 
 MCP tools: `create_social_post`, `update_social_post`, `cancel_social_post`, `list_social_posts`, `list_social_accounts`, `delete_social_post`. They are available only when Social Media is installed on the team.
 
-Call `list_social_accounts` before creating a post when the team has more than one connected profile or Facebook Page, then pass the chosen `accounts[].id` as `accountId`. Omitting `accountId` uses the default profile.
+Call `list_social_accounts` before creating a post when the team has more than one connected profile or Facebook Page, then pass the chosen `accounts[].id` as `accountId`. Omitting `accountId` uses the default profile or the default Facebook Page selected in the integration settings.
 
 `platform` is `instagram`, `x`, `facebook`, or `linkedin`. For Instagram, `format` is `feed` (default), `short`, or `story`. `scheduledAt` is an ISO time. Without a timezone, JoAi uses the team timezone.
 

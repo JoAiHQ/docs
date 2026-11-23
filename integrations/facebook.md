@@ -15,15 +15,17 @@ This covers **Social Media publishing** for a Page you manage. It is not a Messe
 1. Open **Agent settings → Integrations** → **Facebook**
 2. **Connect Facebook Page** (OAuth)
 3. Grant Page access so JoAi can publish — every Page you manage is stored on the connection and listed under the integration
-4. Use [Social Media](/apps/social) to draft or schedule posts, and pick the Page when you create the post if you manage more than one
+4. Pick the **default Page** from the connected Pages list in the integration settings
+5. Use [Social Media](/apps/social) to draft or schedule posts, and pick a different Page per post when you manage more than one
 
 Reconnect to refresh the list of Pages after Meta access changes. The same Facebook connection can be reused by Social Media and other features such as metrics.
 
-From chat or MCP, the agent calls `list_social_accounts` to see every connected Page and passes the chosen Page id as `accountId` to `create_social_post`.
+From chat or MCP, the agent calls `list_social_accounts` to see every connected Page and passes the chosen Page id as `accountId` to `create_social_post`. Omitting `accountId` uses the default Page selected in the integration settings.
 
 ## How it works
 
 - Social Media posts publish through the connected Page access token when a post is due
+- The default Page selected in settings is used when no Page is chosen for a post
 - Text-only posts and posts with images are supported
 - This is separate from [Instagram](/integrations/instagram) messaging and publishing
 
