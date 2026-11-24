@@ -47,16 +47,17 @@ Teams are collaborative workspaces where multiple users work together, share age
 
 Agent wallets live under **Agent settings → Wallets** ([Wallets](/wallets)). Loyalty lives under the **Contacts** app ([Contacts](/apps/contacts)), not Team settings.
 
-### Google place data
+### Place providers
 
-Team **General → Location** uses a native Google place. JoAi stores the place's address, coordinates, rating, review count, and its latest Google reviews.
+A team stores one source per provider, side by side. **Google** is the business location: address, coordinates, rating, review count and the latest Google reviews. **Falstaff** is an editorial guide rating: points, the guide edition and a link to the Falstaff page.
 
-- The place details and the latest reviews refresh **weekly**.
-- Selecting a place refreshes them immediately.
-- Teams with appointment opening-hours sync enabled also refresh the place details daily.
-- Admins can force a refresh with `php artisan team:sync-place <team-slug>`.
+- **General → Location** searches and selects the Google place.
+- **General → Guides** connects a Falstaff guide by pasting its public `falstaff.com` URL.
+- Sources refresh **weekly**. Selecting or connecting a source refreshes it immediately.
+- Teams with appointment opening-hours sync enabled also refresh the Google place daily.
+- Admins can force a refresh with `php artisan team:sync-place <team-slug> --provider=google|falstaff`.
 
-Google reviews are shown on public business profiles (for example on city sites) together with a link to the full review list on Google Maps.
+Public business profiles show the Google rating and reviews with a link to Google Maps, plus every connected guide rating as its own badge. Removing one provider leaves the others untouched.
 
 ### Native apps on a team
 

@@ -36,7 +36,7 @@ Always useful (confirm with `tools/list`):
 
 ## Team admin tools
 
-`create_team`, `update_team`, `update_team_place`, `update_team_settings`
+`create_team`, `update_team`, `update_team_place` (Google place or Falstaff guide via `provider`), `update_team_settings`
 
 ## Agent tooling (examples)
 
