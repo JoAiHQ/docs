@@ -12,6 +12,14 @@ Board is the team workbench: a kanban of **items** the agent can execute, plus r
 - Done column hints auto-archive — clear finished work regularly
 - Agents get Board MCP tools when the app is installed (default)
 
+## Bot brief
+
+Every item has a **Bot brief** under the description: the instructions an agent needs to do the work — URLs, test cases, credentials, expected result. Keep the description for people; agents read the brief.
+
+- Stored as `bot` on the item and returned by the API, in item events and by the Board MCP tools (`create_item`, `update_item`).
+- Shown in the item editor and in the approval card, so you see what the agent will be told before you approve it.
+- Optional: plain tasks leave it empty.
+
 ## In the app
 
 ### Board (`/board`)
