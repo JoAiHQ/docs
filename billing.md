@@ -37,6 +37,8 @@ Examples (exact limits depend on plan):
 
 Locked features show an upgrade nudge instead of the action.
 
+Free business teams include **one agent**, which is enough for forms, smart links and board automations to work. Chat messages, cloud wallets, integrations and adding team members stay on paid plans — the agent is an owner for team data, not a free chat seat.
+
 ## MCP credits
 
 Tool calls consume monthly **credits**. Credits reset each billing cycle. Details and overage: [MCP credits](/protocols/mcp#credits-usage).
