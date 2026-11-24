@@ -153,6 +153,8 @@ Invoice-only orders still use the status control (including **paid** when closed
 
 **Order notification emails** (General): optional list of addresses (e.g. `bestellung@shop.example`) that receive a merchant alert when a shop order is placed — paid online orders after payment, bank/offline orders when created. Separate from customer confirmations and team seats.
 
+Active team members also get a **New orders** mobile push when a storefront order comes in, showing the customer, total, fulfillment and payment status; each member can mute it under their notification settings. Manual and kiosk orders do not send this push — kiosk orders already appear in the app in real time.
+
 #### Legal pages and checkout disclosure
 
 Every public storefront gets built-in legal pages at `/{locale}/{team}/legal/{terms|privacy|withdrawal|imprint}`.
