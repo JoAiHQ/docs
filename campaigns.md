@@ -83,7 +83,7 @@ On update, omit `segmentId` / `tags` / `contactIds` / `installIds` to leave the 
 
 **Dynamic audiences refresh at preview and send.** Push “all subscribed installs”, segments, and tag/contact filters are re-resolved when you preview or start (or run a scheduled) send — so new subscribed devices are included. Explicit `installIds` stay fixed to that device list. Explicit `contactIds` stay fixed to those contacts, but for push their current installs are re-resolved.
 
-Before send, the UI shows how many recipients are **sendable** vs skipped:
+Before send, the UI shows how many recipients are **sendable** vs skipped. In the approval card, the contact chip opens the full list of targeted contacts:
 
 | Skip reason | Meaning |
 | --- | --- |
