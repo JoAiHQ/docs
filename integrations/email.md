@@ -30,6 +30,16 @@ By default the agent receives mail at `handle` on the shared JoAi inbound domain
 
 Leave the domain empty to go back to the shared inbound domain.
 
+### Email signature
+
+Every email the agent sends on your behalf can end with a signature. Open **Agent settings → Integrations → Email** and fill in the **Email Signature** section:
+
+- **Name**, **role**, **company**, **phone**, **email**, **website**, **LinkedIn** and a **logo URL**
+- Toggle the signature off without losing the values
+- Check the live **preview** and the **plain text** fallback before saving
+
+The signature is appended automatically to campaigns, contact emails and automations. A message that already ends with the signature stays unchanged, and agent auto-replies inside an email thread stay untouched. Inbound mail has the signature stripped again so it does not pile up in the conversation history.
+
 ### Primary agent
 
 If a team has more than one agent, mark one as the **Primary agent**. Team-level emails such as monthly website reports use that agent's Email integration and From address. One agent per team can be primary; selecting another replaces it. If the primary agent has no configured Email integration, JoAi falls back to the team's first configured sender.
