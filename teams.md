@@ -49,13 +49,13 @@ Agent wallets live under **Agent settings → Wallets** ([Wallets](/wallets)). L
 
 ### Place providers
 
-A team stores one source per provider, side by side. **Google** is the business location: address, coordinates, rating, review count and the latest Google reviews. **Falstaff** is an editorial guide rating: points, the guide edition and a link to the Falstaff page.
+A team stores one source per provider, side by side. **Google** is the business location: address, coordinates, rating, review count and the latest Google reviews. **Falstaff** is an editorial guide rating: points, the guide edition and a link to the Falstaff page. It is entered as data (no server-side scraping).
 
 - **General → Location** searches and selects the Google place.
-- **General → Guides** connects a Falstaff guide by pasting its public `falstaff.com` URL.
-- Sources refresh **weekly**. Selecting or connecting a source refreshes it immediately.
+- **General → Guides** stores a Falstaff guide: points, maximum, guide label and public URL.
+- The Google place refreshes **weekly**; a weekly vLeap automation keeps the Falstaff guide current from the public Falstaff page.
 - Teams with appointment opening-hours sync enabled also refresh the Google place daily.
-- Admins can force a refresh with `php artisan team:sync-place <team-slug> --provider=google|falstaff`.
+- Admins can force a Google refresh with `php artisan team:sync-place <team-slug>`.
 
 Public business profiles show the Google rating and reviews with a link to Google Maps, plus every connected guide rating as its own badge. Removing one provider leaves the others untouched.
 
