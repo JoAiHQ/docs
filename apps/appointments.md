@@ -53,10 +53,41 @@ https://store.joai.ai/en/my-shop/book/haircut
 https://store.joai.ai/en/my-shop/book/embed
 ```
 
+### Theme preview
+
+Append `?theme=classic|soft|editorial` to a book URL to preview another booking theme without changing the team settings. Preview URLs are sent with `noindex`, so they can be shared with clients safely; the default remains the team's saved theme.
+
+### Pinned booking notice
+A published **news** update with the prop `pinned=true` becomes a dismissible notice at the top of the booking page (the newest pinned update wins). Use it for payment notes, cancellation rules or seasonal announcements.
+
+```
+create_update({
+  team: "my-shop",
+  type: "news",
+  title: "Wichtig",
+  body: "Termine können bis 24 Stunden vorher kostenlos storniert werden.",
+  status: "published",
+  props: { pinned: "true" }
+})
+```
+
+### Booking categories
+
+The booking page groups services when the team setting `public.booking.categories` contains an ordered JSON array:
+
+```json
+[
+  { "key": "neu", "label": "Neu bei uns?" },
+  { "key": "akne", "label": "Unreine Haut & Akne" },
+  { "key": "anti-aging", "label": "Anti-Aging" }
+]
+```
+
+Tag a service with `booking:<key>` for every category it belongs to (multiple tags are allowed, so a service can appear in more than one group). Services without a matching tag appear under “More services”. Without the setting, the list stays flat.
+
 ### Embed on your website
 
 Use the embed URL in an iframe so customers book without leaving your site:
-
 ```html
 <iframe
   src="https://store.joai.ai/en/YOUR-TEAM/book/embed"
