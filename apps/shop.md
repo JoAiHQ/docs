@@ -87,7 +87,7 @@ Need a configurable client-facing scope before creating the quote? See [Client p
    - **Pickup** — choose an active location from Delivery settings
    - **Shipping** — pick a contact address and a rate from your shipping zones (quoted for that country/ZIP and line items). The contact needs an address first; configure zones under Shop → Settings → Delivery
 
-The customer contact remains the buyer shown on the invoice. Use **Invoice recipient** during creation or editing when another contact (for example, an accounting inbox) should receive invoice and confirmation emails; leaving it at the default uses the customer contact.
+The **Invoice recipient** supplies the buyer block on the invoice: its billing address (street, ZIP, city, country) is printed and determines VAT, and its name is used when the address has one. Set it during creation or editing when the invoice should go to another contact (for example, an accounting inbox). Without an invoice recipient the customer contact is used; when the recipient has no billing address, the PDF shows just its name and VAT falls back to the customer address. The chosen recipient also receives invoice and confirmation emails.
 
 **Customer emails:** Online checkout (card, Mollie, Stripe, …) sends the team-branded order confirmation only after payment. Offline / bank-transfer orders can confirm when placed, then send a payment-received note (with invoice) once paid. On a pending order, **Notify contact** runs `joai-order-notify` through the chosen agent (auto-approved sync execution) so a branded **confirmation** or **payment reminder** is sent as that agent. Agents can trigger the same warp from MCP (`type`: `confirmation` or `payment-reminder`). Each type can be sent once per hour per order.
 
@@ -169,7 +169,7 @@ Checkout shows the matching notice and requires acceptance of terms, withdrawal/
 
 #### Tax rates
 
-Teams start with a default VAT rate. Add more rates (e.g. reduced food VAT) under **Shop → Settings → Tax**, then assign them on products, services, or custom order lines. Invoices and order accounting break tax down by rate. Agents manage the same rates via `tax-class-list` / `tax-class-create` / `tax-class-update` / `tax-class-delete`, and pass `taxClassId` on product/service create/update or custom order lines.
+Teams start with a default VAT rate. Add more rates (e.g. reduced food VAT) under **Shop → Settings → Tax**, then assign them on products, services, or custom order lines. Lines without an assigned rate — including custom lines — use the team default, so invoices never silently fall back to 0 %. Invoices and order accounting break tax down by rate. Agents manage the same rates via `tax-class-list` / `tax-class-create` / `tax-class-update` / `tax-class-delete`, and pass `taxClassId` on product/service create/update or custom order lines.
 
 #### Delivery details
 
