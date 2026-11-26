@@ -20,7 +20,7 @@ During onboarding, JoAi may suggest apps from your interests:
 | business | Contacts, Loyalty, Appointments, Shop |
 | ecommerce | Shop, Contacts, Loyalty, Smart Links |
 | shopping | Shop, Smart Links |
-| content | Campaigns, Automations, Sites, Smart Links, Social Media, Studio |
+| content | Campaigns, Automations, Sites, Smart Links, Social Media, Studio, Places |
 | developer | Workspace, Sites, Contracts |
 | web3 | Wallets, Contracts |
 | payments | Shop, Wallets |
@@ -35,7 +35,7 @@ You can change installs anytime under Apps.
 | Concept | Meaning |
 | --- | --- |
 | **Installed** | Listed under `Team settings → Apps` for this team |
-| **Sidebar** | Board, Accounting, Shop, Contacts, Campaigns, Automations, Forms, Appointments, Smart Links, News, Social Media, Studio, Artifacts, Documents, Sites, Meetings, Contracts |
+| **Sidebar** | Board, Accounting, Shop, Contacts, Places, Campaigns, Automations, Forms, Appointments, Smart Links, News, Social Media, Studio, Artifacts, Documents, Sites, Meetings, Contracts |
 | **Chat / settings only** | Workspace (chat control + `/files`), Wallets, Heartbeats, Voice dictation |
 | **Plan lock** | Some apps need a higher plan — they show locked until you upgrade |
 | **MCP gating** | Agent tools for that app appear only when the app is installed on the team |
@@ -54,6 +54,7 @@ Native apps are **not** the same as:
 | **Board** | Kanban items, auto-execution; MCP for tasks/goals/hooks/blueprints/projects | [Board](/apps/board) |
 | **Shop** | Products, services, orders, coupons, payments, storefront, client proposals | [Shop](/apps/shop) · [Proposals](/apps/shop/proposals) |
 | **Contacts** | CRM, tags, timeline; segments via Campaigns | [Contacts](/apps/contacts) |
+| **Places** | Team-owned map places with opening hours and media | [Places](/apps/places) |
 | **Loyalty** | Points, tiers, rewards, scanner, wallet passes | [Loyalty](/apps/loyalty) |
 | **Campaigns** | Email, WhatsApp, SMS, push + segment audiences | [Campaigns](/campaigns) |
 | **Automations** | Welcome series, nurture drips, webhook enroll | [Automations](/automations) |

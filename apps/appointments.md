@@ -31,7 +31,7 @@ Appointments is the booking native app: availability, capacity, requests, and a 
 
 Capacity can be limited **per booking** or **per person**. Booking themes change the public page’s surfaces, typography, spacing, and accent treatment without changing the flow; existing teams stay on the default theme until changed.
 
-`blockedDates` / holidays may exist on the policy payload for agents/API; there is no dedicated holidays UI in the product today. Appointment policy can also align with **team place** hours when place is set (`update_team_place` / place settings) — prefer documenting place on [Teams](/teams) and syncing via policy MCP when automating.
+`blockedDates` / holidays may exist on the policy payload for agents/API; there is no dedicated holidays UI in the product today.
 
 ## Public surfaces & sharing
 
