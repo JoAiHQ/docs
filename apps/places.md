@@ -50,9 +50,8 @@ Opening hours are display data and are not copied into the appointment policy. B
 
 | Method | Endpoint | Purpose |
 | --- | --- | --- |
-| `GET` | `/v1/places` | Public catalogue (`team`, `city`, `tag`, `search`, `limit`, `page`) |
-| `GET` | `/v1/places/{slug}` | One published place; add `team` when slugs collide |
-| `GET` | `/v1/places/manage?team={team}` | Every place of a team, including hidden and scheduled (team-manage) |
+| `GET` | `/v1/places` | Places (`team`, `city`, `tag`, `search`, `limit`, `page`); team members with view access also receive hidden and scheduled places |
+| `GET` | `/v1/places/{slug}` | One place; add `team` when slugs collide. Hidden and scheduled places are returned to team members with view access |
 | `GET` | `/v1/places/providers` | Searchable import providers and labels (team-manage) |
 | `GET` | `/v1/places/search?team={team}&provider={provider}&query={query}` | Search an external provider for a place to import (team-manage) |
 | `POST` | `/v1/places/import` | Import a provider place by `provider` + `sourceId` (team-manage) |
@@ -76,7 +75,7 @@ Media is passed on create and update, not through a separate endpoint:
 
 An empty array on update clears that collection. Media must belong to the same team.
 
-Place responses expose `rating`, `reviewCount`, `reviews`, `reviewsSyncedAt`, `mapsUrl`, `cover`, `gallery`, `audio`, and `models`, plus the team summary. Hidden and future-dated places are excluded from the public list and detail endpoints.
+Place responses expose `rating`, `reviewCount`, `reviews`, `reviewsSyncedAt`, `mapsUrl`, `cover`, `gallery`, `audio`, and `models`, plus the team summary. List and detail requests are permission-aware: team members with view access receive hidden and future-dated places; everyone else only sees published ones.
 
 Team responses expose `place` (the team's primary provider place, including its Google guide, rating/reviews and opening hours) and `guides` (team-level editorial guides). This is what business profiles and physical meeting pages read.
 
@@ -105,7 +104,7 @@ const results = await client.places.search({ team: 'hollabrunn-digital', provide
 await client.places.import({ team: 'hollabrunn-digital', provider: 'google', sourceId: results.data[0].sourceId })
 ```
 
-Staff lists use `client.places.listManaged({ team })`; public catalogues use `list()`.
+List and detail requests use the same `list()` and `get()`; team members with view access receive hidden and scheduled places.
 
 ## For agents (MCP)
 
@@ -116,7 +115,7 @@ Requires **Places** installed.
 | `list_place_providers` | List import providers |
 | `search_place_providers` | Search a provider for a place to import |
 | `import_place` | Import a provider place by key and source id |
-| `list_places` | List team places, including hidden and scheduled ones |
+| `list_places` | List team places; hidden included with team access |
 | `get_place` | Load one place by slug |
 | `create_place` | Create a place with coordinates, tags, and media IDs |
 | `update_place` | Update fields, publish/hide, or replace media |
