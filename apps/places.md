@@ -8,6 +8,8 @@ Install **Places** under **Team settings → Apps**, then open **Places** in the
 
 - Keeps a team-owned catalogue of places with stable slugs
 - Stores public opening hours, address, coordinates, timezone, category, and tags
+- Keeps ratings/reviews as guide entries: Google is a guide on its place, Falstaff is an editable team-level guide
+- Keeps provider opening hours, address and maps URL on the place
 - Holds cover, gallery, audio-guide, and 3D-model media per place
 - Publishes places to the public catalogue, hides them, or schedules them with `publishedAt`
 - Feeds maps, city portals, and agents from one API instead of per-app constants
@@ -54,6 +56,7 @@ Opening hours are display data and are not copied into the appointment policy. B
 | `GET` | `/v1/places/providers` | Searchable import providers and labels (team-manage) |
 | `GET` | `/v1/places/search?team={team}&provider={provider}&query={query}` | Search an external provider for a place to import (team-manage) |
 | `POST` | `/v1/places/import` | Import a provider place by `provider` + `sourceId` (team-manage) |
+| `PUT` | `/v1/teams/{team}/place-guides/{provider}` | Set or clear an editorial guide rating (team-manage, no UI) |
 | `POST` | `/v1/places` | Create a place (team-manage) |
 | `PATCH` | `/v1/places/{id}` | Update fields, visibility, or media (team-manage) |
 | `DELETE` | `/v1/places/{id}` | Delete a place and its media attachments (team-manage) |
@@ -73,7 +76,9 @@ Media is passed on create and update, not through a separate endpoint:
 
 An empty array on update clears that collection. Media must belong to the same team.
 
-Public responses expose `cover`, `gallery`, `audio`, and `models` URLs, plus the team summary. Hidden and future-dated places are excluded from the public list and detail endpoints.
+Place responses expose `rating`, `reviewCount`, `reviews`, `reviewsSyncedAt`, `mapsUrl`, `cover`, `gallery`, `audio`, and `models`, plus the team summary. Hidden and future-dated places are excluded from the public list and detail endpoints.
+
+Team responses expose `place` (the team's primary provider place, including its Google guide, rating/reviews and opening hours) and `guides` (team-level editorial guides). This is what business profiles and physical meeting pages read.
 
 ## SDK
 
@@ -108,6 +113,9 @@ Requires **Places** installed.
 
 | Tool | Purpose |
 | --- | --- |
+| `list_place_providers` | List import providers |
+| `search_place_providers` | Search a provider for a place to import |
+| `import_place` | Import a provider place by key and source id |
 | `list_places` | List team places, including hidden and scheduled ones |
 | `get_place` | Load one place by slug |
 | `create_place` | Create a place with coordinates, tags, and media IDs |
